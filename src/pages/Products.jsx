@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { base44 } from "@/api/base44Client";
+import { fetchProducts } from "@/api/productService";
 import { useState, useMemo } from "react";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -18,7 +18,7 @@ export default function Products() {
 
   const { data: products, isLoading } = useQuery({
     queryKey: ["all-products"],
-    queryFn: () => base44.entities.Product.list("-created_date", 200),
+    queryFn: () => fetchProducts(),
   });
 
   const filtered = useMemo(() => {
