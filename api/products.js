@@ -1,16 +1,13 @@
 export default async function handler(req, res) {
-  // CORS
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
   res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
 
   if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
+    return res.status(200).end();
   }
 
-  // Dados hardcoded
   const products = [
     { id: 1, name: "Feijão Carioca", description: "Feijão carioca de qualidade premium, colhido no sertão", category: "Feijão", price: 15.50, image_url: "https://images.pexels.com/photos/4551832/pexels-photo-4551832.jpeg?auto=compress&cs=tinysrgb&h=400&w=400", created_at: new Date().toISOString() },
     { id: 2, name: "Feijão Preto", description: "Feijão preto autêntico do Nordeste", category: "Feijão", price: 18.00, image_url: "https://images.pexels.com/photos/5737391/pexels-photo-5737391.jpeg?auto=compress&cs=tinysrgb&h=400&w=400", created_at: new Date().toISOString() },
@@ -62,85 +59,9 @@ export default async function handler(req, res) {
       return res.status(200).json(products);
     }
 
-    res.status(200).json({ message: 'OK' });
+    return res.status(200).json({ message: 'OK' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 }
 
-    if (method === 'GET') {
-      if (id) {
-        const product = db.products.find(p => p.id === parseInt(id));
-        return res.status(product ? 200 : 404).json(product || { error: 'Produto não encontrado' });
-      }
-
-      if (category) {
-        const products = db.products.filter(p => p.category === decodeURIComponent(category));
-        return res.status(200).json(products);
-      }
-
-      return res.status(200).json(db.products);
-    }
-
-    if (method === 'POST') {
-      const { name, description, category: cat, price, image_url } = body;
-
-      if (!name || !cat || !price) {
-        return res.status(400).json({ error: 'Nome, categoria e preço são obrigatórios' });
-      }
-
-      const newId = Math.max(...db.products.map(p => p.id), 0) + 1;
-      const newProduct = {
-        id: newId,
-        name,
-        description: description || '',
-        category: cat,
-        price: parseFloat(price),
-        image_url: image_url || 'https://via.placeholder.com/400x400?text=' + name,
-        created_at: new Date().toISOString()
-      };
-
-      db.products.push(newProduct);
-      saveDB(db);
-      return res.status(201).json(newProduct);
-    }
-
-    if (method === 'PUT') {
-      const { name, description, category: cat, price, image_url } = body;
-      const productIndex = db.products.findIndex(p => p.id === parseInt(id));
-
-      if (productIndex === -1) {
-        return res.status(404).json({ error: 'Produto não encontrado' });
-      }
-
-      db.products[productIndex] = {
-        ...db.products[productIndex],
-        name: name || db.products[productIndex].name,
-        description: description !== undefined ? description : db.products[productIndex].description,
-        category: cat || db.products[productIndex].category,
-        price: price ? parseFloat(price) : db.products[productIndex].price,
-        image_url: image_url || db.products[productIndex].image_url
-      };
-
-      saveDB(db);
-      return res.status(200).json(db.products[productIndex]);
-    }
-
-    if (method === 'DELETE') {
-      const productIndex = db.products.findIndex(p => p.id === parseInt(id));
-
-      if (productIndex === -1) {
-        return res.status(404).json({ error: 'Produto não encontrado' });
-      }
-
-      db.products.splice(productIndex, 1);
-      saveDB(db);
-      return res.status(200).json({ message: 'Produto deletado com sucesso' });
-    }
-
-    res.status(405).json({ error: 'Método não permitido' });
-  } catch (error) {
-    console.error('Erro:', error);
-    res.status(500).json({ error: 'Erro interno do servidor', details: error.message });
-  }
-}
