@@ -1,4 +1,4 @@
-import { readDB, saveDB } from '../../api/db-json.js';
+import { readDB, saveDB } from './db-json.js';
 
 export default function handler(req, res) {
   res.setHeader('Access-Control-Allow-Credentials', 'true');
