@@ -1,6 +1,7 @@
 import { readDB, saveDB } from './db-json.js';
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
+  // CORS
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
@@ -12,19 +13,18 @@ export default function handler(req, res) {
   }
 
   try {
-    const { method } = req;
-    const { category, id } = req.query;
+    const { method, query, body } = req;
+    const { category, id } = query;
+    const db = readDB();
 
     if (method === 'GET') {
-      const db = readDB();
-
       if (id) {
         const product = db.products.find(p => p.id === parseInt(id));
         return res.status(product ? 200 : 404).json(product || { error: 'Produto não encontrado' });
       }
 
       if (category) {
-        const products = db.products.filter(p => p.category === category);
+        const products = db.products.filter(p => p.category === decodeURIComponent(category));
         return res.status(200).json(products);
       }
 
@@ -32,15 +32,13 @@ export default function handler(req, res) {
     }
 
     if (method === 'POST') {
-      const { name, description, category: cat, price, image_url } = req.body;
+      const { name, description, category: cat, price, image_url } = body;
 
       if (!name || !cat || !price) {
         return res.status(400).json({ error: 'Nome, categoria e preço são obrigatórios' });
       }
 
-      const db = readDB();
       const newId = Math.max(...db.products.map(p => p.id), 0) + 1;
-
       const newProduct = {
         id: newId,
         name,
@@ -57,8 +55,7 @@ export default function handler(req, res) {
     }
 
     if (method === 'PUT') {
-      const { name, description, category: cat, price, image_url } = req.body;
-      const db = readDB();
+      const { name, description, category: cat, price, image_url } = body;
       const productIndex = db.products.findIndex(p => p.id === parseInt(id));
 
       if (productIndex === -1) {
@@ -79,7 +76,6 @@ export default function handler(req, res) {
     }
 
     if (method === 'DELETE') {
-      const db = readDB();
       const productIndex = db.products.findIndex(p => p.id === parseInt(id));
 
       if (productIndex === -1) {
@@ -94,6 +90,6 @@ export default function handler(req, res) {
     res.status(405).json({ error: 'Método não permitido' });
   } catch (error) {
     console.error('Erro:', error);
-    res.status(500).json({ error: 'Erro interno do servidor' });
+    res.status(500).json({ error: 'Erro interno do servidor', details: error.message });
   }
 }
