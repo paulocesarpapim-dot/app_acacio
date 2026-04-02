@@ -1,0 +1,10 @@
+# .replit
+run = "cd api && npm install && npm start"
+modules = ["nodejs-20"]
+
+[nix]
+channel = "stable-24_05"
+
+[[ports]]
+localPort = 3000
+externalPort = 80
