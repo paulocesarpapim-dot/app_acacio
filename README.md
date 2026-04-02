@@ -1,32 +1,45 @@
-**Welcome to your Base44 project** 
+**APP Acacio - Gestão de Produtos**
 
 **About**
 
-View and Edit  your app on [Base44.com](http://Base44.com) 
+Esta é uma aplicação web para gerenciamento de produtos do Acacio.
 
-This project contains everything you need to run your app locally.
+**Tecnologias:**
+- React 18
+- Vite
+- Tailwind CSS
+- React Query
+- React Hook Form
+- Express API
 
-**Edit the code in your local development environment**
+**Prerequisites:**
 
-Any change pushed to the repo will also be reflected in the Base44 Builder.
-
-**Prerequisites:** 
-
-1. Clone the repository using the project's Git URL 
+1. Clone the repository
 2. Navigate to the project directory
 3. Install dependencies: `npm install`
-4. Create an `.env.local` file and set the right environment variables
+4. Make sure the backend API is running (api/server.js)
 
+```bash
+# Install dependencies
+npm install
+
+# Run the app in development
+npm run dev
+
+# Build for production
+npm run build
 ```
-VITE_BASE44_APP_ID=your_app_id
-VITE_BASE44_APP_BASE_URL=your_backend_url
 
-e.g.
-VITE_BASE44_APP_ID=cbef744a8545c389ef439ea6
-VITE_BASE44_APP_BASE_URL=https://my-to-do-list-81bfaad7.base44.app
+**API Setup:**
+
+Navigate to `api/` folder:
+```bash
+cd api
+npm install
+npm start
 ```
 
-Run the app: `npm run dev`
+The API will be available at `http://localhost:3000`
 
 **Publish your changes**
 

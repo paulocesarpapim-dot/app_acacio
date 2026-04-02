@@ -1,25 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
-import { base44 } from "@/api/base44Client";
 import { Link } from "react-router-dom";
 import { ArrowRight, Truck, Shield, Clock, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CategoryCard from "../components/CategoryCard";
 import ProductCard from "../components/ProductCard";
+import { fetchProducts } from "@/api/productService";
 
 const CATEGORIES = ["Feijão", "Farinha", "Queijos", "Manteiga", "Bolachas", "Rapadura", "Doces", "Cereais", "Requeijão"];
 
 export default function Home() {
-  const { data: featuredProducts, isLoading } = useQuery({
-    queryKey: ["featured-products"],
-    queryFn: () => base44.entities.Product.filter({ featured: true, in_stock: true }, "-created_date", 8),
+  const { data: allProducts, isLoading } = useQuery({
+    queryKey: ["products"],
+    queryFn: fetchProducts,
   });
 
-  const { data: allProducts } = useQuery({
-    queryKey: ["recent-products"],
-    queryFn: () => base44.entities.Product.list("-created_date", 12),
-  });
-
-  const products = featuredProducts?.length > 0 ? featuredProducts : allProducts?.slice(0, 8);
+  const products = allProducts?.slice(0, 8) || [];
 
   return (
     <div>
