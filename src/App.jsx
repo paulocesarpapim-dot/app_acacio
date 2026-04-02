@@ -9,6 +9,7 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import Products from './pages/Products';
 import Cart from './pages/Cart';
+import AdminProducts from './pages/AdminProducts';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -40,6 +41,7 @@ const AuthenticatedApp = () => {
         <Route path="/" element={<Home />} />
         <Route path="/produtos" element={<Products />} />
         <Route path="/carrinho" element={<Cart />} />
+        <Route path="/admin/produtos" element={<AdminProducts />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>
