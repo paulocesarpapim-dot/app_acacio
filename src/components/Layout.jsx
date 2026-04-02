@@ -55,7 +55,7 @@ export default function Layout() {
                 </Link>
               ))}
               <a
-                href="https://wa.me/5500000000000?text=Olá! Gostaria de fazer um pedido."
+                href="https://wa.me/5511957800711?text=Olá! Gostaria de fazer um pedido."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-green-600 text-white hover:bg-green-700 transition-all ml-2"
@@ -140,7 +140,7 @@ export default function Layout() {
 
       {/* Floating WhatsApp Button */}
       <a
-        href="https://wa.me/5500000000000?text=Olá! Gostaria de fazer um pedido."
+        href="https://wa.me/5511957800711?text=Olá! Gostaria de fazer um pedido."
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg hover:shadow-xl flex items-center justify-center transition-all hover:scale-110"

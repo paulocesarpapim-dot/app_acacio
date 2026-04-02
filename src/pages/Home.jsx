@@ -53,7 +53,7 @@ export default function Home() {
                 </Button>
               </Link>
               <a
-                href="https://wa.me/5500000000000?text=Olá! Gostaria de saber mais sobre os produtos."
+                href="https://wa.me/5511957800711?text=Olá! Gostaria de saber mais sobre os produtos."
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -160,7 +160,7 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap justify-center gap-3 mt-6">
             <a
-              href="https://wa.me/5500000000000?text=Olá! Gostaria de fazer um pedido."
+              href="https://wa.me/5511957800711?text=Olá! Gostaria de fazer um pedido."
               target="_blank"
               rel="noopener noreferrer"
             >

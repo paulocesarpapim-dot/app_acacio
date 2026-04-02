@@ -101,7 +101,7 @@ export default function Cart() {
 
         <div className="space-y-3">
           <a
-            href={`https://wa.me/5500000000000?text=${buildWhatsAppMessage()}`}
+            href={`https://wa.me/5511957800711?text=${buildWhatsAppMessage()}`}
             target="_blank"
             rel="noopener noreferrer"
             className="block"
