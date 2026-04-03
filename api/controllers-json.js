@@ -52,6 +52,7 @@ export function createProduct(req, res) {
       category,
       price: parseFloat(price),
       image_url: image_url || 'https://via.placeholder.com/400x400?text=' + name,
+      in_stock: true,
       created_at: new Date().toISOString()
     };
 

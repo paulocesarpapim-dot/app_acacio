@@ -102,7 +102,7 @@ export default function Layout() {
                 </Link>
               ))}
               <a
-                href="https://wa.me/5500000000000?text=Olá! Gostaria de fazer um pedido."
+                href="https://wa.me/5511957800711?text=Olá! Gostaria de fazer um pedido."
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMenuOpen(false)}

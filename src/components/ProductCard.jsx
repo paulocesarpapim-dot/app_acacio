@@ -68,7 +68,7 @@ export default function ProductCard({ product }) {
           <Button
             size="sm"
             onClick={handleAdd}
-            disabled={!product.in_stock || added}
+            disabled={(product.in_stock === false) || added}
             className={`rounded-full transition-all ${
               added ? "bg-green-600 hover:bg-green-600" : ""
             }`}
