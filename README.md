@@ -1,78 +1,39 @@
-# App Acacio - E-Commerce Nordestino
+**Welcome to your Base44 project** 
 
-Um aplicativo de e-commerce moderno apresentando produtos autênticos da região Nordeste, com foco em produtos da Casa do Norte.
+**About**
 
-## 🚀 Sobre o Projeto
+View and Edit  your app on [Base44.com](http://Base44.com) 
 
-- **Frontend**: React 18 + Vite + Tailwind CSS
-- **Backend**: Express.js + JSON Database
-- **Deployment**: Vercel
-- **Produtos**: 38 itens da Casa do Norte com imagens e preços reais
+This project contains everything you need to run your app locally.
 
-## 📋 Requisitos
+**Edit the code in your local development environment**
 
-- Node.js >= 18.0.0
-- npm ou yarn
+Any change pushed to the repo will also be reflected in the Base44 Builder.
 
-## 🛠️ Instalação
+**Prerequisites:** 
 
-1. Clone o repositório
-```bash
-git clone https://github.com/paulocesarpapim-dot/app_acacio.git
-cd app_acacio
-```
-
-2. Instale as dependências
-```bash
-npm install
-```
-
-3. Inicie o servidor local
-```bash
-npm run dev  # Frontend em http://localhost:5173
-node api/server.js  # API em http://localhost:3000
-```
-
-## 📦 Estrutura do Projeto
+1. Clone the repository using the project's Git URL 
+2. Navigate to the project directory
+3. Install dependencies: `npm install`
+4. Create an `.env.local` file and set the right environment variables
 
 ```
-├── src/
-│   ├── components/    # Componentes React
-│   ├── pages/        # Páginas
-│   ├── lib/          # Utilidades
-│   └── App.jsx       # App principal
-├── api/
-│   ├── server.js     # Servidor Express
-│   ├── index.js      # Handler Vercel
-│   ├── database.json # Dados dos produtos
-│   └── controllers/  # API controllers
-├── dist/             # Build production
-└── package.json
+VITE_BASE44_APP_ID=your_app_id
+VITE_BASE44_APP_BASE_URL=your_backend_url
+
+e.g.
+VITE_BASE44_APP_ID=cbef744a8545c389ef439ea6
+VITE_BASE44_APP_BASE_URL=https://my-to-do-list-81bfaad7.base44.app
 ```
 
-## 🌐 Acesso
+Run the app: `npm run dev`
 
-- **Local Frontend**: http://localhost:5173
-- **Local API**: http://localhost:3000/api/products
-- **Produção**: https://app-acacio-paulocesarpapim-dots-projects.vercel.app
+**Publish your changes**
 
-## 📝 Scripts
+Open [Base44.com](http://Base44.com) and click on Publish.
 
-- `npm run dev` - Iniciar servidor de desenvolvimento
-- `npm run build` - Build para produção
-- `npm run lint` - Executar linter
-- `npm run preview` - Preview do build
+**Docs & Support**
 
-## 🎯 API Endpoints
+Documentation: [https://docs.base44.com/Integrations/Using-GitHub](https://docs.base44.com/Integrations/Using-GitHub)
 
-- `GET /api/products` - Lista todos os produtos
-- `GET /api/products/:id` - Produto por ID
-- `GET /api/products/category/:category` - Produtos por categoria
-- `POST /api/products` - Criar produto
-- `PUT /api/products/:id` - Atualizar produto
-- `DELETE /api/products/:id` - Deletar produto
-
----
-
-**Desenvolvido com ❤️ para o Nordeste**
-
+Support: [https://app.base44.com/support](https://app.base44.com/support)
