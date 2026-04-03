@@ -1,14 +1,23 @@
 import { appParams } from '@/lib/app-params';
 
-// Em produção no Replit, usa a raiz da aplicação
-// Em desenvolvimento local, usa localhost:3000
-const API_URL = (() => {
-  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
-    // Produção - usa a mesma origem
+// Detectar environment e construir a URL base da API
+const getAPIUrl = () => {
+  if (typeof window === 'undefined') {
+    return 'http://localhost:3000';
+  }
+  
+  const hostname = window.location.hostname;
+  
+  // Em produção (Vercel, Replit, etc.) - usa a mesma origem
+  if (hostname !== 'localhost' && hostname !== '127.0.0.1') {
     return window.location.origin;
   }
+  
+  // Em desenvolvimento local
   return appParams.appBaseUrl || 'http://localhost:3000';
-})();
+};
+
+const API_URL = getAPIUrl();
 
 export async function fetchProducts() {
   try {
