@@ -34,9 +34,11 @@ if (process.env.NODE_ENV !== 'production') {
   // Fallback para SPA
   app.get('*', (req, res) => {
     const indexPath = path.join(distPath, 'index.html');
-    res.sendFile(indexPath).catch(err => {
-      console.error('Erro ao servir index.html:', err);
-      res.status(404).json({ error: 'Página não encontrada' });
+    res.sendFile(indexPath, (err) => {
+      if (err) {
+        console.error('Erro ao servir index.html:', err);
+        res.status(404).json({ error: 'Página não encontrada' });
+      }
     });
   });
 }
