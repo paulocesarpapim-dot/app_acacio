@@ -1,20 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
+import { fetchProducts } from "@/api/productService";
 import { Link } from "react-router-dom";
 import { ArrowRight, Truck, Shield, Clock, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CategoryCard from "../components/CategoryCard";
 import ProductCard from "../components/ProductCard";
-import { fetchProducts } from "@/api/productService";
 
 const CATEGORIES = ["Feijão", "Farinha", "Queijos", "Manteiga", "Bolachas", "Rapadura", "Doces", "Cereais", "Requeijão"];
 
 export default function Home() {
   const { data: allProducts, isLoading } = useQuery({
-    queryKey: ["products"],
-    queryFn: fetchProducts,
+    queryKey: ["all-products"],
+    queryFn: () => fetchProducts(),
   });
 
-  const products = allProducts?.slice(0, 8) || [];
+  const featuredProducts = allProducts?.slice(0, 8) || [];
+
+  const products = featuredProducts?.length > 0 ? featuredProducts : allProducts?.slice(0, 8);
 
   return (
     <div>
@@ -48,7 +50,7 @@ export default function Home() {
                 </Button>
               </Link>
               <a
-                href="https://wa.me/5511957800711?text=Olá! Gostaria de saber mais sobre os produtos."
+                href="https://wa.me/5500000000000?text=Olá! Gostaria de saber mais sobre os produtos."
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -155,7 +157,7 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap justify-center gap-3 mt-6">
             <a
-              href="https://wa.me/5511957800711?text=Olá! Gostaria de fazer um pedido."
+              href="https://wa.me/5500000000000?text=Olá! Gostaria de fazer um pedido."
               target="_blank"
               rel="noopener noreferrer"
             >

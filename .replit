@@ -1,5 +1,5 @@
 # .replit
-run = "cd api && npm install && npm start"
+run = "npm run build && npm install && cd api && npm install && cd .. && node start.js"
 modules = ["nodejs-20"]
 
 [nix]
