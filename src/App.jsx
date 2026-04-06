@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/toaster"
+import capa from "./assets/capa.jpg";
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -8,6 +9,7 @@ import Layout from './components/Layout';
 import Chatbot from './components/Chatbot';
 import Home from './pages/Home';
 import Products from './pages/Products';
+import Categories from './pages/Categories';
 import Cart from './pages/Cart';
 import ProductDetail from './pages/ProductDetail';
 import React from 'react';
@@ -33,6 +35,7 @@ const AuthenticatedApp = () => {
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
+        <Route path="/categorias" element={<Categories />} />
         <Route path="/produtos" element={<Products />} />
         <Route path="/carrinho" element={<Cart />} />
         <Route path="/produto/:id" element={<ProductDetail />} />
@@ -49,11 +52,18 @@ function App() {
     <ErrorBoundary>
       <AuthProvider>
         <QueryClientProvider client={queryClientInstance}>
-          <Router>
-            <AuthenticatedApp />
-            <Chatbot />
-          </Router>
-          <Toaster />
+          <div>
+            <img
+              src={capa}
+              alt="Capa Casa do Norte"
+              style={{ width: '100%', maxHeight: '400px', objectFit: 'cover', display: 'block' }}
+            />
+            <Router>
+              <AuthenticatedApp />
+              <Chatbot />
+            </Router>
+            <Toaster />
+          </div>
         </QueryClientProvider>
       </AuthProvider>
     </ErrorBoundary>

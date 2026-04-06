@@ -5,6 +5,7 @@ import { ArrowRight, Truck, Shield, Clock, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CategoryCard from "../components/CategoryCard";
 import ProductCard from "../components/ProductCard";
+import capa from "../assets/capa.jpg";
 
 const CATEGORIES = ["Feijão", "Farinha", "Queijos", "Manteiga", "Bolachas", "Rapadura", "Doces", "Cereais", "Requeijão", "Temperos", "Carne de Sol"];
 
@@ -24,7 +25,7 @@ export default function Home() {
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1600&h=800&fit=crop"
+            src={capa}
             alt="Produtos nordestinos"
             className="w-full h-full object-cover"
           />
