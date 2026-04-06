@@ -10,7 +10,7 @@ export default function Cart() {
     new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(price);
 
   const buildWhatsAppMessage = () => {
-    let msg = "🛒 *Meu Pedido - Produtos do Nordeste*\n\n";
+    let msg = "🛒 *Meu Pedido - Casa do Norte Filho de Deus*\n\n";
     items.forEach((item) => {
       msg += `• ${item.qty}x ${item.product.name} — ${formatPrice(item.product.price * item.qty)}\n`;
     });

@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 const CHATBOT_RESPONSES = {
   greetings: [
     'Olá! 👋 Como posso ajudá-lo hoje?',
-    'Bem-vindo aos Produtos do Nordeste! 🎉 Como posso servir?',
+    'Bem-vindo à Casa do Norte Filho de Deus! 🎉 Como posso servir?',
   ],
   products: [
     'Temos mais de 100 produtos nordestinos disponíveis! 🛍️ Gostaria de ver queijos, rapaduras, cereais ou outras categorias?',
@@ -30,7 +30,7 @@ export default function Chatbot() {
   const [messages, setMessages] = useState([
     {
       id: 1,
-      text: 'Olá! 👋 Bem-vindo aos Produtos do Nordeste. Como posso ajudá-lo?',
+      text: 'Olá! 👋 Bem-vindo à Casa do Norte Filho de Deus. Como posso ajudá-lo?',
       sender: 'bot',
       timestamp: new Date(),
     },

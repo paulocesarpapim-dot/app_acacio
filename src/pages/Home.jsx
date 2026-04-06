@@ -33,7 +33,7 @@ export default function Home() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-32 lg:py-40">
           <div className="max-w-xl">
             <span className="inline-block bg-accent/90 text-accent-foreground text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-6">
-              Direto do Nordeste 🌵
+              Casa do Norte Filho de Deus 🌵
             </span>
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
               Sabores autênticos do{" "}

@@ -44,7 +44,7 @@ export default function Products() {
       {/* Header */}
       <div className="mb-8">
         <h1 className="font-display text-3xl sm:text-4xl font-bold text-foreground">Nossos Produtos</h1>
-        <p className="text-muted-foreground mt-2">O melhor do Nordeste para sua mesa</p>
+        <p className="text-muted-foreground mt-2">O melhor da Casa do Norte para sua mesa</p>
       </div>
 
       {/* Search + Filter Toggle */}

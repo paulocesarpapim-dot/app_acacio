@@ -27,10 +27,10 @@ export default function Layout() {
                 <span className="text-primary-foreground font-display text-lg sm:text-xl font-bold">N</span>
               </div>
               <div className="hidden sm:block">
-                <h1 className="font-display text-lg font-bold text-foreground leading-tight">Produtos do Nordeste</h1>
+                <h1 className="font-display text-lg font-bold text-foreground leading-tight">Casa do Norte Filho de Deus</h1>
                 <p className="text-xs text-muted-foreground">Sabor autêntico da nossa terra</p>
               </div>
-              <span className="sm:hidden font-display text-base font-bold text-foreground">Nordeste</span>
+              <span className="sm:hidden font-display text-base font-bold text-foreground">Casa do Norte</span>
             </Link>
 
             {/* Desktop Nav */}
@@ -129,10 +129,10 @@ export default function Layout() {
               <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
                 <span className="text-primary-foreground font-display text-sm font-bold">N</span>
               </div>
-              <span className="font-display text-sm font-semibold">Produtos do Nordeste</span>
+              <span className="font-display text-sm font-semibold">Casa do Norte Filho de Deus</span>
             </div>
             <p className="text-xs text-muted-foreground text-center">
-              © 2026 Produtos do Nordeste — Sabor autêntico direto do sertão para sua mesa
+              © 2026 Casa do Norte Filho de Deus — Sabor autêntico direto do sertão para sua mesa
             </p>
           </div>
         </div>
