@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "@/api/productService";
 import { useState, useMemo } from "react";
-import { Search, X, ChevronDown, Filter } from "lucide-react";
+import { Search, X, ChevronDown, Filter, Grid3x3, List, TrendingDown } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import ProductCard from "../components/ProductCard";
+import ListProductCard from "../components/ListProductCard";
 
 const CATEGORIES = ["Feijão", "Farinha", "Queijos", "Manteiga", "Bolachas", "Rapadura", "Doces", "Cereais", "Requeijão", "Temperos", "Carne de Sol", "Bebidas"];
 
@@ -16,6 +17,13 @@ const PRICE_RANGES = [
   { label: "Acima de R$100", min: 100, max: Infinity },
 ];
 
+const SORT_OPTIONS = [
+  { label: "Relevância", value: "default" },
+  { label: "Menor Preço", value: "price-asc" },
+  { label: "Maior Preço", value: "price-desc" },
+  { label: "Mais Antigos", value: "newest" },
+];
+
 export default function Products() {
   const urlParams = new URLSearchParams(window.location.search);
   const initialCategory = urlParams.get("categoria") || "";
@@ -24,6 +32,8 @@ export default function Products() {
   const [priceRange, setPriceRange] = useState(PRICE_RANGES[0]);
   const [search, setSearch] = useState("");
   const [showFilters, setShowFilters] = useState(true);
+  const [sortBy, setSortBy] = useState("default");
+  const [viewMode, setViewMode] = useState("grid"); // grid or list
   const [expandedFilters, setExpandedFilters] = useState({
     categories: true,
     price: true
@@ -59,8 +69,24 @@ export default function Products() {
       );
     }
 
+    // Ordenar resultados
+    switch (sortBy) {
+      case "price-asc":
+        result.sort((a, b) => a.price - b.price);
+        break;
+      case "price-desc":
+        result.sort((a, b) => b.price - a.price);
+        break;
+      case "newest":
+        result.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        break;
+      case "default":
+      default:
+        break;
+    }
+
     return result;
-  }, [products, selectedCategories, priceRange, search]);
+  }, [products, selectedCategories, priceRange, search, sortBy]);
 
   const toggleCategory = (category) => {
     setSelectedCategories((prev) =>
@@ -217,17 +243,62 @@ export default function Products() {
               {showFilters ? "Ocultar Filtros" : "Mostrar Filtros"}
             </Button>
 
-            {/* Results Info */}
-            <div className="flex items-center justify-between mb-6">
+            {/* Results Info + Controls */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
               <p className="text-sm text-muted-foreground">
                 <span className="font-semibold text-foreground">{filtered.length}</span>{" "}
                 {filtered.length === 1 ? "produto encontrado" : "produtos encontrados"}
               </p>
+
+              {/* Controles de Ordenação e Visualização */}
+              <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
+                {/* Ordenação */}
+                <div className="relative">
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    className="px-4 py-2 rounded-lg border border-border bg-white text-sm font-medium text-foreground hover:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 appearance-none pr-10"
+                  >
+                    {SORT_OPTIONS.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                </div>
+
+                {/* View Mode Toggle */}
+                <div className="flex items-center border border-border rounded-lg p-1 bg-white">
+                  <button
+                    onClick={() => setViewMode("grid")}
+                    className={`p-2 rounded transition-all ${
+                      viewMode === "grid"
+                        ? "bg-primary text-primary-foreground"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                    title="Visualizar em grade"
+                  >
+                    <Grid3x3 className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => setViewMode("list")}
+                    className={`p-2 rounded transition-all ${
+                      viewMode === "list"
+                        ? "bg-primary text-primary-foreground"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                    title="Visualizar em lista"
+                  >
+                    <List className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
             </div>
 
-            {/* Products Grid */}
+            {/* Products Grid/List */}
             {isLoading ? (
-              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+              <div className={viewMode === "grid" ? "grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6" : "space-y-4"}>
                 {Array.from({ length: 8 }).map((_, i) => (
                   <div key={i} className="bg-card rounded-2xl border border-border overflow-hidden animate-pulse">
                     <div className="aspect-square bg-muted" />
@@ -240,11 +311,19 @@ export default function Products() {
                 ))}
               </div>
             ) : filtered.length > 0 ? (
-              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-                {filtered.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
+              viewMode === "grid" ? (
+                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+                  {filtered.map((product) => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {filtered.map((product) => (
+                    <ListProductCard key={product.id} product={product} />
+                  ))}
+                </div>
+              )
             ) : (
               <div className="text-center py-20 bg-card rounded-2xl border border-border">
                 <p className="text-4xl mb-4">🔍</p>
