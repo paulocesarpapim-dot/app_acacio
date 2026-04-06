@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
 import { Send, X, MessageCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 const CHATBOT_RESPONSES = {
   greetings: [
