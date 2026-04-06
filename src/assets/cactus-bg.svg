@@ -1,0 +1,100 @@
+<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+  <!-- Fundo branco -->
+  <rect width="1200" height="800" fill="white"/>
+  
+  <!-- Sol -->
+  <g id="sun">
+    <circle cx="150" cy="120" r="60" fill="none" stroke="black" stroke-width="8"/>
+    <path d="M 150 30 Q 165 50 150 70" fill="none" stroke="black" stroke-width="6" stroke-linecap="round"/>
+    <path d="M 150 70 Q 135 50 150 30" fill="none" stroke="black" stroke-width="6" stroke-linecap="round"/>
+    <path d="M 100 120 Q 120 135 140 120" fill="none" stroke="black" stroke-width="6" stroke-linecap="round"/>
+    <path d="M 140 120 Q 120 105 100 120" fill="none" stroke="black" stroke-width="6" stroke-linecap="round"/>
+    <path d="M 110 60 Q 125 80 140 65" fill="none" stroke="black" stroke-width="6" stroke-linecap="round"/>
+    <path d="M 140 65 Q 125 45 110 60" fill="none" stroke="black" stroke-width="6" stroke-linecap="round"/>
+    <path d="M 160 180 Q 175 160 190 175" fill="none" stroke="black" stroke-width="6" stroke-linecap="round"/>
+    <path d="M 190 175 Q 175 195 160 180" fill="none" stroke="black" stroke-width="6" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Nuvens esquerda -->
+  <ellipse cx="280" cy="100" rx="40" ry="25" fill="black" opacity="0.3"/>
+  <ellipse cx="310" cy="95" rx="35" ry="20" fill="black" opacity="0.3"/>
+  <ellipse cx="250" cy="110" rx="30" ry="18" fill="black" opacity="0.3"/>
+  
+  <!-- Nuvem direita acima -->
+  <ellipse cx="950" cy="80" rx="45" ry="28" fill="black" opacity="0.3"/>
+  <ellipse cx="990" cy="75" rx="38" ry="22" fill="black" opacity="0.3"/>
+  <ellipse cx="910" cy="95" rx="35" ry="20" fill="black" opacity="0.3"/>
+  
+  <!-- Nuvem direita abaixo -->
+  <ellipse cx="1020" cy="200" rx="50" ry="30" fill="black" opacity="0.25"/>
+  <ellipse cx="1065" cy="195" rx="40" ry="25" fill="black" opacity="0.25"/>
+  <ellipse cx="975" cy="215" rx="40" ry="22" fill="black" opacity="0.25"/>
+  
+  <!-- Cacto esquerdo pequeno -->
+  <g id="cactus-left">
+    <!-- Tronco principal -->
+    <rect x="200" y="400" width="60" height="300" fill="black" stroke="black" stroke-width="2"/>
+    <line x1="210" y1="410" x2="250" y2="410" stroke="black" stroke-width="3"/>
+    <line x1="210" y1="440" x2="250" y2="440" stroke="black" stroke-width="3"/>
+    <line x1="210" y1="470" x2="250" y2="470" stroke="black" stroke-width="3"/>
+    <line x1="210" y1="500" x2="250" y2="500" stroke="black" stroke-width="3"/>
+    <line x1="210" y1="530" x2="250" y2="530" stroke="black" stroke-width="3"/>
+    <line x1="210" y1="560" x2="250" y2="560" stroke="black" stroke-width="3"/>
+    <line x1="210" y1="590" x2="250" y2="590" stroke="black" stroke-width="3"/>
+    <line x1="210" y1="620" x2="250" y2="620" stroke="black" stroke-width="3"/>
+    
+    <!-- Braço esquerdo -->
+    <rect x="140" y="480" width="60" height="50" fill="black" stroke="black" stroke-width="2"/>
+    <line x1="150" y1="490" x2="190" y2="490" stroke="black" stroke-width="2"/>
+    <line x1="150" y1="510" x2="190" y2="510" stroke="black" stroke-width="2"/>
+    
+    <!-- Braço direito -->
+    <rect x="260" y="520" width="60" height="50" fill="black" stroke="black" stroke-width="2"/>
+    <line x1="270" y1="530" x2="310" y2="530" stroke="black" stroke-width="2"/>
+    <line x1="270" y1="550" x2="310" y2="550" stroke="black" stroke-width="2"/>
+  </g>
+  
+  <!-- Estrela/Planta esquerda -->
+  <g id="star-left">
+    <polygon points="180,750 200,680 220,750 160,770 220,800 200,730 180,800 140,770" fill="black"/>
+  </g>
+  
+  <!-- Cacto direito grande -->
+  <g id="cactus-right">
+    <!-- Tronco principal direito -->
+    <rect x="820" y="350" width="80" height="350" fill="black" stroke="black" stroke-width="2"/>
+    <line x1="835" y1="365" x2="885" y2="365" stroke="black" stroke-width="4"/>
+    <line x1="835" y1="400" x2="885" y2="400" stroke="black" stroke-width="4"/>
+    <line x1="835" y1="440" x2="885" y2="440" stroke="black" stroke-width="4"/>
+    <line x1="835" y1="480" x2="885" y2="480" stroke="black" stroke-width="4"/>
+    <line x1="835" y1="520" x2="885" y2="520" stroke="black" stroke-width="4"/>
+    <line x1="835" y1="560" x2="885" y2="560" stroke="black" stroke-width="4"/>
+    <line x1="835" y1="600" x2="885" y2="600" stroke="black" stroke-width="4"/>
+    <line x1="835" y1="640" x2="885" y2="640" stroke="black" stroke-width="4"/>
+    
+    <!-- Braço esquerdo grande -->
+    <rect x="740" y="440" width="80" height="60" fill="black" stroke="black" stroke-width="2"/>
+    <line x1="755" y1="455" x2="805" y2="455" stroke="black" stroke-width="3"/>
+    <line x1="755" y1="485" x2="805" y2="485" stroke="black" stroke-width="3"/>
+    
+    <!-- Braço direito grande -->
+    <rect x="900" y="480" width="80" height="60" fill="black" stroke="black" stroke-width="2"/>
+    <line x1="915" y1="495" x2="965" y2="495" stroke="black" stroke-width="3"/>
+    <line x1="915" y1="525" x2="965" y2="525" stroke="black" stroke-width="3"/>
+    
+    <!-- Braço superior direito -->
+    <rect x="900" y="380" width="70" height="55" fill="black" stroke="black" stroke-width="2"/>
+    <line x1="912" y1="395" x2="958" y2="395" stroke="black" stroke-width="3"/>
+    <line x1="912" y1="420" x2="958" y2="420" stroke="black" stroke-width="3"/>
+  </g>
+  
+  <!-- Estrela/Planta direita esquerda -->
+  <g id="star-right-left">
+    <polygon points="750,760 775,680 800,760 730,785 800,820 775,740 750,820 705,785" fill="black"/>
+  </g>
+  
+  <!-- Estrela/Planta direita direita -->
+  <g id="star-right-right">
+    <polygon points="1000,770 1025,680 1050,770 980,795 1050,830 1025,740 1000,830 955,795" fill="black"/>
+  </g>
+</svg>
