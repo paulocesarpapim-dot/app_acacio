@@ -1,16 +1,18 @@
 import { Link } from "react-router-dom";
 
 const categoryImages = {
-  "Feijão": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=400&h=300&fit=crop",
-  "Farinha": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&h=300&fit=crop",
-  "Queijos": "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=400&h=300&fit=crop",
-  "Manteiga": "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=400&h=300&fit=crop",
-  "Bolachas": "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400&h=300&fit=crop",
-  "Rapadura": "https://images.unsplash.com/photo-1604431696980-07e518647610?w=400&h=300&fit=crop",
-  "Doces": "https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&h=300&fit=crop",
-  "Cereais": "https://images.unsplash.com/photo-1536304993881-460ea32c4328?w=400&h=300&fit=crop",
-  "Requeijão": "https://images.unsplash.com/photo-1559561853-08451507cbe7?w=400&h=300&fit=crop",
-  "Outros": "https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=400&h=300&fit=crop",
+  "Feijão": "https://images.pexels.com/photos/6613054/pexels-photo-6613054.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
+  "Farinha": "https://images.pexels.com/photos/8477743/pexels-photo-8477743.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
+  "Queijos": "https://images.pexels.com/photos/793129/pexels-photo-793129.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
+  "Manteiga": "https://images.pexels.com/photos/10165696/pexels-photo-10165696.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
+  "Bolachas": "https://images.pexels.com/photos/6103122/pexels-photo-6103122.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
+  "Rapadura": "https://images.pexels.com/photos/29748150/pexels-photo-29748150.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
+  "Doces": "https://images.pexels.com/photos/5365924/pexels-photo-5365924.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
+  "Cereais": "https://images.pexels.com/photos/4224269/pexels-photo-4224269.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
+  "Requeijão": "https://images.pexels.com/photos/12449964/pexels-photo-12449964.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
+  "Temperos": "https://images.pexels.com/photos/5740404/pexels-photo-5740404.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
+  "Carne de Sol": "https://images.pexels.com/photos/5237010/pexels-photo-5237010.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
+  "Outros": "https://images.pexels.com/photos/4224269/pexels-photo-4224269.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
 };
 
 const categoryEmojis = {
@@ -23,6 +25,8 @@ const categoryEmojis = {
   "Doces": "🍮",
   "Cereais": "🌽",
   "Requeijão": "🥛",
+  "Temperos": "🌶️",
+  "Carne de Sol": "🥩",
   "Outros": "📦",
 };
 

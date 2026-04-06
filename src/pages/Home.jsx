@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import CategoryCard from "../components/CategoryCard";
 import ProductCard from "../components/ProductCard";
 
-const CATEGORIES = ["Feijão", "Farinha", "Queijos", "Manteiga", "Bolachas", "Rapadura", "Doces", "Cereais", "Requeijão"];
+const CATEGORIES = ["Feijão", "Farinha", "Queijos", "Manteiga", "Bolachas", "Rapadura", "Doces", "Cereais", "Requeijão", "Temperos", "Carne de Sol"];
 
 export default function Home() {
   const { data: allProducts, isLoading } = useQuery({
@@ -24,7 +24,7 @@ export default function Home() {
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=1600&h=800&fit=crop"
+            src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1600&h=800&fit=crop"
             alt="Produtos nordestinos"
             className="w-full h-full object-cover"
           />
@@ -50,7 +50,7 @@ export default function Home() {
                 </Button>
               </Link>
               <a
-                href="https://wa.me/5500000000000?text=Olá! Gostaria de saber mais sobre os produtos."
+                href="https://wa.me/5511957800711?text=Olá! Gostaria de saber mais sobre os produtos."
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -157,7 +157,7 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap justify-center gap-3 mt-6">
             <a
-              href="https://wa.me/5500000000000?text=Olá! Gostaria de fazer um pedido."
+              href="https://wa.me/5511957800711?text=Olá! Gostaria de fazer um pedido."
               target="_blank"
               rel="noopener noreferrer"
             >

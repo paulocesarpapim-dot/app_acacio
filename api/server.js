@@ -33,9 +33,11 @@ app.use(express.static(publicPath));
 
 // Fallback para SPA - redireciona para index.html para rotas não encontradas
 app.get('*', (req, res) => {
-  res.sendFile(path.join(publicPath, 'index.html')).catch(err => {
-    console.error('Erro ao servir index.html:', err);
-    res.status(404).json({ error: 'Página não encontrada' });
+  res.sendFile(path.join(publicPath, 'index.html'), (err) => {
+    if (err) {
+      console.error('Erro ao servir index.html:', err);
+      res.status(404).json({ error: 'Página não encontrada' });
+    }
   });
 });
 

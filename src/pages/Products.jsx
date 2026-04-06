@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import ProductCard from "../components/ProductCard";
 
-const CATEGORIES = ["Todos", "Feijão", "Farinha", "Queijos", "Manteiga", "Bolachas", "Rapadura", "Doces", "Cereais", "Requeijão", "Outros"];
+const CATEGORIES = ["Todos", "Feijão", "Farinha", "Queijos", "Manteiga", "Bolachas", "Rapadura", "Doces", "Cereais", "Requeijão", "Temperos", "Carne de Sol", "Outros"];
 
 export default function Products() {
   const urlParams = new URLSearchParams(window.location.search);
