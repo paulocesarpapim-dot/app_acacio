@@ -7,6 +7,7 @@ import PageNotFound from './lib/PageNotFound';
 import { AuthProvider } from '@/lib/AuthContext';
 import { AccessibilityProvider } from '@/context/AccessibilityContext';
 import Layout from './components/Layout';
+import AdminGuard from './components/AdminGuard';
 import Chatbot from './components/Chatbot';
 import AccessibilityPanel from './components/AccessibilityPanel';
 import Home from './pages/Home';
@@ -16,6 +17,8 @@ import Cart from './pages/Cart';
 import ProductDetail from './pages/ProductDetail';
 import LoyaltyProgram from './pages/LoyaltyProgram';
 import LoyaltyCard from './pages/LoyaltyCard';
+import AdminLogin from './pages/AdminLogin';
+import AdminProducts from './pages/AdminProducts';
 import React from 'react';
 
 class ErrorBoundary extends React.Component {
@@ -47,6 +50,15 @@ const AuthenticatedApp = () => {
         <Route path="/minha-fidelidade" element={<LoyaltyCard />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
+      <Route path="/admin/login" element={<AdminLogin />} />
+      <Route
+        path="/admin"
+        element={
+          <AdminGuard>
+            <AdminProducts />
+          </AdminGuard>
+        }
+      />
     </Routes>
   );
 };

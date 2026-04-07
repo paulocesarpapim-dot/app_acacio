@@ -3,12 +3,19 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchProducts, createProduct, updateProduct, deleteProduct } from "@/api/productService";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Trash2, Edit2, Plus, AlertCircle } from "lucide-react";
+import { Trash2, Edit2, Plus, AlertCircle, LogOut } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const CATEGORIES = ["Feijão", "Cereais"];
 
 export default function AdminProducts() {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("admin_authenticated");
+    navigate("/");
+  };
   const { data: products = [], isLoading } = useQuery({
     queryKey: ["all-products"],
     queryFn: () => fetchProducts(),
@@ -114,7 +121,13 @@ export default function AdminProducts() {
   return (
     <div className="min-h-screen bg-background p-6">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8">Gerenciar Produtos</h1>
+        <div className="flex items-center justify-between mb-8">
+          <h1 className="text-4xl font-bold">Gerenciar Produtos</h1>
+          <Button variant="outline" onClick={handleLogout} className="flex items-center gap-2">
+            <LogOut className="w-4 h-4" />
+            Sair
+          </Button>
+        </div>
 
         {/* Formulário */}
         <div className="bg-card rounded-lg border border-border p-6 mb-10">
