@@ -134,6 +134,9 @@ export default function Layout() {
             <p className="text-xs text-muted-foreground text-center">
               © 2026 Casa do Norte Filho de Deus — Sabor autêntico direto do sertão para sua mesa
             </p>
+            <Link to="/admin" className="text-xs text-muted-foreground/40 hover:text-muted-foreground transition-colors">
+              Admin
+            </Link>
           </div>
         </div>
       </footer>

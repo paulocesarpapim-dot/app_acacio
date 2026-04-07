@@ -2,925 +2,157 @@
   "products": [
     {
       "id": 1,
-      "name": "Rapadura Castilho Sabor Gengibre 400g",
-      "description": "Rapadura tradicional nordestina com gengibre, preparada em engenho artesanal. Feita com cana-de-açúcar 100% pura do sertão pernambucano.",
-      "category": "Rapadura",
-      "price": 14.9,
-      "image_url": "https://images.pexels.com/photos/29748150/pexels-photo-29748150.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
+      "name": "Feijão Fradinho",
+      "description": "Feijão fradinho de qualidade premium, ideal para acarajé, saladas e diversas receitas nordestinas. Grãos selecionados.",
+      "category": "Feijão",
+      "price": 6.99,
+      "unit": "kg",
+      "in_stock": true,
+      "image_url": "https://images.pexels.com/photos/6613054/pexels-photo-6613054.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
+      "created_at": "2026-04-07T12:00:00Z"
     },
     {
       "id": 2,
-      "name": "Rapadura com Coco Ralado 400g",
-      "description": "Rapadura cremosa batida com coco fresco ralado. Sabor tradicional nordestino, preparada artesanalmente em tacho de cobre.",
-      "category": "Rapadura",
-      "price": 15.5,
-      "image_url": "https://images.pexels.com/photos/3973028/pexels-photo-3973028.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
+      "name": "Feijão de Corda",
+      "description": "Feijão de corda tradicional do nordeste, perfeito para o baião de dois e pratos típicos regionais. Grãos frescos e saborosos.",
+      "category": "Feijão",
+      "price": 6.99,
+      "unit": "kg",
+      "in_stock": true,
+      "image_url": "https://images.pexels.com/photos/6613054/pexels-photo-6613054.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
+      "created_at": "2026-04-07T12:00:00Z"
     },
     {
       "id": 3,
-      "name": "Paçoca de Amendoim Caseira 200g",
-      "description": "Paçoca tradicional feita com amendoim torrado e rapadura. Receita repassada de gerações com qualidade garantida.",
-      "category": "Doces",
-      "price": 9.9,
-      "image_url": "https://images.pexels.com/photos/5865653/pexels-photo-5865653.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
+      "name": "Feijão Branco",
+      "description": "Feijão branco de alta qualidade, excelente para sopas, feijoadas brancas e saladas nutritivas. Rico em proteínas e fibras.",
+      "category": "Feijão",
+      "price": 12.99,
+      "unit": "kg",
+      "in_stock": true,
+      "image_url": "https://images.pexels.com/photos/6613054/pexels-photo-6613054.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
+      "created_at": "2026-04-07T12:00:00Z"
     },
     {
       "id": 4,
-      "name": "Carne Seca Premium Selecionada 500g",
-      "description": "Carne seca de gado sertanejo, selecionada e temperada com sal grosso. Secagem natural ao sol garantindo qualidade premium.",
-      "category": "Carne de Sol",
-      "price": 48.9,
-      "image_url": "https://images.pexels.com/photos/32567878/pexels-photo-32567878.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
+      "name": "Feijão Preto",
+      "description": "Feijão preto selecionado, base da feijoada brasileira. Grãos brilhantes de sabor marcante e textura cremosa.",
+      "category": "Feijão",
+      "price": 7.40,
+      "unit": "kg",
+      "in_stock": true,
+      "image_url": "https://images.pexels.com/photos/6613054/pexels-photo-6613054.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
+      "created_at": "2026-04-07T12:00:00Z"
     },
     {
       "id": 5,
-      "name": "Carne de Sol Desfiada 300g",
-      "description": "Carne desfiada seleta, pronta para uso em receitas. Ideal para carne com broa, paçoca e outros pratos típicos nordestinos.",
-      "category": "Carne de Sol",
-      "price": 35.5,
-      "image_url": "https://images.pexels.com/photos/5237009/pexels-photo-5237009.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
+      "name": "Fava Rajada",
+      "description": "Fava rajada sertaneja, grãos grandes e nutritivos. Muito usada no nordeste em sopas, ensopados e pratos típicos.",
+      "category": "Feijão",
+      "price": 24.50,
+      "unit": "kg",
+      "in_stock": true,
+      "image_url": "https://images.pexels.com/photos/6613054/pexels-photo-6613054.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
+      "created_at": "2026-04-07T12:00:00Z"
     },
     {
       "id": 6,
-      "name": "Manteiga de Garrafa Sertaneja 500g",
-      "description": "Manteiga de garrafa tradicional conservada pela salmoura. Origem: Nordeste. Produto artesanal com aroma e sabor incomparável.",
-      "category": "Manteiga",
-      "price": 32.9,
-      "image_url": "https://images.pexels.com/photos/10165696/pexels-photo-10165696.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
+      "name": "Fava Branca",
+      "description": "Fava branca de alta qualidade, grãos macios e saborosos. Tradição nordestina em sopas, vatapás e pratos regionais.",
+      "category": "Feijão",
+      "price": 24.50,
+      "unit": "kg",
+      "in_stock": true,
+      "image_url": "https://images.pexels.com/photos/6613054/pexels-photo-6613054.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
+      "created_at": "2026-04-07T12:00:00Z"
     },
     {
       "id": 7,
-      "name": "Queijo Coalho Crocante 300g",
-      "description": "Queijo coalho fresco em cubos crocantes. Típico das feiras de Recife, perfeito para grelhar ou comer temperado com mel.",
-      "category": "Queijos",
-      "price": 29.9,
-      "image_url": "https://images.pexels.com/photos/8751408/pexels-photo-8751408.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
+      "name": "Fava Manteiga",
+      "description": "Fava manteiga premium, grãos grandes e cremosos com sabor suave. Ideal para ensopados e receitas tradicionais do sertão.",
+      "category": "Feijão",
+      "price": 24.50,
+      "unit": "kg",
+      "in_stock": true,
+      "image_url": "https://images.pexels.com/photos/6613054/pexels-photo-6613054.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
+      "created_at": "2026-04-07T12:00:00Z"
     },
     {
       "id": 8,
-      "name": "Queijo Meia Cura Sertanejo 500g",
-      "description": "Queijo de leite integral envelhecido 60 dias. Sabor predominantemente suave. Textura cremosa e derretimento rápido na boca.",
-      "category": "Queijos",
-      "price": 34.9,
-      "image_url": "https://images.pexels.com/photos/10917519/pexels-photo-10917519.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
+      "name": "Canjica Branca",
+      "description": "Canjica branca de milho, perfeita para a festa junina e receitas doces ou salgadas. Grãos selecionados do campo.",
+      "category": "Cereais",
+      "price": 6.99,
+      "unit": "kg",
+      "in_stock": true,
+      "image_url": "https://images.pexels.com/photos/4224269/pexels-photo-4224269.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
+      "created_at": "2026-04-07T12:00:00Z"
     },
     {
       "id": 9,
-      "name": "Mel Puro de Abelha Sertaneja 500g",
-      "description": "Mel 100% puro coletado em apiários do sertão. Cristalizado naturalmente, rico em propriedades nutricionais. Origem certificada.",
-      "category": "Doces",
-      "price": 45.9,
-      "image_url": "https://images.pexels.com/photos/9105959/pexels-photo-9105959.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
+      "name": "Canjica Amarela",
+      "description": "Canjica amarela de milho, sabor tradicional nordestino. Ideal para mungunzá, pamonha e pratos típicos juninos.",
+      "category": "Cereais",
+      "price": 4.99,
+      "unit": "kg",
+      "in_stock": true,
+      "image_url": "https://images.pexels.com/photos/4224269/pexels-photo-4224269.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
+      "created_at": "2026-04-07T12:00:00Z"
     },
     {
       "id": 10,
-      "name": "Mel de Jataí Silvestre 400g",
-      "description": "Mel de abelha silvestre sertaneja (Jataí). Riquíssimo em propriedades medicinais e sabor delicado característico.",
-      "category": "Doces",
-      "price": 52.5,
-      "image_url": "https://images.pexels.com/photos/5634206/pexels-photo-5634206.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
+      "name": "Quirela",
+      "description": "Quirela de milho, canjica quebrada ideal para cozidos, mingaus e receitas típicas do nordeste. Grãos frescos e saborosos.",
+      "category": "Cereais",
+      "price": 4.15,
+      "unit": "kg",
+      "in_stock": true,
+      "image_url": "https://images.pexels.com/photos/4224269/pexels-photo-4224269.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
+      "created_at": "2026-04-07T12:00:00Z"
     },
     {
       "id": 11,
-      "name": "Bolo de Chuva Caseiro 400g",
-      "description": "Bolo de chuva tradicional feito com massa mole e calda de açúcar. Receita pura nordestina que vem de gerações.",
-      "category": "Bolachas",
-      "price": 11.9,
-      "image_url": "https://images.pexels.com/photos/7144270/pexels-photo-7144270.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
+      "name": "Milho de Pipoca",
+      "description": "Milho de pipoca selecionado, grãos de alta qualidade para pipoca crocante e saborosa. Ideal para festas e lanches.",
+      "category": "Cereais",
+      "price": 6.99,
+      "unit": "kg",
+      "in_stock": true,
+      "image_url": "https://images.pexels.com/photos/4224269/pexels-photo-4224269.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
+      "created_at": "2026-04-07T12:00:00Z"
     },
     {
       "id": 12,
-      "name": "Sequilho Dourado da Vó 300g",
-      "description": "Sequilho caseiro peneirado com açúcar e canela. Receita tradicional nordestina com massa crocante irresistível.",
-      "category": "Bolachas",
-      "price": 13.5,
-      "image_url": "https://images.pexels.com/photos/13143701/pexels-photo-13143701.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
+      "name": "Grão de Bico",
+      "description": "Grão de bico premium, rico em proteínas e fibras. Perfeito para homus, saladas, sopas e diversos pratos nutritivos.",
+      "category": "Feijão",
+      "price": 12.99,
+      "unit": "kg",
+      "in_stock": true,
+      "image_url": "https://images.pexels.com/photos/6613054/pexels-photo-6613054.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
+      "created_at": "2026-04-07T12:00:00Z"
     },
     {
       "id": 13,
-      "name": "Goma de Tapioca Fresca 500g",
-      "description": "Goma de tapioca artesanal pronta para pelagio. Feita com raiz de mandioca pura do sertão. Ideal para cafe da manhã.",
-      "category": "Farinha",
-      "price": 8.5,
-      "image_url": "https://images.pexels.com/photos/5860731/pexels-photo-5860731.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
+      "name": "Lentilha",
+      "description": "Lentilha selecionada, grãos de cozimento rápido e alto valor nutritivo. Ideal para sopas, curry, saladas e ensopados.",
+      "category": "Feijão",
+      "price": 19.70,
+      "unit": "kg",
+      "in_stock": true,
+      "image_url": "https://images.pexels.com/photos/6613054/pexels-photo-6613054.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
+      "created_at": "2026-04-07T12:00:00Z"
     },
     {
       "id": 14,
-      "name": "Farinha de Mandioca Pura 1kg",
-      "description": "Farinha de mandioca brava torrada e moída fresca. 100% puro sem aditivos. Moagem artesanal diária.",
-      "category": "Farinha",
-      "price": 7.9,
-      "image_url": "https://images.pexels.com/photos/36617926/pexels-photo-36617926.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 15,
-      "name": "Cachaça Artesanal Sertaneja 750ml",
-      "description": "Cachaça destilada em alambique de cobre por mestre engenho. Envelhecida em carvalho com aroma e sabor autêntico.",
-      "category": "Outros",
-      "price": 54.9,
-      "image_url": "https://images.pexels.com/photos/18612032/pexels-photo-18612032.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 16,
-      "name": "Vinho de Caju Tradicional 750ml",
-      "description": "Vinho feito com polpa de caju fermentada. Bebida típica do Nordeste com teor alcoólico moderado e sabor frutado.",
-      "category": "Outros",
-      "price": 38.5,
-      "image_url": "https://images.pexels.com/photos/5768125/pexels-photo-5768125.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 17,
-      "name": "Suco de Caju Natural Congelado 1L",
-      "description": "Suco de caju puro congelado, 100% natural sem açúcar adicionado. Colhido fresco direto do pé no sertão.",
-      "category": "Outros",
-      "price": 14.9,
-      "image_url": "https://images.pexels.com/photos/30878153/pexels-photo-30878153.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 18,
-      "name": "Suco de Graviola Natural 1L",
-      "description": "Suco de graviola congelado, sabor intenso tropical. Sem conservantes, feito com frutas colhidas no auge do amadurecimento.",
-      "category": "Outros",
-      "price": 16.5,
-      "image_url": "https://images.pexels.com/photos/593126/pexels-photo-593126.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 19,
-      "name": "Leite de Coco Nordestino 400ml",
-      "description": "Leite de coco 100% puro extraído da polpa fresca. Sem aditivos químicos ou conservantes. Sabor concentrado auténtico.",
-      "category": "Outros",
-      "price": 12.9,
-      "image_url": "https://images.pexels.com/photos/4294735/pexels-photo-4294735.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 20,
-      "name": "Calda de Melado Natural 500ml",
-      "description": "Melado puro extraído da cana-de-açúcar em processo artesanal. Ideal para receitas doces e sobremesas.",
-      "category": "Doces",
-      "price": 13.9,
-      "image_url": "https://images.pexels.com/photos/8500508/pexels-photo-8500508.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 21,
-      "name": "Goiabada de Primeira Qualidade 500g",
-      "description": "Goiabada feita em tacho de cobre com goiabas selecionadas. Polpa concentrada com aroma inconfundível.",
-      "category": "Doces",
-      "price": 18.5,
-      "image_url": "https://images.pexels.com/photos/6133484/pexels-photo-6133484.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 22,
-      "name": "Doce de Leite Premium 500g",
-      "description": "Doce de leite cozido lentamente em tacho de cobre. Textura cremosa, sem cristalização, feito com leite integral fresco.",
-      "category": "Doces",
-      "price": 19.9,
-      "image_url": "https://images.pexels.com/photos/7213879/pexels-photo-7213879.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 23,
-      "name": "Amendoim Torrado Salgado 500g",
-      "description": "Amendoim colhido no sertão, torrado e salgado na forma tradicional. Perfeito para acompanhar bebidas e festas.",
-      "category": "Outros",
-      "price": 14.5,
-      "image_url": "https://images.pexels.com/photos/2112789/pexels-photo-2112789.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 24,
-      "name": "Castanha do Brasil Torrada 500g",
-      "description": "Castanha do Pará selecionada, torrada levemente para manter propriedades. Sabor e aroma natural preservados.",
-      "category": "Outros",
-      "price": 48.9,
-      "image_url": "https://images.pexels.com/photos/1295572/pexels-photo-1295572.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 25,
-      "name": "Coco Ralado Fresco 500g",
-      "description": "Coco ralado fresco do litoral nordestino, naturalmente adoçado. Colhido e ralado no mesmo dia de chegada.",
-      "category": "Outros",
-      "price": 11.9,
-      "image_url": "https://images.pexels.com/photos/4294738/pexels-photo-4294738.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 26,
-      "name": "Feijão Preto Orgânico 1kg",
-      "description": "Feijão preto colhido organicamente no interior do Nordeste. Grãos selecionados e limpos, sem aditivos. Sabor intenso e textura macia.",
-      "category": "Feijão",
-      "price": 9.5,
-      "image_url": "https://images.pexels.com/photos/7772002/pexels-photo-7772002.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 27,
-      "name": "Milho Branco Moído 1kg",
-      "description": "Milho branco moído para canjica, bolo de milho e receitas nordestinas. Moagem fresca preservando qualidade.",
+      "name": "Soja Grão",
+      "description": "Soja em grão de alta qualidade, fonte rica em proteínas vegetais. Usada para leite de soja, farinha, brotos e receitas variadas.",
       "category": "Cereais",
-      "price": 10.5,
-      "image_url": "https://images.pexels.com/photos/8282240/pexels-photo-8282240.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 28,
-      "name": "Pimenta Dedo de Moça Desidratada 100g",
-      "description": "Pimenta vermelha colhida e desidratada naturalmente. Aroma e pique característicos para tempero de pratos nordestinos.",
-      "category": "Temperos",
-      "price": 8.9,
-      "image_url": "https://images.pexels.com/photos/6902055/pexels-photo-6902055.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 29,
-      "name": "Feijão Carioca Selecionado 1kg",
-      "description": "Feijão carioca tipo 1 colhido e selecionado no sertão de Pernambuco. Grãos perfeitos, limpeza garantida. Essencial para receitas nordestinas.",
-      "category": "Feijão",
-      "price": 8.5,
-      "image_url": "https://images.pexels.com/photos/6316673/pexels-photo-6316673.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 30,
-      "name": "Gengibre em Calda Sertaneja 300g",
-      "description": "Gengibre fresco em calda de açúcar e mel sertanejo. Sabor quente e doce, ideal para chás preparados frios.",
-      "category": "Doces",
-      "price": 11.9,
-      "image_url": "https://images.pexels.com/photos/161556/pexels-photo-161556.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 31,
-      "name": "Doce de Abóbora com Coco 500g",
-      "description": "Doce tradicional de abóbora cozida com coco ralado. Receita da vó nordestina feita em tacho de cobre.",
-      "category": "Doces",
-      "price": 13.5,
-      "image_url": "https://images.pexels.com/photos/5644953/pexels-photo-5644953.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 32,
-      "name": "Banana Passa Sertaneja 400g",
-      "description": "Banana desidratada naturalmente sob o sol do sertão. Textura macia preservando sabor original da fruta.",
-      "category": "Outros",
-      "price": 16.9,
-      "image_url": "https://images.pexels.com/photos/3872425/pexels-photo-3872425.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 33,
-      "name": "Fruta Cristalizada Mista 300g",
-      "description": "Mix de frutas cristalizadas: melancia, melão, abóbora e gengibre. Doced ura moderada, texturas diferentes.",
-      "category": "Outros",
-      "price": 14.9,
-      "image_url": "https://images.pexels.com/photos/14699875/pexels-photo-14699875.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 34,
-      "name": "Pasta de Goiaba Premium 400g",
-      "description": "Pasta de goiaba tipo gourmet, feita com goiabas escolhidas. Perfeita para acompanhar queijo meia cura.",
-      "category": "Doces",
-      "price": 17.5,
-      "image_url": "https://images.pexels.com/photos/1051849/pexels-photo-1051849.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 35,
-      "name": "Bacalhau Seco Importado 300g",
-      "description": "Bacalhau português seco de primeira qualidade. Perfeito para receitas tradicoinais de ceia de Natal e festas.",
-      "category": "Outros",
-      "price": 79.9,
-      "image_url": "https://images.pexels.com/photos/5556710/pexels-photo-5556710.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 36,
-      "name": "Paçoca Crocante com Banana 300g",
-      "description": "Paçoca misturada com banana passa. Crocância e suavidade em perfeito equilíbrio. Receita especial da Casa.",
-      "category": "Doces",
-      "price": 12.5,
-      "image_url": "https://images.pexels.com/photos/14513406/pexels-photo-14513406.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 37,
-      "name": "Requeijão Artesanal Fresco 400g",
-      "description": "Requeijão cremoso feito com leite fresco integral selecionado. Processo artesanal sem conservantes.",
-      "category": "Requeijão",
-      "price": 22.9,
-      "image_url": "https://images.pexels.com/photos/34520946/pexels-photo-34520946.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 38,
-      "name": "Broinhas de Chuva de Polvilho 300g",
-      "description": "Broinhas leves feitas com polvilho azedo. Receita tradicional que derrete na boca com sabor levemente adocicado.",
-      "category": "Bolachas",
-      "price": 10.9,
-      "image_url": "https://images.pexels.com/photos/34158234/pexels-photo-34158234.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 39,
-      "name": "Farinha de Mandioca Grossa 1kg",
-      "description": "Farinha de mandioca grossa torrada no forno a lenha. Crocante e solta, perfeita para farofa e pirzao. Artesanal do sertao.",
-      "category": "Farinha",
-      "price": 8.9,
-      "image_url": "https://images.pexels.com/photos/5441094/pexels-photo-5441094.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 40,
-      "name": "Farinha de Tapioca Granulada 500g",
-      "description": "Tapioca granulada pronta para hidratacao. Graos uniformes ideais para tapioca recheada. Produto 100% natural.",
-      "category": "Farinha",
-      "price": 7.5,
-      "image_url": "https://images.pexels.com/photos/2522610/pexels-photo-2522610.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 41,
-      "name": "Fuba de Milho Artesanal 1kg",
-      "description": "Fuba moido em moinho de pedra tradicional. Grao fino ideal para cuscuz, bolo de fuba e angu nordestino.",
-      "category": "Farinha",
-      "price": 6.9,
-      "image_url": "https://images.pexels.com/photos/17236203/pexels-photo-17236203.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 42,
-      "name": "Manteiga de Garrafa Clarificada 250ml",
-      "description": "Manteiga clarificada premium em garrafa de vidro. Processo artesanal de decantacao lenta preservando aroma puro.",
-      "category": "Manteiga",
-      "price": 24.9,
-      "image_url": "https://images.pexels.com/photos/7965898/pexels-photo-7965898.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 43,
-      "name": "Manteiga da Terra Pura 350g",
-      "description": "Manteiga da terra feita com leite de vaca sertaneja. Textura cremosa, sabor intenso. Ideal para receitas nordestinas.",
-      "category": "Manteiga",
-      "price": 28.5,
-      "image_url": "https://images.pexels.com/photos/7110152/pexels-photo-7110152.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 44,
-      "name": "Nata Fresca do Sertao 300g",
-      "description": "Nata pura extraida do leite fresco da manha. Cremosa e encorpada, perfeita para cafe, tapioca e cuscuz.",
-      "category": "Manteiga",
-      "price": 18.9,
-      "image_url": "https://images.pexels.com/photos/9615877/pexels-photo-9615877.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 45,
-      "name": "Biscoito de Goma Caseiro 300g",
-      "description": "Biscoito de goma de tapioca assado em forno a lenha. Crocante e leve, receita tradicional nordestina.",
-      "category": "Bolachas",
-      "price": 12.5,
-      "image_url": "https://images.pexels.com/photos/12557741/pexels-photo-12557741.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 46,
-      "name": "Bolacha de Polvilho Crocante 250g",
-      "description": "Bolacha de polvilho azedo assada artesanalmente. Textura aerada e crocancia irresistivel. Sem gluten.",
-      "category": "Bolachas",
-      "price": 10.9,
-      "image_url": "https://images.pexels.com/photos/14430245/pexels-photo-14430245.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 47,
-      "name": "Rosquinha de Nata Caseira 400g",
-      "description": "Rosquinhas feitas com nata fresca e acucar. Massa macia por dentro, crocante por fora. Receita da vovo.",
-      "category": "Bolachas",
-      "price": 14.5,
-      "image_url": "https://images.pexels.com/photos/31116132/pexels-photo-31116132.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 48,
-      "name": "Rapadura Pura de Engenho 500g",
-      "description": "Rapadura tradicional pura sem adicao de sabores. Produzida em engenho centenario com cana-de-acucar organica.",
-      "category": "Rapadura",
-      "price": 12.9,
-      "image_url": "https://images.pexels.com/photos/9501669/pexels-photo-9501669.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 49,
-      "name": "Rapadura com Castanha de Caju 400g",
-      "description": "Rapadura batida recheada com pedacos de castanha de caju torrada. Combinacao perfeita de doce e crocante.",
-      "category": "Rapadura",
-      "price": 18.5,
-      "image_url": "https://images.pexels.com/photos/19123122/pexels-photo-19123122.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 50,
-      "name": "Rapadura Batida com Amendoim 350g",
-      "description": "Rapadura cremosa batida com amendoim torrado e triturado. Textura macia que derrete na boca.",
-      "category": "Rapadura",
-      "price": 16.9,
-      "image_url": "https://images.pexels.com/photos/29748151/pexels-photo-29748151.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 51,
-      "name": "Cocada Branca Artesanal 300g",
-      "description": "Cocada branca feita com coco fresco ralado e acucar. Receita tradicional das praias do Nordeste.",
-      "category": "Doces",
-      "price": 13.9,
-      "image_url": "https://images.pexels.com/photos/34682283/pexels-photo-34682283.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 52,
-      "name": "Bananada Cascao 500g",
-      "description": "Bananada de corte feita com banana da terra madura. Textura firme e sabor concentrado. Sem conservantes.",
-      "category": "Doces",
-      "price": 15.5,
-      "image_url": "https://images.pexels.com/photos/6588492/pexels-photo-6588492.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 53,
-      "name": "Cominho em Grao Sertanejo 100g",
-      "description": "Cominho em graos colhido no sertao. Aroma forte e sabor marcante, essencial na culinaria nordestina.",
-      "category": "Temperos",
-      "price": 7.9,
-      "image_url": "https://images.pexels.com/photos/10487762/pexels-photo-10487762.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 54,
-      "name": "Colorau Artesanal 200g",
-      "description": "Colorau feito com sementes de urucum moidas e oleo de soja. Cor vibrante para arroz, feijao e carnes.",
-      "category": "Temperos",
-      "price": 6.5,
-      "image_url": "https://images.pexels.com/photos/6104650/pexels-photo-6104650.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 55,
-      "name": "Pimenta de Cheiro em Conserva 200g",
-      "description": "Pimenta de cheiro fresca em conserva com vinagre e ervas. Aroma suave e ardencia moderada.",
-      "category": "Temperos",
-      "price": 9.9,
-      "image_url": "https://images.pexels.com/photos/34476859/pexels-photo-34476859.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 56,
-      "name": "Carne de Sol em Mantas 1kg",
-      "description": "Carne de sol legitima curada em mantas ao sol do sertao. Corte nobre temperado com sal grosso e alho.",
-      "category": "Carne de Sol",
-      "price": 62.9,
-      "image_url": "https://images.pexels.com/photos/5237006/pexels-photo-5237006.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 57,
-      "name": "Charque Premium do Sertao 500g",
-      "description": "Charque selecionado de primeira qualidade. Seco e salgado na tradicao gaucha-nordestina. Ideal para feijao tropeiro.",
-      "category": "Carne de Sol",
-      "price": 45.5,
-      "image_url": "https://images.pexels.com/photos/8250275/pexels-photo-8250275.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 58,
-      "name": "Jaba Sertaneja Curada 400g",
-      "description": "Jaba (carne seca) curada artesanalmente pelo mestre sertanejo. Sabor defumado natural, pronta para cozinhar.",
-      "category": "Carne de Sol",
-      "price": 38.9,
-      "image_url": "https://images.pexels.com/photos/8250189/pexels-photo-8250189.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 59,
-      "name": "Canjica Branca 500g",
-      "price": 8.9,
-      "category": "Cereais",
-      "description": "Canjica branca de milho, ideal para munguzza e sobremesas nordestinas",
-      "image_url": "https://images.pexels.com/photos/209389/pexels-photo-209389.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 60,
-      "name": "Canjica Amarela 500g",
-      "price": 8.9,
-      "category": "Cereais",
-      "description": "Canjica amarela de milho para preparar deliciosas receitas",
-      "image_url": "https://images.pexels.com/photos/27564206/pexels-photo-27564206.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 61,
-      "name": "Milho de Pipoca Premium 500g",
-      "price": 6.5,
-      "category": "Cereais",
-      "description": "Milho de pipoca selecionado, grãos grandes e crocantes",
-      "image_url": "https://images.pexels.com/photos/14321951/pexels-photo-14321951.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 62,
-      "name": "Milho para Munguzza 500g",
-      "price": 7.9,
-      "category": "Cereais",
-      "description": "Milho especial para preparar munguzza cremoso",
-      "image_url": "https://images.pexels.com/photos/17442637/pexels-photo-17442637.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 63,
-      "name": "Xerem de Milho 500g",
-      "price": 5.9,
-      "category": "Cereais",
-      "description": "Xerem de milho para cuscuz e outras receitas tradicionais",
-      "image_url": "https://images.pexels.com/photos/5154131/pexels-photo-5154131.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 64,
-      "name": "Quirera de Milho 500g",
-      "price": 5.5,
-      "category": "Cereais",
-      "description": "Quirera de milho para mingau e receitas caseiras",
-      "image_url": "https://images.pexels.com/photos/30204262/pexels-photo-30204262.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 65,
-      "name": "Arroz Vermelho 1kg",
-      "price": 12.9,
-      "category": "Cereais",
-      "description": "Arroz vermelho nordestino, rico em fibras e nutrientes",
-      "image_url": "https://images.pexels.com/photos/6086557/pexels-photo-6086557.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 66,
-      "name": "Arroz Parboilizado 5kg",
-      "price": 28.9,
-      "category": "Cereais",
-      "description": "Arroz parboilizado tipo 1, grãos firmes e soltos",
-      "image_url": "https://images.pexels.com/photos/4187615/pexels-photo-4187615.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 67,
-      "name": "Arroz Integral 1kg",
-      "price": 9.9,
-      "category": "Cereais",
-      "description": "Arroz integral natural, fonte de fibras",
-      "image_url": "https://images.pexels.com/photos/14197541/pexels-photo-14197541.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 68,
-      "name": "Arroz da Terra 1kg",
-      "price": 11.9,
-      "category": "Cereais",
-      "description": "Arroz da terra nordestino, sabor e tradicao",
-      "image_url": "https://images.pexels.com/photos/8251401/pexels-photo-8251401.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 69,
-      "name": "Aveia em Flocos Grossos 500g",
-      "price": 7.9,
-      "category": "Cereais",
-      "description": "Aveia em flocos grossos, ideal para mingau e receitas fitness",
-      "image_url": "https://images.pexels.com/photos/27490597/pexels-photo-27490597.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 70,
-      "name": "Aveia em Flocos Finos 250g",
-      "price": 5.5,
-      "category": "Cereais",
-      "description": "Aveia em flocos finos, perfeita para vitaminas e bolos",
-      "image_url": "https://images.pexels.com/photos/4327693/pexels-photo-4327693.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 71,
-      "name": "Granola Caseira 500g",
-      "price": 14.9,
-      "category": "Cereais",
-      "description": "Granola caseira com frutas secas e castanhas",
-      "image_url": "https://images.pexels.com/photos/3872412/pexels-photo-3872412.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 72,
-      "name": "Granola com Frutas 300g",
-      "price": 11.9,
-      "category": "Cereais",
-      "description": "Granola crocante com mix de frutas desidratadas",
-      "image_url": "https://images.pexels.com/photos/25947301/pexels-photo-25947301.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 73,
-      "name": "Grao de Bico 500g",
-      "price": 12.9,
-      "category": "Cereais",
-      "description": "Grao de bico selecionado, rico em proteinas",
-      "image_url": "https://images.pexels.com/photos/7771994/pexels-photo-7771994.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 74,
-      "name": "Lentilha 500g",
-      "price": 10.9,
-      "category": "Cereais",
-      "description": "Lentilha de primeira qualidade, tradicao na mesa",
-      "image_url": "https://images.pexels.com/photos/8108209/pexels-photo-8108209.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 75,
-      "name": "Ervilha Seca 500g",
-      "price": 9.9,
-      "category": "Cereais",
-      "description": "Ervilha seca para sopas e acompanhamentos",
-      "image_url": "https://images.pexels.com/photos/6086414/pexels-photo-6086414.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 76,
-      "name": "Trigo para Kibe 500g",
-      "price": 8.9,
-      "category": "Cereais",
-      "description": "Trigo para kibe moido, pronto para uso",
-      "image_url": "https://images.pexels.com/photos/4110250/pexels-photo-4110250.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 77,
-      "name": "Gergelim Branco 200g",
-      "price": 7.9,
-      "category": "Cereais",
-      "description": "Gergelim branco torrado, para receitas e decoracao",
-      "image_url": "https://images.pexels.com/photos/7421207/pexels-photo-7421207.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 78,
-      "name": "Gergelim Preto 200g",
-      "price": 8.9,
-      "category": "Cereais",
-      "description": "Gergelim preto, rico em calcio e ferro",
-      "image_url": "https://images.pexels.com/photos/30756211/pexels-photo-30756211.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 79,
-      "name": "Linhaca Dourada 250g",
-      "price": 9.5,
-      "category": "Cereais",
-      "description": "Linhaca dourada em graos, fonte de omega-3",
-      "image_url": "https://images.pexels.com/photos/8681420/pexels-photo-8681420.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 80,
-      "name": "Linhaca Marrom 250g",
-      "price": 7.9,
-      "category": "Cereais",
-      "description": "Linhaca marrom natural, rica em fibras",
-      "image_url": "https://images.pexels.com/photos/4725748/pexels-photo-4725748.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 81,
-      "name": "Chia em Graos 200g",
-      "price": 12.9,
-      "category": "Cereais",
-      "description": "Sementes de chia, superalimento rico em nutrientes",
-      "image_url": "https://images.pexels.com/photos/7421197/pexels-photo-7421197.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 82,
-      "name": "Quinoa em Graos 250g",
-      "price": 15.9,
-      "category": "Cereais",
-      "description": "Quinoa em graos, proteina completa de origem vegetal",
-      "image_url": "https://images.pexels.com/photos/4110255/pexels-photo-4110255.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 83,
-      "name": "Cevadinha 500g",
-      "price": 8.5,
-      "category": "Cereais",
-      "description": "Cevadinha em graos para sopas e saladas",
-      "image_url": "https://images.pexels.com/photos/8251404/pexels-photo-8251404.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 84,
-      "name": "Painco 500g",
-      "price": 9.9,
-      "category": "Cereais",
-      "description": "Painco em graos, cereal sem gluten versátil",
-      "image_url": "https://images.pexels.com/photos/106974/pexels-photo-106974.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 85,
-      "name": "Sorgo em Graos 500g",
-      "price": 8.9,
-      "category": "Cereais",
-      "description": "Sorgo em graos, cereal nutritivo sem gluten",
-      "image_url": "https://images.pexels.com/photos/4110261/pexels-photo-4110261.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 86,
-      "name": "Sagu 500g",
-      "price": 6.9,
-      "category": "Cereais",
-      "description": "Sagu de mandioca para sobremesas tradicionais",
-      "image_url": "https://images.pexels.com/photos/6086556/pexels-photo-6086556.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 87,
-      "name": "Milho Branco para Canjica 1kg",
-      "price": 12.9,
-      "category": "Cereais",
-      "description": "Milho branco especial para canjica de festa junina",
-      "image_url": "https://images.pexels.com/photos/14321952/pexels-photo-14321952.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 88,
-      "name": "Amendoim Cru 500g",
-      "price": 9.9,
-      "category": "Cereais",
-      "description": "Amendoim cru em graos, para receitas e pacoca",
-      "image_url": "https://images.pexels.com/photos/7656561/pexels-photo-7656561.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 89,
-      "name": "Fuba Mimoso 1kg",
-      "price": 5.9,
-      "category": "Cereais",
-      "description": "Fuba de milho mimoso para cuscuz e polenta",
-      "image_url": "https://images.pexels.com/photos/5734741/pexels-photo-5734741.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 90,
-      "name": "Milho de Pipoca Gourmet 300g",
-      "price": 8.9,
-      "category": "Cereais",
-      "description": "Milho de pipoca gourmet tipo mushroom expandido",
-      "image_url": "https://images.pexels.com/photos/6085952/pexels-photo-6085952.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop"
-    },
-    {
-      "id": 91,
-      "name": "Pimenta Malagueta Desidratada 50g",
-      "description": "Pimenta malagueta seca, forte e aromatica para molhos e refogados",
-      "category": "Temperos",
-      "price": 6.9,
-      "image_url": "https://images.pexels.com/photos/7094360/pexels-photo-7094360.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 92,
-      "name": "Coentro em Graos 100g",
-      "description": "Sementes de coentro para temperar carnes, peixes e ensopados",
-      "category": "Temperos",
-      "price": 5.5,
-      "image_url": "https://images.pexels.com/photos/4871218/pexels-photo-4871218.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 93,
-      "name": "Louro em Folhas 20g",
-      "description": "Folhas de louro secas, essenciais para feijao e caldos",
-      "category": "Temperos",
-      "price": 4.9,
-      "image_url": "https://images.pexels.com/photos/5774814/pexels-photo-5774814.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 94,
-      "name": "Pimenta do Reino em Graos 100g",
-      "description": "Pimenta do reino preta em graos, moagem na hora",
-      "category": "Temperos",
-      "price": 9.9,
-      "image_url": "https://images.pexels.com/photos/10897946/pexels-photo-10897946.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 95,
-      "name": "Acafrao da Terra em Po 50g",
-      "description": "Curcuma moida, cor e sabor para arroz e moquecas",
-      "category": "Temperos",
-      "price": 7.9,
-      "image_url": "https://images.pexels.com/photos/4198418/pexels-photo-4198418.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 96,
-      "name": "Ervas Finas Desidratadas 30g",
-      "description": "Mix de ervas finas: tomilho, manjericao, alecrim e salsa",
-      "category": "Temperos",
-      "price": 6.5,
-      "image_url": "https://images.pexels.com/photos/4871097/pexels-photo-4871097.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 97,
-      "name": "Pimenta Biquinho em Conserva 200g",
-      "description": "Pimenta biquinho em conserva, suave e saborosa",
-      "category": "Temperos",
-      "price": 11.9,
-      "image_url": "https://images.pexels.com/photos/16575686/pexels-photo-16575686.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 98,
-      "name": "Urucum em Graos 100g",
-      "description": "Sementes de urucum para fazer colorau caseiro",
-      "category": "Temperos",
-      "price": 5.9,
-      "image_url": "https://images.pexels.com/photos/4871164/pexels-photo-4871164.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 99,
-      "name": "Pimenta Calabresa em Flocos 100g",
-      "description": "Flocos de pimenta calabresa para pizza e massas",
-      "category": "Temperos",
-      "price": 7.5,
-      "image_url": "https://images.pexels.com/photos/5060367/pexels-photo-5060367.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 100,
-      "name": "Cravo da India 50g",
-      "description": "Cravo da india inteiro, essencial para doces e cha",
-      "category": "Temperos",
-      "price": 8.9,
-      "image_url": "https://images.pexels.com/photos/4871134/pexels-photo-4871134.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 101,
-      "name": "Canela em Pau 50g",
-      "description": "Canela em pau para cha, doces e caldas",
-      "category": "Temperos",
-      "price": 7.9,
-      "image_url": "https://images.pexels.com/photos/8640336/pexels-photo-8640336.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 102,
-      "name": "Noz Moscada Inteira 30g",
-      "description": "Noz moscada inteira para ralar na hora",
-      "category": "Temperos",
-      "price": 9.9,
-      "image_url": "https://images.pexels.com/photos/4198756/pexels-photo-4198756.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 103,
-      "name": "Oregano Desidratado 50g",
-      "description": "Oregano seco de primeira qualidade, aroma intenso",
-      "category": "Temperos",
-      "price": 5.5,
-      "image_url": "https://images.pexels.com/photos/130980/pexels-photo-130980.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 104,
-      "name": "Pimenta de Cheiro Fresca 200g",
-      "description": "Pimenta de cheiro fresca, aroma suave para pratos regionais",
-      "category": "Temperos",
-      "price": 8.9,
-      "image_url": "https://images.pexels.com/photos/31025268/pexels-photo-31025268.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 105,
-      "name": "Tempero Baiano Completo 200g",
-      "description": "Mix de tempero baiano com cominho, pimenta e ervas",
-      "category": "Temperos",
-      "price": 8.5,
-      "image_url": "https://images.pexels.com/photos/3233275/pexels-photo-3233275.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
-    },
-    {
-      "id": 106,
-      "name": "Sal Grosso para Churrasco 1kg",
-      "description": "Sal grosso ideal para churrasco nordestino",
-      "category": "Temperos",
-      "price": 4.9,
-      "image_url": "https://images.pexels.com/photos/6823265/pexels-photo-6823265.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
-      "created_at": "2026-04-03T10:00:00Z"
+      "price": 9.90,
+      "unit": "kg",
+      "in_stock": true,
+      "image_url": "https://images.pexels.com/photos/4224269/pexels-photo-4224269.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop",
+      "created_at": "2026-04-07T12:00:00Z"
     }
   ]
 }

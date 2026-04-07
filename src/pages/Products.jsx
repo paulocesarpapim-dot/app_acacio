@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "@/api/productService";
 import { useState, useMemo } from "react";
-import { Search, X, ChevronDown, Filter, Grid3x3, List, TrendingDown } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
+import { Search, X, ChevronDown, Filter, Grid3x3, List } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import ProductCard from "../components/ProductCard";
 import ListProductCard from "../components/ListProductCard";
 
-const CATEGORIES = ["Feijão", "Farinha", "Queijos", "Manteiga", "Bolachas", "Rapadura", "Doces", "Cereais", "Requeijão", "Temperos", "Carne de Sol", "Bebidas"];
+const CATEGORIES = ["Feijão", "Cereais"];
 
 const PRICE_RANGES = [
   { label: "Todos os preços", min: 0, max: Infinity },
@@ -25,8 +26,8 @@ const SORT_OPTIONS = [
 ];
 
 export default function Products() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const initialCategory = urlParams.get("categoria") || "";
+  const [searchParams] = useSearchParams();
+  const initialCategory = searchParams.get("categoria") || "";
 
   const [selectedCategories, setSelectedCategories] = useState(initialCategory ? [initialCategory] : []);
   const [priceRange, setPriceRange] = useState(PRICE_RANGES[0]);

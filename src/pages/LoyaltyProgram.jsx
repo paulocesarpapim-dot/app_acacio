@@ -1,4 +1,4 @@
-import { Gift, Zap, Crown, Award, TrendingUp } from "lucide-react";
+import { Gift, Crown, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 

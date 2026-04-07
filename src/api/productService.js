@@ -1,4 +1,5 @@
 import { appParams } from '@/lib/app-params';
+import { getAdminToken } from '@/lib/admin-session';
 
 // Detectar environment e construir a URL base da API
 const getAPIUrl = () => {
@@ -18,6 +19,14 @@ const getAPIUrl = () => {
 };
 
 const API_URL = getAPIUrl();
+
+function adminHeaders() {
+  const token = getAdminToken();
+  return {
+    'Content-Type': 'application/json',
+    ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+  };
+}
 
 export async function fetchProducts() {
   try {
@@ -62,9 +71,7 @@ export async function createProduct(product) {
   try {
     const response = await fetch(`${API_URL}/api/products`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: adminHeaders(),
       body: JSON.stringify(product),
     });
     if (!response.ok) {
@@ -81,9 +88,7 @@ export async function updateProduct(id, product) {
   try {
     const response = await fetch(`${API_URL}/api/products/${id}`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: adminHeaders(),
       body: JSON.stringify(product),
     });
     if (!response.ok) {
@@ -100,6 +105,7 @@ export async function deleteProduct(id) {
   try {
     const response = await fetch(`${API_URL}/api/products/${id}`, {
       method: 'DELETE',
+      headers: adminHeaders(),
     });
     if (!response.ok) {
       throw new Error(`API error: ${response.statusText}`);

@@ -3,12 +3,20 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchProducts, createProduct, updateProduct, deleteProduct } from "@/api/productService";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Trash2, Edit2, Plus, AlertCircle } from "lucide-react";
+import { Trash2, Edit2, Plus, AlertCircle, LogOut } from "lucide-react";
+import { adminLogout } from "@/lib/admin-session";
+import { useNavigate } from "react-router-dom";
 
-const CATEGORIES = ["Feijão", "Farinha", "Queijos", "Manteiga", "Bolachas", "Rapadura", "Doces", "Cereais", "Requeijão", "Outros"];
+const CATEGORIES = ["Feijão", "Cereais"];
 
 export default function AdminProducts() {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    adminLogout();
+    navigate("/");
+  };
   const { data: products = [], isLoading } = useQuery({
     queryKey: ["all-products"],
     queryFn: () => fetchProducts(),
@@ -20,6 +28,8 @@ export default function AdminProducts() {
     description: "",
     category: "Feijão",
     price: "",
+    unit: "kg",
+    in_stock: true,
     image_url: "",
   });
   const [error, setError] = useState("");
@@ -68,6 +78,8 @@ export default function AdminProducts() {
       description: "",
       category: "Feijão",
       price: "",
+      unit: "kg",
+      in_stock: true,
       image_url: "",
     });
     setEditingId(null);
@@ -80,6 +92,8 @@ export default function AdminProducts() {
       description: product.description || "",
       category: product.category,
       price: product.price,
+      unit: product.unit || "kg",
+      in_stock: product.in_stock ?? true,
       image_url: product.image_url || "",
     });
   };
@@ -104,17 +118,23 @@ export default function AdminProducts() {
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
   return (
     <div className="min-h-screen bg-background p-6">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8">Gerenciar Produtos</h1>
+        <div className="flex items-center justify-between mb-8">
+          <h1 className="text-4xl font-bold">Gerenciar Produtos</h1>
+          <Button variant="outline" onClick={handleLogout} className="flex items-center gap-2">
+            <LogOut className="w-4 h-4" />
+            Sair
+          </Button>
+        </div>
 
         {/* Formulário */}
         <div className="bg-card rounded-lg border border-border p-6 mb-10">
@@ -177,6 +197,25 @@ export default function AdminProducts() {
               />
             </div>
 
+            <div className="grid md:grid-cols-2 gap-4">
+              <Input
+                placeholder="Unidade (ex: kg, un, L)"
+                name="unit"
+                value={formData.unit}
+                onChange={handleChange}
+              />
+              <label className="flex items-center gap-3 px-3 py-2 border border-input rounded-md bg-background cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="in_stock"
+                  checked={formData.in_stock}
+                  onChange={handleChange}
+                  className="w-4 h-4 rounded"
+                />
+                <span className="text-sm font-medium">Em estoque</span>
+              </label>
+            </div>
+
             <div className="flex gap-3">
               <Button
                 type="submit"
@@ -215,6 +254,8 @@ export default function AdminProducts() {
                     <th className="px-6 py-3 text-left text-sm font-semibold">Nome</th>
                     <th className="px-6 py-3 text-left text-sm font-semibold">Categoria</th>
                     <th className="px-6 py-3 text-left text-sm font-semibold">Preço</th>
+                    <th className="px-6 py-3 text-left text-sm font-semibold">Unidade</th>
+                    <th className="px-6 py-3 text-left text-sm font-semibold">Estoque</th>
                     <th className="px-6 py-3 text-left text-sm font-semibold">Ações</th>
                   </tr>
                 </thead>
@@ -224,6 +265,12 @@ export default function AdminProducts() {
                       <td className="px-6 py-4 text-sm">{product.name}</td>
                       <td className="px-6 py-4 text-sm">{product.category}</td>
                       <td className="px-6 py-4 text-sm font-medium">R$ {parseFloat(product.price).toFixed(2)}</td>
+                      <td className="px-6 py-4 text-sm">{product.unit || "kg"}</td>
+                      <td className="px-6 py-4 text-sm">
+                        <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${(product.in_stock ?? true) ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}>
+                          {(product.in_stock ?? true) ? "Em estoque" : "Esgotado"}
+                        </span>
+                      </td>
                       <td className="px-6 py-4 text-sm flex gap-2">
                         <Button
                           variant="outline"
