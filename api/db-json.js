@@ -67,17 +67,15 @@ function writeFile(data) {
 
 // ——— Sync from Redis on cold start ———
 let initPromise = null;
+let redisSyncOk = false;
 
 async function syncFromRedis() {
   try {
     const remoteData = await redisGet('database');
     if (remoteData) {
-      // Merge: use Redis data as base, fallback to local file for products if Redis has none
       const localData = readFile();
       const merged = {
         ...remoteData,
-        // Use Redis products if they were updated (different count or newer),
-        // otherwise use deploy bundle as initial seed
         products: (remoteData.products && remoteData.products.length > 0)
           ? remoteData.products
           : localData.products,
@@ -87,14 +85,17 @@ async function syncFromRedis() {
         promotions: remoteData.promotions || [],
       };
       writeFile(merged);
+      redisSyncOk = true;
       console.log(`✅ Redis sync: ${merged.products.length} produtos, ${merged.customers.length} clientes, ${merged.orders.length} pedidos`);
     } else {
       // First time: seed Redis from file
       const localData = readFile();
       await redisSet('database', localData);
+      redisSyncOk = true;
       console.log('✅ Seeded Redis from database.json');
     }
   } catch (e) {
+    redisSyncOk = false;
     console.error('❌ Redis sync error:', e.message);
   }
 }
@@ -124,9 +125,14 @@ export async function readDB() {
 
 export function saveDB(data) {
   writeFile(data);
-  // Fire-and-forget: persist to Redis in background
+  // Persist to Redis — but NEVER overwrite with empty data if sync failed
   if (useRedis) {
-    redisSet('database', data).catch(e => console.error('❌ Redis save error:', e.message));
+    const safeToSave = redisSyncOk || (data.customers && data.customers.length > 0) || (data.orders && data.orders.length > 0);
+    if (safeToSave) {
+      redisSet('database', data).catch(e => console.error('❌ Redis save error:', e.message));
+    } else {
+      console.warn('⚠️ Skipping Redis save: sync not confirmed and data has no customers/orders (protection against data loss)');
+    }
   }
 }
 

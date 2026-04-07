@@ -101,7 +101,7 @@ export async function updateCustomerLoyalty(req, res) {
     const { purchaseAmount, redeemPoints } = req.body;
     const db = await readDB();
     if (!db.customers) db.customers = [];
-    const idx = db.customers.findIndex(c => c.id === parseInt(id));
+    const idx = db.customers.findIndex(c => String(c.id) === String(id));
     if (idx < 0) return res.status(404).json({ error: 'Cliente não encontrado' });
 
     const customer = db.customers[idx];
@@ -140,7 +140,7 @@ export async function deleteCustomer(req, res) {
     const { id } = req.params;
     const db = await readDB();
     if (!db.customers) return res.status(404).json({ error: 'Cliente não encontrado' });
-    const idx = db.customers.findIndex(c => c.id === parseInt(id));
+    const idx = db.customers.findIndex(c => String(c.id) === String(id));
     if (idx < 0) return res.status(404).json({ error: 'Cliente não encontrado' });
     db.customers.splice(idx, 1);
     saveDB(db);
