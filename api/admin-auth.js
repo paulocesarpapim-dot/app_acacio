@@ -2,35 +2,57 @@ import crypto from 'crypto';
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 if (!ADMIN_PASSWORD) {
-  console.warn('[admin-auth] AVISO: variável ADMIN_PASSWORD não definida. Defina-a no ambiente para proteger o acesso admin.');
+  if (process.env.NODE_ENV === 'production') {
+    console.error('[admin-auth] ERRO FATAL: variável ADMIN_PASSWORD não definida em produção. Defina-a antes de iniciar o servidor.');
+    process.exit(1);
+  } else {
+    console.warn('[admin-auth] AVISO: ADMIN_PASSWORD não definida. Usando senha padrão para desenvolvimento.');
+  }
 }
 const PASSWORD = ADMIN_PASSWORD || 'acacio@admin';
 
 const TOKEN_VALIDITY_MS = 24 * 60 * 60 * 1000; // 24 horas
 const HMAC_ALG = 'sha256';
-// sha256 hex digest is always 64 characters
-const SIG_BYTE_LEN = 32;
+// sha256 hex digest is always 64 hex chars (32 bytes * 2)
+const SIG_HEX_LEN = 64;
 
-// --- Simple in-memory rate limiter for login ---
-const loginAttempts = new Map(); // ip -> { count, resetAt }
-const MAX_ATTEMPTS = 5;
-const WINDOW_MS = 15 * 60 * 1000; // 15 minutes
+// Derive salt from the password so it is unique per deployment and not hardcoded
+const PW_SALT = crypto.createHash('sha256').update('app-acacio-' + PASSWORD).digest();
+const PW_KEYLEN = 32;
 
-function checkRateLimit(ip) {
-  const now = Date.now();
-  const entry = loginAttempts.get(ip);
-  if (!entry || now > entry.resetAt) {
-    loginAttempts.set(ip, { count: 1, resetAt: now + WINDOW_MS });
-    return true;
-  }
-  if (entry.count >= MAX_ATTEMPTS) return false;
-  entry.count += 1;
-  return true;
+function hashPassword(pw) {
+  return crypto.scryptSync(String(pw), PW_SALT, PW_KEYLEN);
 }
 
-function resetRateLimit(ip) {
-  loginAttempts.delete(ip);
+// Pre-compute expected hash once at startup
+const EXPECTED_HASH = hashPassword(PASSWORD);
+
+// --- Simple in-memory rate limiter ---
+function makeRateLimiter(maxRequests, windowMs, message) {
+  const store = new Map(); // ip -> { count, resetAt }
+  return function rateLimiter(req, res, next) {
+    const ip = req.ip || req.socket?.remoteAddress || 'unknown';
+    const now = Date.now();
+    const entry = store.get(ip);
+    if (!entry || now > entry.resetAt) {
+      store.set(ip, { count: 1, resetAt: now + windowMs });
+      return next();
+    }
+    if (entry.count >= maxRequests) {
+      return res.status(429).json({ error: message });
+    }
+    entry.count += 1;
+    next();
+  };
 }
+
+export const loginRateLimit = makeRateLimiter(
+  5, 15 * 60 * 1000, 'Muitas tentativas. Tente novamente em 15 minutos.'
+);
+
+export const writeRateLimit = makeRateLimiter(
+  60, 60 * 1000, 'Muitas requisições. Tente novamente em breve.'
+);
 
 // --- HMAC token ---
 function sign(expires) {
@@ -52,8 +74,7 @@ export function verifyToken(token) {
   const expires = token.slice(0, dot);
   const signature = token.slice(dot + 1);
   if (Date.now() > parseInt(expires, 10)) return false;
-  // Ensure buffers are equal length before timingSafeEqual
-  if (signature.length !== SIG_BYTE_LEN * 2) return false;
+  if (signature.length !== SIG_HEX_LEN) return false;
   const expected = sign(expires);
   try {
     return crypto.timingSafeEqual(
@@ -65,31 +86,19 @@ export function verifyToken(token) {
   }
 }
 
-// --- Hash-based password comparison (avoids length-mismatch in timingSafeEqual) ---
-function hashPassword(pw) {
-  return crypto.createHash('sha256').update(pw).digest();
-}
-
 export function adminLoginHandler(req, res) {
-  const ip = req.ip || req.socket?.remoteAddress || 'unknown';
-  if (!checkRateLimit(ip)) {
-    return res.status(429).json({ error: 'Muitas tentativas. Tente novamente em 15 minutos.' });
-  }
-
   const { password } = req.body || {};
   if (!password) {
     return res.status(400).json({ error: 'Senha obrigatória' });
   }
 
-  const inputHash = hashPassword(String(password));
-  const expectedHash = hashPassword(PASSWORD);
-  const correct = crypto.timingSafeEqual(inputHash, expectedHash);
+  const inputHash = hashPassword(password);
+  const correct = crypto.timingSafeEqual(inputHash, EXPECTED_HASH);
 
   if (!correct) {
     return res.status(401).json({ error: 'Senha incorreta' });
   }
 
-  resetRateLimit(ip);
   res.json({ token: generateToken() });
 }
 

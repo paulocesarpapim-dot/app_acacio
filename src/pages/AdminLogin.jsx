@@ -5,8 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Lock, AlertCircle } from "lucide-react";
 import { ADMIN_TOKEN_KEY } from "@/lib/admin-session";
 
-export { getAdminToken, isAdminAuthenticated } from "@/lib/admin-session";
-
 export default function AdminLogin() {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
