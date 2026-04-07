@@ -1219,9 +1219,10 @@ function AdminClientes() {
     if (!pointsModal || !purchaseAmount || parseFloat(purchaseAmount) <= 0) return;
     setPointsLoading(true);
     try {
-      const res = await fetch(`${API_URL}/api/customers/${pointsModal.id}/loyalty`, {
+      const url = `${API_URL}/api/customers/${pointsModal.id}/loyalty`;
+      const res = await fetch(url, {
         method: 'PUT',
-        headers: { ...adminHeaders(), 'Content-Type': 'application/json' },
+        headers: adminHeaders(),
         body: JSON.stringify({ purchaseAmount: parseFloat(purchaseAmount) }),
       });
       if (res.ok) {
@@ -1229,11 +1230,12 @@ function AdminClientes() {
         setPurchaseAmount("");
         loadCustomers();
       } else {
-        alert("Erro ao adicionar pontos");
+        const err = await res.json().catch(() => ({}));
+        alert(err.error || `Erro ao adicionar pontos (${res.status})`);
       }
     } catch (err) {
       console.error("Erro ao adicionar pontos:", err);
-      alert("Erro de conexão");
+      alert("Erro de conexão: " + err.message);
     }
     setPointsLoading(false);
   };
