@@ -59,7 +59,7 @@ export function useCart() {
     saveCart([]);
   }, []);
 
-  const cartCount = parseFloat(items.reduce((sum, i) => sum + i.qty, 0).toFixed(2));
+  const cartCount = items.reduce((sum, i) => sum + Math.ceil(i.qty), 0);
   const cartTotal = parseFloat(items.reduce((sum, i) => sum + parseFloat((i.product.price * i.qty).toFixed(2)), 0).toFixed(2));
 
   return { items, addItem, removeItem, updateQty, clearCart, cartCount, cartTotal };
