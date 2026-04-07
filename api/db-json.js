@@ -72,15 +72,22 @@ async function syncFromRedis() {
   try {
     const remoteData = await redisGet('database');
     if (remoteData) {
-      // Merge: products from deploy bundle + customers/orders from Redis
+      // Merge: use Redis data as base, fallback to local file for products if Redis has none
       const localData = readFile();
       const merged = {
-        products: localData.products,
+        ...remoteData,
+        // Use Redis products if they were updated (different count or newer),
+        // otherwise use deploy bundle as initial seed
+        products: (remoteData.products && remoteData.products.length > 0)
+          ? remoteData.products
+          : localData.products,
         customers: remoteData.customers || [],
         orders: remoteData.orders || [],
+        settings: remoteData.settings || {},
+        promotions: remoteData.promotions || [],
       };
       writeFile(merged);
-      console.log(`✅ Redis sync: ${merged.customers.length} clientes, ${merged.orders.length} pedidos`);
+      console.log(`✅ Redis sync: ${merged.products.length} produtos, ${merged.customers.length} clientes, ${merged.orders.length} pedidos`);
     } else {
       // First time: seed Redis from file
       const localData = readFile();
