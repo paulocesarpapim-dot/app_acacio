@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Trash2, Edit2, Plus, AlertCircle, Lock, ImageIcon, Search, Users, Package, Star, Phone, Mail, ShoppingBag, Settings, Tag, Megaphone, Percent, CalendarDays, Eye, EyeOff, Coins } from "lucide-react";
+import { Trash2, Edit2, Plus, AlertCircle, Lock, ImageIcon, Search, Users, Package, Star, Phone, Mail, ShoppingBag, Settings, Tag, Megaphone, Percent, CalendarDays, Eye, EyeOff, Coins, TrendingUp, DollarSign, Clock, CheckCircle } from "lucide-react";
 
 // ============================================================
 // API BASE URL - Definida uma única vez
@@ -1428,9 +1428,55 @@ function AdminPedidos() {
     return 'Pendente';
   };
 
+  const approved = orders.filter(o => o.status === 'approved');
+  const pending = orders.filter(o => o.status === 'pending');
+  const rejected = orders.filter(o => o.status === 'rejected');
+  const totalApproved = parseFloat(approved.reduce((s, o) => s + (o.total || 0), 0).toFixed(2));
+  const totalPending = parseFloat(pending.reduce((s, o) => s + (o.total || 0), 0).toFixed(2));
+  const totalAll = parseFloat(orders.reduce((s, o) => s + (o.total || 0), 0).toFixed(2));
+  const ticketMedio = approved.length > 0 ? parseFloat((totalApproved / approved.length).toFixed(2)) : 0;
+
   return (
     <>
       <h2 className="text-2xl font-bold mb-6 text-gray-900">Pedidos ({orders.length})</h2>
+
+      {/* Relatório de Vendas */}
+      {!loading && orders.length > 0 && (
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold text-gray-700 mb-3 flex items-center gap-2">
+            <TrendingUp className="w-5 h-5 text-amber-600" /> Relatório de Vendas
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
+              <CheckCircle className="w-6 h-6 text-green-600 mx-auto mb-1" />
+              <p className="text-xs text-green-700 font-medium">Vendas Aprovadas</p>
+              <p className="text-xl font-bold text-green-800">R$ {totalApproved.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
+              <p className="text-xs text-green-600">{approved.length} pedido{approved.length !== 1 ? 's' : ''}</p>
+            </div>
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-center">
+              <Clock className="w-6 h-6 text-yellow-600 mx-auto mb-1" />
+              <p className="text-xs text-yellow-700 font-medium">Pendentes</p>
+              <p className="text-xl font-bold text-yellow-800">R$ {totalPending.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
+              <p className="text-xs text-yellow-600">{pending.length} pedido{pending.length !== 1 ? 's' : ''}</p>
+            </div>
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-center">
+              <DollarSign className="w-6 h-6 text-amber-600 mx-auto mb-1" />
+              <p className="text-xs text-amber-700 font-medium">Total Geral</p>
+              <p className="text-xl font-bold text-amber-800">R$ {totalAll.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
+              <p className="text-xs text-amber-600">{orders.length} pedido{orders.length !== 1 ? 's' : ''}</p>
+            </div>
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-center">
+              <ShoppingBag className="w-6 h-6 text-blue-600 mx-auto mb-1" />
+              <p className="text-xs text-blue-700 font-medium">Ticket Médio</p>
+              <p className="text-xl font-bold text-blue-800">R$ {ticketMedio.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
+              <p className="text-xs text-blue-600">por venda aprovada</p>
+            </div>
+          </div>
+          {rejected.length > 0 && (
+            <p className="text-xs text-red-500 mt-2 text-right">{rejected.length} pedido{rejected.length !== 1 ? 's' : ''} recusado{rejected.length !== 1 ? 's' : ''}</p>
+          )}
+        </div>
+      )}
       {loading ? (
         <div className="text-center py-12 text-gray-500">Carregando pedidos...</div>
       ) : orders.length === 0 ? (
