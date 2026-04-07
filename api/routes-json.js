@@ -11,6 +11,7 @@ import {
   checkPixStatus,
   pixWebhook,
   registerPixWebhook,
+  handleMPNotification,
   getSettings,
   updateSettings,
   getProducts,
@@ -36,8 +37,14 @@ router.get('/products/:id', getProductById);
 router.post('/customers/register', registerCustomer);
 router.post('/customers/login', loginRateLimit, loginCustomer);
 
-// Pix webhook (chamado pelo C6 Bank)
+// Webhooks (chamados pelos provedores de pagamento)
 router.post('/pix/webhook', pixWebhook);
+router.post('/payments/notification', handleMPNotification);
+
+// Checkout (público — clientes precisam criar cobranças)
+router.post('/payments/preference', createPaymentPreference);
+router.post('/pix/charge', createPixCharge);
+router.get('/pix/status/:txid', checkPixStatus);
 
 // Admin login
 router.post('/admin/login', loginRateLimit, loginAdmin);
@@ -57,10 +64,7 @@ router.delete('/customers/:id', adminAuth, deleteCustomer);
 // Orders
 router.get('/orders', adminAuth, getOrders);
 
-// Payments
-router.post('/payments/preference', adminAuth, createPaymentPreference);
-router.post('/pix/charge', adminAuth, createPixCharge);
-router.get('/pix/status/:txid', adminAuth, checkPixStatus);
+// Payments (admin-only)
 router.post('/pix/webhook/register', adminAuth, registerPixWebhook);
 
 // Settings

@@ -172,6 +172,7 @@ export async function createPaymentPreference(req, res) {
         pending: `${origin}/checkout/status?status=pending`,
       },
       auto_return: 'approved',
+      notification_url: `${origin}/api/payments/notification`,
       external_reference: external_reference || `order_${Date.now()}`,
       statement_descriptor: 'EMPORIO FILHO DEUS',
     };
@@ -490,17 +491,28 @@ export async function checkPixStatus(req, res) {
 // Webhook — C6 Bank POST when Pix confirmed
 export async function pixWebhook(req, res) {
   try {
+    // Verify webhook secret (optional extra security layer)
+    const db = await readDB();
+    const webhookSecret = (db.settings || {}).pixWebhookSecret || process.env.PIX_WEBHOOK_SECRET;
+    if (webhookSecret) {
+      const provided = req.headers['x-webhook-secret'] || req.query.secret;
+      if (provided !== webhookSecret) {
+        console.warn('Pix webhook: secret inválido');
+        return res.status(200).json({ status: 'ok' }); // 200 to avoid retries
+      }
+    }
+
     const { pix } = req.body;
 
     if (!pix || !Array.isArray(pix)) {
       return res.status(200).json({ status: 'ok' });
     }
 
-    const db = await readDB();
     if (!db.orders) db.orders = [];
 
     for (const payment of pix) {
       const { txid, valor, horario, endToEndId } = payment;
+      if (!txid) continue;
       const orderIdx = db.orders.findIndex(o => o.id === txid);
 
       if (orderIdx >= 0) {
@@ -511,7 +523,7 @@ export async function pixWebhook(req, res) {
         console.log(`✅ Pix confirmado: ${txid} — R$ ${valor}`);
       } else {
         db.orders.push({
-          id: txid || `pix_${Date.now()}`,
+          id: txid,
           type: 'pix_c6_webhook',
           external_reference: txid,
           items: [],
@@ -529,6 +541,88 @@ export async function pixWebhook(req, res) {
     res.status(200).json({ status: 'ok' });
   } catch (error) {
     console.error('Webhook error:', error);
+    res.status(200).json({ status: 'ok' });
+  }
+}
+
+// ============ MERCADO PAGO IPN NOTIFICATION ============
+
+export async function handleMPNotification(req, res) {
+  try {
+    const { type, data } = req.body;
+
+    // MP sends 'payment' type for payment notifications
+    if (type !== 'payment' || !data?.id) {
+      return res.status(200).json({ status: 'ok' });
+    }
+
+    const db = await readDB();
+    const accessToken = process.env.MP_ACCESS_TOKEN || (db.settings || {}).mpAccessToken;
+    if (!accessToken) {
+      console.warn('MP notification recebida mas MP_ACCESS_TOKEN não configurado');
+      return res.status(200).json({ status: 'ok' });
+    }
+
+    // Fetch payment details from Mercado Pago API
+    const mpRes = await fetch(`https://api.mercadopago.com/v1/payments/${data.id}`, {
+      headers: { 'Authorization': `Bearer ${accessToken}` },
+    });
+
+    if (!mpRes.ok) {
+      console.error('MP notification: erro ao consultar pagamento', mpRes.status);
+      return res.status(200).json({ status: 'ok' });
+    }
+
+    const payment = await mpRes.json();
+    const externalRef = payment.external_reference;
+    const mpStatus = payment.status; // approved, rejected, pending, in_process
+
+    // Map MP status to our status
+    const statusMap = {
+      approved: 'approved',
+      authorized: 'approved',
+      pending: 'pending',
+      in_process: 'pending',
+      rejected: 'rejected',
+      cancelled: 'rejected',
+      refunded: 'refunded',
+      charged_back: 'refunded',
+    };
+    const mappedStatus = statusMap[mpStatus] || 'pending';
+
+    if (!db.orders) db.orders = [];
+    const orderIdx = db.orders.findIndex(o =>
+      o.id === externalRef || o.external_reference === externalRef
+    );
+
+    if (orderIdx >= 0) {
+      db.orders[orderIdx].status = mappedStatus;
+      db.orders[orderIdx].mpPaymentId = data.id;
+      if (mappedStatus === 'approved') {
+        db.orders[orderIdx].paidAt = payment.date_approved || new Date().toISOString();
+      }
+      console.log(`✅ MP pagamento ${data.id}: ${mpStatus} → pedido ${externalRef}`);
+    } else {
+      // Payment without matching order — store it
+      db.orders.push({
+        id: externalRef || `mp_${data.id}`,
+        type: 'mercadopago',
+        external_reference: externalRef,
+        mpPaymentId: data.id,
+        items: [],
+        payer: payment.payer ? { name: payment.payer.first_name, email: payment.payer.email } : null,
+        total: payment.transaction_amount || 0,
+        status: mappedStatus,
+        paidAt: mappedStatus === 'approved' ? (payment.date_approved || new Date().toISOString()) : null,
+        createdAt: new Date().toISOString(),
+      });
+      console.log(`✅ MP pagamento ${data.id}: novo pedido criado (${mappedStatus})`);
+    }
+
+    saveDB(db);
+    res.status(200).json({ status: 'ok' });
+  } catch (error) {
+    console.error('MP notification error:', error);
     res.status(200).json({ status: 'ok' });
   }
 }
