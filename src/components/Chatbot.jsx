@@ -12,14 +12,14 @@ const QUICK_ACTIONS = [
 ];
 
 const RESPONSES = {
-  greeting: `Olá! 👋 Seja bem-vindo à *Casa do Norte Filho de Deus*!\n\nSou o assistente virtual. Posso te ajudar com:`,
-  products_list: `Aqui estão algumas categorias disponíveis:\n\n🫘 Feijão · 🌾 Farinha · 🧀 Queijos\n🧈 Manteiga · 🍬 Rapadura · 🍮 Doces\n🌶️ Temperos · 🥩 Carne de Sol\n\nClique em **Ver Produtos** para ver o catálogo completo!`,
+  greeting: `Olá! 👋 Seja bem-vindo ao *Empório Filho de Deus*!\n\nSou o assistente virtual. Posso te ajudar com:`,
+  products_list: `Aqui estão nossas categorias disponíveis:\n\n🫘 Feijão · 🌾 Cereais\n\nClique em **Ver Produtos** para ver o catálogo completo!`,
   delivery: `🚚 *Informações de Entrega:*\n\n• Entregamos em toda a cidade\n• Pedidos pelo WhatsApp ou pelo carrinho\n• Frete calculado conforme endereço\n• Prazo médio: 1 a 2 dias úteis\n\nDúvidas? Fale direto no WhatsApp! 📱`,
   payment: `💳 *Formas de Pagamento:*\n\n• PIX (desconto especial!)\n• Cartão de crédito ou débito\n• Dinheiro na entrega\n• Transferência bancária\n\nPara mais detalhes, fale conosco pelo WhatsApp!`,
   whatsapp: `📱 *Fale conosco agora!*\n\nNosso atendimento é rápido e personalizado. Clique abaixo para abrir o WhatsApp!`,
   hours: `🕐 *Horário de Atendimento:*\n\n• Segunda a Sábado: 8h às 18h\n• Domingo: 8h às 12h\n\nFora do horário? Deixe sua mensagem, retornaremos em breve! 😊`,
   promotions: `🎉 *Promoções especiais!*\n\nFale com a gente no WhatsApp para saber as ofertas do dia. Sempre temos novidades chegando!`,
-  about: `🏪 *Casa do Norte Filho de Deus*\n\nTrazemos os melhores produtos nordestinos direto para sua mesa. Tudo artesanal, selecionado com carinho e qualidade garantida.\n\n🌵 Sabor autêntico do sertão!`,
+  about: `🏪 *Empório Filho de Deus*\n\nTrazemos os melhores produtos nordestinos direto para sua mesa. Tudo artesanal, selecionado com carinho e qualidade garantida.\n\n🌵 Sabor autêntico do sertão!`,
   default: `Não entendi direito, mas posso te ajudar! 😊\n\nEscolha uma das opções abaixo ou fale conosco pelo WhatsApp para atendimento personalizado.`,
 };
 
@@ -197,7 +197,7 @@ export default function Chatbot() {
               <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-400 rounded-full border-2 border-orange-600" />
             </div>
             <div className="flex-1">
-              <h3 className="font-bold text-sm leading-tight">Assistente Casa do Norte</h3>
+              <h3 className="font-bold text-sm leading-tight">Assistente Empório FD</h3>
               <p className="text-xs opacity-80">🟢 Online agora</p>
             </div>
             <button
@@ -280,7 +280,7 @@ export default function Chatbot() {
               </button>
             </div>
             <p className="text-center text-[10px] text-gray-400 mt-2">
-              Casa do Norte Filho de Deus · Atendimento via chat
+              Empório Filho de Deus · Atendimento via chat
             </p>
           </div>
         </div>

@@ -1,23 +1,26 @@
 import { Outlet, Link, useLocation } from "react-router-dom";
-import { ShoppingCart, Home, Package, MessageCircle, Menu, X } from "lucide-react";
+import { ShoppingCart, Home, Package, MessageCircle, Menu, X, User, Star } from "lucide-react";
 import { useState } from "react";
 import { useCart } from "../hooks/useCart";
+import { useAuth } from "../lib/AuthContext";
 
 export default function Layout() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { cartCount } = useCart();
+  const { isAuthenticated, user } = useAuth();
   const location = useLocation();
 
   const navLinks = [
     { to: "/", label: "Início", icon: Home },
     { to: "/produtos", label: "Produtos", icon: Package },
     { to: "/carrinho", label: "Carrinho", icon: ShoppingCart, badge: cartCount },
+    { to: isAuthenticated ? "/minha-conta" : "/conta", label: isAuthenticated ? (user?.name?.split(" ")[0] || "Conta") : "Entrar", icon: isAuthenticated ? Star : User },
   ];
 
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen flex flex-col">
       {/* Header */}
       <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -27,10 +30,10 @@ export default function Layout() {
                 <span className="text-primary-foreground font-display text-lg sm:text-xl font-bold">N</span>
               </div>
               <div className="hidden sm:block">
-                <h1 className="font-display text-lg font-bold text-foreground leading-tight">Casa do Norte Filho de Deus</h1>
+                <h1 className="font-display text-lg font-bold text-foreground leading-tight">Empório Filho de Deus</h1>
                 <p className="text-xs text-muted-foreground">Sabor autêntico da nossa terra</p>
               </div>
-              <span className="sm:hidden font-display text-base font-bold text-foreground">Casa do Norte</span>
+              <span className="sm:hidden font-display text-base font-bold text-foreground">Empório FD</span>
             </Link>
 
             {/* Desktop Nav */}
@@ -129,11 +132,14 @@ export default function Layout() {
               <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
                 <span className="text-primary-foreground font-display text-sm font-bold">N</span>
               </div>
-              <span className="font-display text-sm font-semibold">Casa do Norte Filho de Deus</span>
+              <span className="font-display text-sm font-semibold">Empório Filho de Deus</span>
             </div>
             <p className="text-xs text-muted-foreground text-center">
-              © 2026 Casa do Norte Filho de Deus — Sabor autêntico direto do sertão para sua mesa
+              © 2026 Empório Filho de Deus — Sabor autêntico direto do sertão para sua mesa
             </p>
+            <Link to="/admin/produtos" className="text-[10px] text-muted-foreground/40 hover:text-muted-foreground transition-colors">
+              Admin
+            </Link>
           </div>
         </div>
       </footer>
@@ -143,7 +149,7 @@ export default function Layout() {
         href="https://wa.me/5511957800711?text=Olá! Gostaria de fazer um pedido."
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg hover:shadow-xl flex items-center justify-center transition-all hover:scale-110"
+        className="fixed bottom-6 left-6 z-50 w-14 h-14 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg hover:shadow-xl flex items-center justify-center transition-all hover:scale-110"
       >
         <MessageCircle className="w-7 h-7" />
       </a>

@@ -20,12 +20,13 @@ import {
   Truck,
   Shield,
 } from "lucide-react";
+import { isKgProduct, formatQty, qtyStep, minQty } from "../utils/productUtils";
 
 export default function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addItem, cartCount } = useCart();
-  const [qty, setQty] = useState(1);
+  const [qty, setQty] = useState(null);
   const [added, setAdded] = useState(false);
 
   const { data: product, isLoading, isError } = useQuery({
@@ -43,18 +44,25 @@ export default function ProductDetail() {
     ?.filter((p) => p.category === product?.category && p.id !== product?.id)
     .slice(0, 4) || [];
 
+  const isKg = product ? isKgProduct(product) : false;
+  const step = product ? qtyStep(product) : 1;
+  const min = product ? minQty(product) : 1;
+  const currentQty = qty ?? min;
+
   const formatPrice = (price) =>
     new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(price);
 
   const handleAdd = () => {
-    addItem(product, qty);
+    addItem(product, currentQty);
     setAdded(true);
-    toast.success(`${product.name} adicionado ao carrinho!`);
+    const label = isKg ? `${formatQty(product, currentQty)} de ${product.name}` : product.name;
+    toast.success(`${label} adicionado ao carrinho!`);
     setTimeout(() => setAdded(false), 1800);
   };
 
   const buildWhatsAppMessage = () => {
-    const msg = `Olá! Tenho interesse no produto:\n\n*${product.name}*\nCategoria: ${product.category}\nPreço: ${formatPrice(product.price)}\nQuantidade: ${qty}\n\nGostaria de confirmar disponibilidade!`;
+    const qtyLabel = isKg ? formatQty(product, currentQty) : currentQty;
+    const msg = `Olá! Tenho interesse no produto:\n\n*${product.name}*\nCategoria: ${product.category}\nPreço: ${formatPrice(product.price)}${isKg ? '/kg' : ''}\nQuantidade: ${qtyLabel}\n\nGostaria de confirmar disponibilidade!`;
     return encodeURIComponent(msg);
   };
 
@@ -219,24 +227,24 @@ export default function ProductDetail() {
           {/* Seletor de quantidade */}
           {product.in_stock !== false && (
             <div className="flex items-center gap-4 mb-6">
-              <span className="text-sm font-medium text-foreground">Quantidade:</span>
+              <span className="text-sm font-medium text-foreground">{isKg ? 'Peso:' : 'Quantidade:'}</span>
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => setQty((q) => Math.max(1, q - 1))}
+                  onClick={() => setQty((q) => Math.max(min, parseFloat(((q ?? min) - step).toFixed(2))))}
                   className="w-9 h-9 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors"
                 >
                   <Minus className="w-3.5 h-3.5" />
                 </button>
-                <span className="text-base font-bold w-8 text-center">{qty}</span>
+                <span className="text-base font-bold min-w-[60px] text-center">{isKg ? formatQty(product, currentQty) : currentQty}</span>
                 <button
-                  onClick={() => setQty((q) => q + 1)}
+                  onClick={() => setQty((q) => parseFloat(((q ?? min) + step).toFixed(2)))}
                   className="w-9 h-9 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors"
                 >
                   <Plus className="w-3.5 h-3.5" />
                 </button>
               </div>
               <span className="text-sm text-muted-foreground ml-1">
-                Total: <span className="font-semibold text-primary">{formatPrice(product.price * qty)}</span>
+                Total: <span className="font-semibold text-primary">{formatPrice(product.price * currentQty)}</span>
               </span>
             </div>
           )}

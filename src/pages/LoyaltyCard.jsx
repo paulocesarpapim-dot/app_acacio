@@ -26,7 +26,7 @@ export default function LoyaltyCard() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       {/* Cartão Principal */}
-      <div className="rounded-3xl gradient-to-br from-primary/20 to-accent/20 border-2 border-primary/30 p-8 sm:p-12 mb-12 bg-white">
+      <div className="rounded-3xl bg-gradient-to-br from-primary/20 to-accent/20 border-2 border-primary/30 p-8 sm:p-12 mb-12 bg-white">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
           <div>
             <p className="text-muted-foreground text-lg sm:text-xl mb-2">Bem-vindo,</p>

@@ -3,35 +3,123 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dbPath = path.join(__dirname, 'database.json');
+const sourcePath = path.join(__dirname, 'database.json');
 
-// Initialize database if it doesn't exist
-export function initDB() {
-  if (!fs.existsSync(dbPath)) {
-    console.log('❌ database.json not found. Please create it first.');
-  } else {
-    console.log('✅ Database loaded from database.json');
+const isVercel = !!process.env.VERCEL;
+const dbPath = isVercel ? '/tmp/database.json' : sourcePath;
+
+// Upstash Redis REST API (no package needed — just fetch)
+const UPSTASH_URL = process.env.UPSTASH_REDIS_REST_URL;
+const UPSTASH_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
+const useRedis = !!(UPSTASH_URL && UPSTASH_TOKEN);
+
+// ——— Redis helpers ———
+async function redisCommand(...args) {
+  const res = await fetch(UPSTASH_URL, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${UPSTASH_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(args),
+  });
+  return await res.json();
+}
+
+async function redisGet(key) {
+  const { result } = await redisCommand('GET', key);
+  return result ? (typeof result === 'string' ? JSON.parse(result) : result) : null;
+}
+
+async function redisSet(key, value) {
+  await redisCommand('SET', key, JSON.stringify(value));
+}
+
+// ——— File helpers ———
+function ensureFile() {
+  if (isVercel && !fs.existsSync(dbPath)) {
+    try {
+      const data = fs.readFileSync(sourcePath, 'utf-8');
+      fs.writeFileSync(dbPath, data);
+      console.log('✅ Copied database.json to /tmp');
+    } catch (e) {
+      console.error('❌ Error copying database to /tmp:', e.message);
+    }
   }
 }
 
-// Read database
-export function readDB() {
+function readFile() {
+  ensureFile();
   try {
-    const data = fs.readFileSync(dbPath, 'utf-8');
-    return JSON.parse(data);
-  } catch (error) {
-    console.error('❌ Error reading database:', error.message);
-    return { products: [] };
+    return JSON.parse(fs.readFileSync(dbPath, 'utf-8'));
+  } catch {
+    return { products: [], customers: [], orders: [] };
   }
 }
 
-// Save database
-export function saveDB(data) {
+function writeFile(data) {
   try {
     fs.writeFileSync(dbPath, JSON.stringify(data, null, 2));
-    console.log('✅ Database saved');
-  } catch (error) {
-    console.error('❌ Error saving database:', error.message);
+  } catch (e) {
+    console.error('❌ Error saving file:', e.message);
+  }
+}
+
+// ——— Sync from Redis on cold start ———
+let initPromise = null;
+
+async function syncFromRedis() {
+  try {
+    const remoteData = await redisGet('database');
+    if (remoteData) {
+      // Merge: products from deploy bundle + customers/orders from Redis
+      const localData = readFile();
+      const merged = {
+        products: localData.products,
+        customers: remoteData.customers || [],
+        orders: remoteData.orders || [],
+      };
+      writeFile(merged);
+      console.log(`✅ Redis sync: ${merged.customers.length} clientes, ${merged.orders.length} pedidos`);
+    } else {
+      // First time: seed Redis from file
+      const localData = readFile();
+      await redisSet('database', localData);
+      console.log('✅ Seeded Redis from database.json');
+    }
+  } catch (e) {
+    console.error('❌ Redis sync error:', e.message);
+  }
+}
+
+// ——— Public API ———
+export function initDB() {
+  ensureFile();
+  if (useRedis) {
+    initPromise = syncFromRedis();
+    console.log('✅ Database: Upstash Redis + file');
+  } else {
+    console.log('✅ Database: file only —', dbPath);
+    if (isVercel) {
+      console.log('⚠️  Dados efêmeros! Configure UPSTASH_REDIS_REST_URL e UPSTASH_REDIS_REST_TOKEN no Vercel para persistência.');
+    }
+  }
+}
+
+export async function readDB() {
+  // Wait for Redis sync on first request after cold start
+  if (initPromise) {
+    await initPromise;
+    initPromise = null;
+  }
+  return readFile();
+}
+
+export function saveDB(data) {
+  writeFile(data);
+  // Fire-and-forget: persist to Redis in background
+  if (useRedis) {
+    redisSet('database', data).catch(e => console.error('❌ Redis save error:', e.message));
   }
 }
 

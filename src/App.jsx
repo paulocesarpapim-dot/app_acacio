@@ -1,5 +1,5 @@
 import { Toaster } from "@/components/ui/toaster"
-import capa from "./assets/capa.jpg";
+import { Toaster as SonnerToaster } from "sonner"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -14,8 +14,11 @@ import Products from './pages/Products';
 import Categories from './pages/Categories';
 import Cart from './pages/Cart';
 import ProductDetail from './pages/ProductDetail';
-import LoyaltyProgram from './pages/LoyaltyProgram';
-import LoyaltyCard from './pages/LoyaltyCard';
+import CustomerAuth from './pages/CustomerAuth';
+import MyAccount from './pages/MyAccount';
+import AdminProducts from './pages/AdminProducts';
+import CheckoutStatus from './pages/CheckoutStatus';
+import PixPayment from './pages/PixPayment';
 import React from 'react';
 
 class ErrorBoundary extends React.Component {
@@ -43,8 +46,11 @@ const AuthenticatedApp = () => {
         <Route path="/produtos" element={<Products />} />
         <Route path="/carrinho" element={<Cart />} />
         <Route path="/produto/:id" element={<ProductDetail />} />
-        <Route path="/fidelidade" element={<LoyaltyProgram />} />
-        <Route path="/minha-fidelidade" element={<LoyaltyCard />} />
+        <Route path="/conta" element={<CustomerAuth />} />
+        <Route path="/minha-conta" element={<MyAccount />} />
+        <Route path="/admin/produtos" element={<AdminProducts />} />
+        <Route path="/checkout/status" element={<CheckoutStatus />} />
+        <Route path="/pix/pagamento" element={<PixPayment />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>
@@ -60,17 +66,13 @@ function App() {
         <AuthProvider>
           <QueryClientProvider client={queryClientInstance}>
             <div>
-              <img
-                src={capa}
-                alt="Capa Casa do Norte"
-                style={{ width: '100%', maxHeight: '400px', objectFit: 'cover', display: 'block' }}
-              />
               <Router>
                 <AuthenticatedApp />
                 <Chatbot />
                 <AccessibilityPanel />
               </Router>
               <Toaster />
+              <SonnerToaster position="top-center" richColors />
             </div>
           </QueryClientProvider>
         </AuthProvider>

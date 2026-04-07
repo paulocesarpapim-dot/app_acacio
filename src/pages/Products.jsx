@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import ProductCard from "../components/ProductCard";
 import ListProductCard from "../components/ListProductCard";
 
-const CATEGORIES = ["Feijão", "Farinha", "Queijos", "Manteiga", "Bolachas", "Rapadura", "Doces", "Cereais", "Requeijão", "Temperos", "Carne de Sol", "Bebidas"];
+const CATEGORIES = ["Feijão", "Cereais"];
 
 const PRICE_RANGES = [
   { label: "Todos os preços", min: 0, max: Infinity },
@@ -31,7 +31,7 @@ export default function Products() {
   const [selectedCategories, setSelectedCategories] = useState(initialCategory ? [initialCategory] : []);
   const [priceRange, setPriceRange] = useState(PRICE_RANGES[0]);
   const [search, setSearch] = useState("");
-  const [showFilters, setShowFilters] = useState(true);
+  const [showFilters, setShowFilters] = useState(false);
   const [sortBy, setSortBy] = useState("default");
   const [viewMode, setViewMode] = useState("grid"); // grid or list
   const [expandedFilters, setExpandedFilters] = useState({
@@ -110,14 +110,14 @@ export default function Products() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+    <div className="min-h-screen">
       {/* Header */}
       <div className="bg-white border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
           <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="font-display text-3xl sm:text-4xl font-bold text-foreground">Nossos Produtos</h1>
-              <p className="text-muted-foreground mt-2">O melhor da Casa do Norte para sua mesa</p>
+              <p className="text-muted-foreground mt-2">O melhor do Empório para sua mesa</p>
             </div>
           </div>
 
@@ -143,7 +143,7 @@ export default function Products() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-        <div className="flex gap-8">
+        <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar Filters */}
           <aside className={`${showFilters ? "block" : "hidden lg:block"} w-full lg:w-56 flex-shrink-0`}>
             <div className="sticky top-4 space-y-6">

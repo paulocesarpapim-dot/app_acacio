@@ -1,18 +1,24 @@
-import { Plus, Check, Package, Star } from "lucide-react";
+import { Plus, Check, Package, Star, Minus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../hooks/useCart";
 import { toast } from "sonner";
+import { isKgProduct, formatQty, qtyStep, minQty } from "../utils/productUtils";
 
 export default function ListProductCard({ product }) {
   const { addItem } = useCart();
   const [added, setAdded] = useState(false);
+  const isKg = isKgProduct(product);
+  const [qty, setQty] = useState(isKg ? 0.1 : 1);
+  const step = qtyStep(product);
+  const min = minQty(product);
 
   const handleAdd = () => {
-    addItem(product);
+    addItem(product, qty);
     setAdded(true);
-    toast.success(`${product.name} adicionado ao carrinho!`);
+    const label = isKg ? `${formatQty(product, qty)} de ${product.name}` : product.name;
+    toast.success(`${label} adicionado ao carrinho!`);
     setTimeout(() => setAdded(false), 1500);
   };
 
@@ -51,7 +57,7 @@ export default function ListProductCard({ product }) {
             {product.category}
           </span>
           <Link to={`/produto/${product.id}`}>
-            <h3 className="font-display text-base sm:text-lg font-semibold mt-1 text-foreground leading-tight hover:text-primary transition-colors line-clamp-2">
+            <h3 className="text-base sm:text-lg font-bold mt-1 text-foreground leading-tight hover:text-primary transition-colors line-clamp-2">
               {product.name}
             </h3>
           </Link>
@@ -89,14 +95,27 @@ export default function ListProductCard({ product }) {
             <span className="text-lg sm:text-xl font-bold text-primary">
               {formatPrice(product.price)}
             </span>
-            {product.unit && (
+            {isKg ? (
+              <span className="text-xs text-muted-foreground ml-2">/ kg</span>
+            ) : product.unit ? (
               <span className="text-xs text-muted-foreground ml-2">/ {product.unit}</span>
-            )}
+            ) : null}
           </div>
+          {isKg && (
+            <div className="flex items-center gap-1 mr-2">
+              <button onClick={() => setQty(q => Math.max(min, parseFloat((q - step).toFixed(2))))} className="w-7 h-7 rounded-full border border-border flex items-center justify-center hover:bg-muted">
+                <Minus className="w-3 h-3" />
+              </button>
+              <span className="text-xs font-bold min-w-[40px] text-center">{formatQty(product, qty)}</span>
+              <button onClick={() => setQty(q => parseFloat((q + step).toFixed(2)))} className="w-7 h-7 rounded-full border border-border flex items-center justify-center hover:bg-muted">
+                <Plus className="w-3 h-3" />
+              </button>
+            </div>
+          )}
           <Button
             size="sm"
             onClick={handleAdd}
-            disabled={!product.in_stock || added}
+            disabled={product.in_stock === false || added}
             className={`rounded-lg transition-all ${
               added ? "bg-green-600 hover:bg-green-600" : ""
             }`}

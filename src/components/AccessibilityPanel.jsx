@@ -19,11 +19,11 @@ export default function AccessibilityPanel() {
       {/* Botão Flutuante */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-50 rounded-full w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-primary to-accent text-white shadow-lg hover:shadow-xl transition-all flex items-center justify-center"
+        className="fixed bottom-24 left-6 sm:bottom-28 sm:left-8 z-50 rounded-full w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-primary to-accent text-white shadow-lg hover:shadow-xl transition-all flex items-center justify-center"
         aria-label="Abrir configurações de acessibilidade"
         title="Acessibilidade"
       >
-        <Settings className="w-8 h-8 sm:w-10 sm:h-10" />
+        <Settings className="w-6 h-6 sm:w-8 sm:h-8" />
       </button>
 
       {/* Modal de Acessibilidade */}

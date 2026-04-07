@@ -11,8 +11,28 @@ dotenv.config();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 
-// Middlewares
-app.use(cors());
+// CORS — origens permitidas
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  ...(process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : []),
+  'https://emporiofilhodedeus.com.br',
+  'https://www.emporiofilhodedeus.com.br',
+];
+
+app.use(cors({
+  origin(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    if (origin.endsWith('.vercel.app')) {
+      return callback(null, true);
+    }
+    callback(new Error('Bloqueado pelo CORS'));
+  },
+  credentials: true,
+}));
 app.use(express.json());
 
 // Inicializar banco de dados

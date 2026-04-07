@@ -1,24 +1,70 @@
 import express from 'express';
 import {
+  getCustomers,
+  registerCustomer,
+  loginCustomer,
+  updateCustomerLoyalty,
+  deleteCustomer,
+  createPaymentPreference,
+  getOrders,
+  createPixCharge,
+  checkPixStatus,
+  pixWebhook,
+  registerPixWebhook,
+  getSettings,
+  updateSettings,
   getProducts,
   getProductsByCategory,
   getProductById,
   createProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  loginAdmin,
 } from './controllers-json.js';
-import imageRoutes from './image-routes.js';
+import { adminAuth, loginRateLimit } from './middleware.js';
 
 const router = express.Router();
 
+// ============ PUBLIC ROUTES ============
+
+// Products (leitura publica)
 router.get('/products', getProducts);
 router.get('/products/category/:category', getProductsByCategory);
 router.get('/products/:id', getProductById);
-router.post('/products', createProduct);
-router.put('/products/:id', updateProduct);
-router.delete('/products/:id', deleteProduct);
 
-// Rotas de imagens com IA
-router.use('/images', imageRoutes);
+// Customer auth
+router.post('/customers/register', registerCustomer);
+router.post('/customers/login', loginRateLimit, loginCustomer);
+
+// Pix webhook (chamado pelo C6 Bank)
+router.post('/pix/webhook', pixWebhook);
+
+// Admin login
+router.post('/admin/login', loginRateLimit, loginAdmin);
+
+// ============ ADMIN ROUTES (protegidas) ============
+
+// Products (escrita)
+router.post('/products', adminAuth, createProduct);
+router.put('/products/:id', adminAuth, updateProduct);
+router.delete('/products/:id', adminAuth, deleteProduct);
+
+// Customers
+router.get('/customers', adminAuth, getCustomers);
+router.put('/customers/:id/loyalty', adminAuth, updateCustomerLoyalty);
+router.delete('/customers/:id', adminAuth, deleteCustomer);
+
+// Orders
+router.get('/orders', adminAuth, getOrders);
+
+// Payments
+router.post('/payments/preference', adminAuth, createPaymentPreference);
+router.post('/pix/charge', adminAuth, createPixCharge);
+router.get('/pix/status/:txid', adminAuth, checkPixStatus);
+router.post('/pix/webhook/register', adminAuth, registerPixWebhook);
+
+// Settings
+router.get('/settings', adminAuth, getSettings);
+router.put('/settings', adminAuth, updateSettings);
 
 export default router;

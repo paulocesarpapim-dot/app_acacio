@@ -1,7 +1,5 @@
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
 
 export default function PageNotFound({}) {
     const location = useLocation();

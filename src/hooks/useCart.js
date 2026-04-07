@@ -29,9 +29,9 @@ export function useCart() {
     const cart = getCart();
     const idx = cart.findIndex((i) => i.product.id === product.id);
     if (idx >= 0) {
-      cart[idx].qty += qty;
+      cart[idx].qty = parseFloat((cart[idx].qty + qty).toFixed(2));
     } else {
-      cart.push({ product, qty });
+      cart.push({ product, qty: parseFloat(qty.toFixed(2)) });
     }
     saveCart(cart);
   }, []);
@@ -45,10 +45,11 @@ export function useCart() {
     const cart = getCart();
     const idx = cart.findIndex((i) => i.product.id === productId);
     if (idx >= 0) {
-      if (qty <= 0) {
+      const rounded = parseFloat(qty.toFixed(2));
+      if (rounded <= 0) {
         cart.splice(idx, 1);
       } else {
-        cart[idx].qty = qty;
+        cart[idx].qty = rounded;
       }
     }
     saveCart(cart);

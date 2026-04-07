@@ -1,20 +1,30 @@
-import { Plus, Check, Package } from "lucide-react";
+import { Plus, Check, Package, Minus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../hooks/useCart";
 import { toast } from "sonner";
+import { isKgProduct, formatQty, qtyStep, minQty } from "../utils/productUtils";
 
 export default function ProductCard({ product }) {
   const { addItem } = useCart();
   const [added, setAdded] = useState(false);
+  const isKg = isKgProduct(product);
+  const [qty, setQty] = useState(isKg ? 0.1 : 1);
 
   const handleAdd = () => {
-    addItem(product);
+    addItem(product, qty);
     setAdded(true);
-    toast.success(`${product.name} adicionado ao carrinho!`);
+    const label = isKg ? `${formatQty(product, qty)} de ${product.name}` : product.name;
+    toast.success(`${label} adicionado ao carrinho!`);
     setTimeout(() => setAdded(false), 1500);
   };
+
+  const step = qtyStep(product);
+  const min = minQty(product);
+
+  const handleDecrease = () => setQty(q => Math.max(min, parseFloat((q - step).toFixed(2))));
+  const handleIncrease = () => setQty(q => parseFloat((q + step).toFixed(2)));
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(price);
@@ -40,7 +50,7 @@ export default function ProductCard({ product }) {
               ⭐ Destaque
             </span>
           )}
-          {!product.in_stock && (
+          {product.in_stock === false && (
             <div className="absolute inset-0 bg-background/60 flex items-center justify-center">
               <span className="bg-destructive text-destructive-foreground text-sm font-medium px-3 py-1.5 rounded-lg">
                 Esgotado
@@ -55,7 +65,7 @@ export default function ProductCard({ product }) {
           {product.category}
         </span>
         <Link to={`/produto/${product.id}`} className="block">
-          <h3 className="font-display text-base font-semibold mt-1 text-foreground leading-tight hover:text-primary transition-colors">
+          <h3 className="text-base font-bold mt-1 text-foreground leading-tight hover:text-primary transition-colors">
             {product.name}
           </h3>
         </Link>
@@ -66,15 +76,41 @@ export default function ProductCard({ product }) {
         <div className="flex items-center justify-between mt-4">
           <div>
             <span className="text-lg font-bold text-primary">{formatPrice(product.price)}</span>
-            {product.unit && (
+            {isKg ? (
+              <span className="text-xs text-muted-foreground ml-1">/ kg</span>
+            ) : product.unit ? (
               <span className="text-xs text-muted-foreground ml-1">/ {product.unit}</span>
-            )}
+            ) : null}
           </div>
+        </div>
+
+        {isKg && (
+          <div className="flex items-center gap-2 mt-3">
+            <button
+              onClick={handleDecrease}
+              className="w-7 h-7 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors text-xs"
+            >
+              <Minus className="w-3 h-3" />
+            </button>
+            <span className="text-sm font-bold min-w-[50px] text-center">{formatQty(product, qty)}</span>
+            <button
+              onClick={handleIncrease}
+              className="w-7 h-7 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors text-xs"
+            >
+              <Plus className="w-3 h-3" />
+            </button>
+            <span className="text-xs text-muted-foreground ml-1">
+              {formatPrice(product.price * qty)}
+            </span>
+          </div>
+        )}
+
+        <div className="mt-3">
           <Button
             size="sm"
             onClick={handleAdd}
-            disabled={!product.in_stock || added}
-            className={`rounded-full transition-all ${
+            disabled={product.in_stock === false || added}
+            className={`rounded-full transition-all w-full ${
               added ? "bg-green-600 hover:bg-green-600" : ""
             }`}
           >

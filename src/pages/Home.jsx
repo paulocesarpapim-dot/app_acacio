@@ -6,8 +6,9 @@ import { Button } from "@/components/ui/button";
 import CategoryCard from "../components/CategoryCard";
 import ProductCard from "../components/ProductCard";
 import capa from "../assets/capa.jpg";
+import PromocaoCliente from "@/components/PromocaoCliente";
 
-const CATEGORIES = ["Feijão", "Farinha", "Queijos", "Manteiga", "Bolachas", "Rapadura", "Doces", "Cereais", "Requeijão", "Temperos", "Carne de Sol"];
+const CATEGORIES = ["Feijão", "Cereais"];
 
 export default function Home() {
   const { data: allProducts, isLoading } = useQuery({
@@ -24,24 +25,30 @@ export default function Home() {
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
-          <img
-            src={capa}
-            alt="Produtos nordestinos"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
+          <img src={capa} alt="Empório Filho de Deus" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/70 to-black/30" />
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-32 lg:py-40">
-          <div className="max-w-xl">
-            <span className="inline-block bg-accent/90 text-accent-foreground text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-6">
-              Casa do Norte Filho de Deus 🌵
-            </span>
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
-              Sabores autênticos do{" "}
-              <span className="text-accent">Sertão</span>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-24 sm:py-36 lg:py-44">
+          <div className="max-w-2xl">
+            <h2
+              className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-2 leading-none tracking-tight"
+              style={{textShadow: '3px 3px 12px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5)'}}
+            >
+              Empório
+            </h2>
+            <h2
+              className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold text-accent mb-6 leading-none tracking-tight"
+              style={{textShadow: '3px 3px 12px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5)'}}
+            >
+              Filho de Deus
+            </h2>
+            <div className="w-20 h-1 bg-accent rounded-full mb-6" />
+            <h1 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight">
+              <span className="text-white/60">Sabores autênticos do</span>{" "}
+              <span className="text-white font-extrabold">Sertão</span>
             </h1>
-            <p className="text-white/80 text-lg mt-4 leading-relaxed">
-              Feijão, farinha, requeijão, queijo coalho, rapadura, doces e muito mais.
+            <p className="text-white/70 text-lg mt-4 leading-relaxed max-w-lg">
+              Feijão, cereais, grãos e leguminosas.
               Produtos selecionados com o gosto de nossa terra.
             </p>
             <div className="flex flex-wrap gap-3 mt-8">
@@ -63,6 +70,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Espaço de Promoção e Fidelidade */}
+      <PromocaoCliente />
 
       {/* Trust Bar */}
       <section className="bg-card border-b border-border">
