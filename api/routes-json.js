@@ -15,9 +15,9 @@ const router = express.Router();
 router.get('/products', getProducts);
 router.get('/products/category/:category', getProductsByCategory);
 router.get('/products/:id', getProductById);
-router.post('/products', requireAdmin, writeRateLimit, createProduct);
-router.put('/products/:id', requireAdmin, writeRateLimit, updateProduct);
-router.delete('/products/:id', requireAdmin, writeRateLimit, deleteProduct);
+router.post('/products', writeRateLimit, requireAdmin, createProduct);
+router.put('/products/:id', writeRateLimit, requireAdmin, updateProduct);
+router.delete('/products/:id', writeRateLimit, requireAdmin, deleteProduct);
 
 // Rotas de imagens com IA
 router.use('/images', imageRoutes);

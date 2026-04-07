@@ -16,8 +16,8 @@ const HMAC_ALG = 'sha256';
 // sha256 hex digest is always 64 hex chars (32 bytes * 2)
 const SIG_HEX_LEN = 64;
 
-// Derive salt from the password so it is unique per deployment and not hardcoded
-const PW_SALT = crypto.createHash('sha256').update('app-acacio-' + PASSWORD).digest();
+// Fixed salt per application (not derived from password to avoid correlation)
+const PW_SALT = Buffer.from('casa-do-norte-app-acacio-2026', 'utf8');
 const PW_KEYLEN = 32;
 
 function hashPassword(pw) {
