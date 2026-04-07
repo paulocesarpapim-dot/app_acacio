@@ -7,7 +7,7 @@ import CategoryCard from "../components/CategoryCard";
 import ProductCard from "../components/ProductCard";
 import capa from "../assets/capa.jpg";
 
-const CATEGORIES = ["Feijão", "Farinha", "Queijos", "Manteiga", "Bolachas", "Rapadura", "Doces", "Cereais", "Requeijão", "Temperos", "Carne de Sol"];
+const CATEGORIES = ["Feijão", "Cereais"];
 
 export default function Home() {
   const { data: allProducts, isLoading } = useQuery({

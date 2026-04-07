@@ -13,7 +13,7 @@ const QUICK_ACTIONS = [
 
 const RESPONSES = {
   greeting: `Olá! 👋 Seja bem-vindo à *Casa do Norte Filho de Deus*!\n\nSou o assistente virtual. Posso te ajudar com:`,
-  products_list: `Aqui estão algumas categorias disponíveis:\n\n🫘 Feijão · 🌾 Farinha · 🧀 Queijos\n🧈 Manteiga · 🍬 Rapadura · 🍮 Doces\n🌶️ Temperos · 🥩 Carne de Sol\n\nClique em **Ver Produtos** para ver o catálogo completo!`,
+  products_list: `Aqui estão as categorias disponíveis:\n\n🫘 Feijão · 🌽 Cereais\n\nFeijões, favas, lentilha, grão de bico, canjica, quirela, milho e soja.\n\nClique em **Ver Produtos** para ver o catálogo completo!`,
   delivery: `🚚 *Informações de Entrega:*\n\n• Entregamos em toda a cidade\n• Pedidos pelo WhatsApp ou pelo carrinho\n• Frete calculado conforme endereço\n• Prazo médio: 1 a 2 dias úteis\n\nDúvidas? Fale direto no WhatsApp! 📱`,
   payment: `💳 *Formas de Pagamento:*\n\n• PIX (desconto especial!)\n• Cartão de crédito ou débito\n• Dinheiro na entrega\n• Transferência bancária\n\nPara mais detalhes, fale conosco pelo WhatsApp!`,
   whatsapp: `📱 *Fale conosco agora!*\n\nNosso atendimento é rápido e personalizado. Clique abaixo para abrir o WhatsApp!`,

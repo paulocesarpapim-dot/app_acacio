@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Trash2, Edit2, Plus, AlertCircle } from "lucide-react";
 
-const CATEGORIES = ["Feijão", "Farinha", "Queijos", "Manteiga", "Bolachas", "Rapadura", "Doces", "Cereais", "Requeijão", "Outros"];
+const CATEGORIES = ["Feijão", "Cereais"];
 
 export default function AdminProducts() {
   const queryClient = useQueryClient();

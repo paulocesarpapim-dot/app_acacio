@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import ProductCard from "../components/ProductCard";
 import ListProductCard from "../components/ListProductCard";
 
-const CATEGORIES = ["Feijão", "Farinha", "Queijos", "Manteiga", "Bolachas", "Rapadura", "Doces", "Cereais", "Requeijão", "Temperos", "Carne de Sol", "Bebidas"];
+const CATEGORIES = ["Feijão", "Cereais"];
 
 const PRICE_RANGES = [
   { label: "Todos os preços", min: 0, max: Infinity },

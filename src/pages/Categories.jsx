@@ -9,64 +9,14 @@ import { useState, useMemo } from "react";
 const CATEGORIES_INFO = {
   "Feijão": {
     emoji: "🫘",
-    description: "Feijões tradicionais do sertão",
+    description: "Feijões, favas e leguminosas selecionadas",
     color: "from-amber-600 to-amber-700"
-  },
-  "Farinha": {
-    emoji: "🌾",
-    description: "Farinha de mandioca e derivados",
-    color: "from-yellow-600 to-yellow-700"
-  },
-  "Queijos": {
-    emoji: "🧀",
-    description: "Queijos artesanais nordestinos",
-    color: "from-orange-600 to-orange-700"
-  },
-  "Manteiga": {
-    emoji: "🧈",
-    description: "Manteiga de garrafa sertaneja",
-    color: "from-yellow-500 to-yellow-600"
-  },
-  "Bolachas": {
-    emoji: "🍪",
-    description: "Bolachas caseiras tradicionais",
-    color: "from-amber-500 to-amber-600"
-  },
-  "Rapadura": {
-    emoji: "🍯",
-    description: "Rapadura artesanal nordestina",
-    color: "from-amber-700 to-amber-800"
-  },
-  "Doces": {
-    emoji: "🍬",
-    description: "Doces regionais e confeitaria",
-    color: "from-pink-600 to-pink-700"
   },
   "Cereais": {
     emoji: "🌽",
-    description: "Cereais e grãos regionais",
-    color: "from-yellow-700 to-yellow-800"
+    description: "Canjica, quirela, milho e grãos regionais",
+    color: "from-yellow-600 to-yellow-700"
   },
-  "Requeijão": {
-    emoji: "🥛",
-    description: "Requeijão cremoso artesanal",
-    color: "from-orange-500 to-orange-600"
-  },
-  "Temperos": {
-    emoji: "🌶️",
-    description: "Temperos e especiarias amazônicas",
-    color: "from-red-600 to-red-700"
-  },
-  "Carne de Sol": {
-    emoji: "🥩",
-    description: "Carne seca e de sol artesanal",
-    color: "from-red-700 to-red-800"
-  },
-  "Outros": {
-    emoji: "📦",
-    description: "Outros produtos regionais",
-    color: "from-gray-600 to-gray-700"
-  }
 };
 
 export default function Categories() {
