@@ -78,25 +78,173 @@ async function deleteProduct(id) {
 // COMPONENTE AdminConfiguracoes (criado)
 // ============================================================
 function AdminConfiguracoes() {
+  const API_URL = getApiUrl();
+  const [settings, setSettings] = useState({
+    pixKey: '',
+    pixKeyType: 'cnpj',
+    pixName: '',
+    pixCity: '',
+    pixBank: '',
+  });
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [msg, setMsg] = useState({ text: '', type: '' });
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API_URL}/api/settings`, { headers: adminHeaders() });
+        if (res.ok) {
+          const data = await res.json();
+          setSettings(prev => ({ ...prev, ...data }));
+        }
+      } catch (err) {
+        console.error('Erro ao carregar configurações:', err);
+      }
+      setLoading(false);
+    };
+    load();
+  }, []);
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+    setMsg({ text: '', type: '' });
+    try {
+      const res = await fetch(`${API_URL}/api/settings`, {
+        method: 'PUT',
+        headers: adminHeaders(),
+        body: JSON.stringify(settings),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setSettings(prev => ({ ...prev, ...data }));
+        setMsg({ text: 'Configurações salvas com sucesso!', type: 'success' });
+      } else {
+        setMsg({ text: 'Erro ao salvar configurações', type: 'error' });
+      }
+    } catch (err) {
+      setMsg({ text: 'Erro de conexão com o servidor', type: 'error' });
+    }
+    setSaving(false);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setSettings(prev => ({ ...prev, [name]: value }));
+  };
+
+  if (loading) return <div className="text-center py-12 text-gray-500">Carregando configurações...</div>;
+
   return (
     <>
-      <h2 className="text-2xl font-bold mb-6">Configurações</h2>
-      <div className="bg-card rounded-lg border border-border p-6">
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-2">Categorias Disponíveis</label>
-            <div className="flex flex-wrap gap-2">
-              {CATEGORIES.map(cat => (
-                <span key={cat} className="px-2 py-1 bg-muted rounded-md text-sm">{cat}</span>
-              ))}
+      <h2 className="text-2xl font-bold mb-6 text-gray-900">Configurações</h2>
+
+      {msg.text && (
+        <div className={`rounded-lg p-4 mb-6 flex items-center gap-2 ${msg.type === 'success' ? 'bg-green-50 border border-green-200 text-green-700' : 'bg-red-50 border border-red-200 text-red-700'}`}>
+          <AlertCircle className="w-4 h-4 flex-shrink-0" />
+          {msg.text}
+        </div>
+      )}
+
+      <form onSubmit={handleSave} className="space-y-8">
+        {/* Dados Pix */}
+        <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            💳 Dados do Pix
+          </h3>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Chave Pix</label>
+              <Input name="pixKey" value={settings.pixKey} onChange={handleChange} placeholder="CPF, CNPJ, e-mail, telefone ou aleatória" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Tipo da Chave</label>
+              <select name="pixKeyType" value={settings.pixKeyType} onChange={handleChange} className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white">
+                <option value="cnpj">CNPJ</option>
+                <option value="cpf">CPF</option>
+                <option value="email">E-mail</option>
+                <option value="phone">Telefone</option>
+                <option value="random">Aleatória</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Nome do Recebedor</label>
+              <Input name="pixName" value={settings.pixName} onChange={handleChange} placeholder="Nome que aparece no Pix" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Cidade</label>
+              <Input name="pixCity" value={settings.pixCity} onChange={handleChange} placeholder="Cidade do recebedor" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Banco</label>
+              <Input name="pixBank" value={settings.pixBank} onChange={handleChange} placeholder="Ex: C6 Bank, Nubank, Itaú..." />
             </div>
           </div>
+        </div>
+
+        {/* API Mercado Pago */}
+        <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            🟡 Mercado Pago
+          </h3>
+          <p className="text-sm text-gray-500 mb-4">Configure o token de acesso para aceitar pagamentos via Mercado Pago Checkout Pro.</p>
           <div>
-            <label className="block text-sm font-medium mb-2">Versão do Sistema</label>
-            <p className="text-muted-foreground">v1.0.0 - Painel Administrativo Casa do Norte</p>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Access Token (MP_ACCESS_TOKEN)</label>
+            <Input name="mpAccessToken" value={settings.mpAccessToken || ''} onChange={handleChange} placeholder="APP_USR-xxxxxxxx-xxxx-xxxx..." type="password" />
+            <p className="text-xs text-gray-400 mt-1">Obtenha em: developers.mercadopago.com.br → Suas integrações → Credenciais</p>
           </div>
         </div>
-      </div>
+
+        {/* API C6 Bank Pix */}
+        <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            🏦 API Pix C6 Bank (Opcional)
+          </h3>
+          <p className="text-sm text-gray-500 mb-4">Para cobranças Pix dinâmicas via API do C6 Bank. Deixe em branco para usar Pix estático.</p>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Client ID</label>
+              <Input name="c6ClientId" value={settings.c6ClientId || ''} onChange={handleChange} placeholder="Client ID da API C6" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Client Secret</label>
+              <Input name="c6ClientSecret" value={settings.c6ClientSecret || ''} onChange={handleChange} placeholder="Client Secret" type="password" />
+            </div>
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-1">URL da API</label>
+              <Input name="c6ApiUrl" value={settings.c6ApiUrl || ''} onChange={handleChange} placeholder="https://openfinance.c6bank.com.br (padrão)" />
+            </div>
+          </div>
+        </div>
+
+        {/* Info Geral */}
+        <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            ⚙️ Geral
+          </h3>
+          <div className="space-y-3">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Categorias Disponíveis</label>
+              <div className="flex flex-wrap gap-2">
+                {CATEGORIES.map(cat => (
+                  <span key={cat} className="px-3 py-1 bg-amber-50 border border-amber-200 rounded-full text-sm text-amber-700 font-medium">{cat}</span>
+                ))}
+              </div>
+            </div>
+            {settings.updatedAt && (
+              <p className="text-xs text-gray-400">Última atualização: {new Date(settings.updatedAt).toLocaleString('pt-BR')}</p>
+            )}
+            <p className="text-xs text-gray-400">v1.0.0 — Empório Filho de Deus</p>
+          </div>
+        </div>
+
+        <div className="flex gap-3">
+          <Button type="submit" disabled={saving} className="bg-amber-600 hover:bg-amber-700 px-8">
+            {saving ? 'Salvando...' : 'Salvar Configurações'}
+          </Button>
+        </div>
+      </form>
     </>
   );
 }

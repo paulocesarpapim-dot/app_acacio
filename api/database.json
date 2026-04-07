@@ -35,7 +35,7 @@
       "name": "Feijao Preto",
       "description": "Feijao preto selecionado, ideal para feijoada e acompanhamentos.",
       "category": "Feijao",
-      "price": 7.40,
+      "price": 7.4,
       "unit": "kg",
       "image_url": "https://via.placeholder.com/400x400?text=Feijao+Preto",
       "created_at": "2026-04-07T10:00:00Z"
@@ -45,7 +45,7 @@
       "name": "Fava Rajada",
       "description": "Fava rajada de primeira qualidade, rica em proteinas e fibras.",
       "category": "Feijao",
-      "price": 24.50,
+      "price": 24.5,
       "unit": "kg",
       "image_url": "https://via.placeholder.com/400x400?text=Fava+Rajada",
       "created_at": "2026-04-07T10:00:00Z"
@@ -55,7 +55,7 @@
       "name": "Fava Branca",
       "description": "Fava branca selecionada, otima para cozidos e sopas.",
       "category": "Feijao",
-      "price": 24.50,
+      "price": 24.5,
       "unit": "kg",
       "image_url": "https://via.placeholder.com/400x400?text=Fava+Branca",
       "created_at": "2026-04-07T10:00:00Z"
@@ -65,7 +65,7 @@
       "name": "Fava Manteiga",
       "description": "Fava manteiga cremosa, sabor suave e textura macia.",
       "category": "Feijao",
-      "price": 24.50,
+      "price": 24.5,
       "unit": "kg",
       "image_url": "https://via.placeholder.com/400x400?text=Fava+Manteiga",
       "created_at": "2026-04-07T10:00:00Z"
@@ -125,7 +125,7 @@
       "name": "Lentilha",
       "description": "Lentilha de qualidade superior, rica em ferro e proteinas.",
       "category": "Feijao",
-      "price": 19.70,
+      "price": 19.7,
       "unit": "kg",
       "image_url": "https://via.placeholder.com/400x400?text=Lentilha",
       "created_at": "2026-04-07T10:00:00Z"
@@ -135,13 +135,15 @@
       "name": "Soja Grao",
       "description": "Soja em grao selecionada, versatil para diversas preparacoes.",
       "category": "Cereais",
-      "price": 9.90,
+      "price": 9.9,
       "unit": "kg",
-      "image_url": "https://via.placeholder.com/400x400?text=Soja+Grao",
+      "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4GXBDtb8Dm0yespn5NwQGsKi8MS5UeqP6Q&s",
       "created_at": "2026-04-07T10:00:00Z"
     }
   ],
   "customers": [],
   "orders": [],
-  "settings": {}
+  "settings": {
+    "adminPassword": "c3f45df626552a051bb510e41ae08042:04e3f7733f5b242a3964c236f20264c0f2584ecfe003c0ccb5da5eeb678a2bf2e28a21a762e197794ecddd5194db30859ae5bb9e25821ddc2e1d15ad86f24e1f"
+  }
 }

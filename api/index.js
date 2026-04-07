@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 import routes from './routes-json.js';
 import { initDB } from './db-json.js';
 
-dotenv.config();
+dotenv.config({ path: path.join(path.dirname(fileURLToPath(import.meta.url)), '.env') });
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();

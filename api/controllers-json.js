@@ -138,7 +138,8 @@ export async function deleteCustomer(req, res) {
 
 export async function createPaymentPreference(req, res) {
   try {
-    const accessToken = process.env.MP_ACCESS_TOKEN;
+    const db = await readDB();
+    const accessToken = process.env.MP_ACCESS_TOKEN || db.settings?.mpAccessToken;
     if (!accessToken) {
       return res.status(500).json({ error: 'Mercado Pago não configurado. Defina MP_ACCESS_TOKEN.' });
     }
@@ -202,7 +203,6 @@ export async function createPaymentPreference(req, res) {
     }
 
     // Save order to database
-    const db = await readDB();
     if (!db.orders) db.orders = [];
     db.orders.push({
       id: mpData.id,
@@ -240,15 +240,15 @@ export async function getOrders(req, res) {
 // Cache token in memory (survives within same Vercel instance)
 let pixTokenCache = { token: null, expiresAt: 0 };
 
-async function getPixToken() {
+async function getPixToken(dbSettings) {
   const now = Date.now();
   if (pixTokenCache.token && pixTokenCache.expiresAt > now) {
     return pixTokenCache.token;
   }
 
-  const clientId = process.env.C6_CLIENT_ID;
-  const clientSecret = process.env.C6_CLIENT_SECRET;
-  const apiUrl = process.env.C6_API_URL || 'https://openfinance.c6bank.com.br';
+  const clientId = process.env.C6_CLIENT_ID || dbSettings?.c6ClientId;
+  const clientSecret = process.env.C6_CLIENT_SECRET || dbSettings?.c6ClientSecret;
+  const apiUrl = process.env.C6_API_URL || dbSettings?.c6ApiUrl || 'https://openfinance.c6bank.com.br';
 
   const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
 
@@ -339,11 +339,11 @@ export async function createPixCharge(req, res) {
     }
 
     const txid = generateTxid();
-    const clientId = process.env.C6_CLIENT_ID;
 
     // Load settings from DB for Pix key / merchant info
     const db = await readDB();
     const settings = db.settings || {};
+    const clientId = process.env.C6_CLIENT_ID || settings.c6ClientId;
     const pixKey = settings.pixKey || process.env.C6_PIX_KEY || '64330427000130';
     const merchantName = settings.pixName || 'EMPORIO FILHO DE DEUS';
     const merchantCity = settings.pixCity || 'SAO PAULO';
@@ -353,8 +353,8 @@ export async function createPixCharge(req, res) {
 
     if (clientId) {
       // ——— C6 Bank API (cobrança dinâmica) ———
-      const apiUrl = process.env.C6_API_URL || 'https://openfinance.c6bank.com.br';
-      const token = await getPixToken();
+      const apiUrl = process.env.C6_API_URL || settings.c6ApiUrl || 'https://openfinance.c6bank.com.br';
+      const token = await getPixToken(settings);
 
       const cobPayload = {
         calendario: { expiracao: 3600 },
@@ -442,13 +442,15 @@ export async function checkPixStatus(req, res) {
     const apiUrl = process.env.C6_API_URL || 'https://openfinance.c6bank.com.br';
     const clientId = process.env.C6_CLIENT_ID;
 
+    const db = await readDB();
+    const dbSettings = db.settings || {};
+
     if (!clientId) {
-      const db = await readDB();
       const order = (db.orders || []).find(o => o.id === txid);
       return res.json({ txid, status: order?.status || 'pending' });
     }
 
-    const token = await getPixToken();
+    const token = await getPixToken(dbSettings);
     const cobResponse = await fetch(`${apiUrl}/api/v2/cob/${txid}`, {
       headers: { 'Authorization': `Bearer ${token}` },
     });
@@ -462,7 +464,6 @@ export async function checkPixStatus(req, res) {
     const mappedStatus = isPaid ? 'approved' : cobData.status === 'ATIVA' ? 'pending' : 'rejected';
 
     // Update local DB
-    const db = await readDB();
     const orderIdx = (db.orders || []).findIndex(o => o.id === txid);
     if (orderIdx >= 0 && db.orders[orderIdx].status !== mappedStatus) {
       db.orders[orderIdx].status = mappedStatus;
@@ -536,15 +537,17 @@ export async function pixWebhook(req, res) {
 export async function registerPixWebhook(req, res) {
   try {
     const pixKey = process.env.C6_PIX_KEY || '64330427000130';
-    const apiUrl = process.env.C6_API_URL || 'https://openfinance.c6bank.com.br';
-    const clientId = process.env.C6_CLIENT_ID;
+    const db = await readDB();
+    const dbSettings = db.settings || {};
+    const apiUrl = process.env.C6_API_URL || dbSettings.c6ApiUrl || 'https://openfinance.c6bank.com.br';
+    const clientId = process.env.C6_CLIENT_ID || dbSettings.c6ClientId;
 
     if (!clientId) return res.status(500).json({ error: 'API C6 não configurada' });
 
     const { webhookUrl } = req.body;
     if (!webhookUrl) return res.status(400).json({ error: 'webhookUrl é obrigatório' });
 
-    const token = await getPixToken();
+    const token = await getPixToken(dbSettings);
 
     const wRes = await fetch(`${apiUrl}/api/v2/webhook/${pixKey}`, {
       method: 'PUT',
@@ -586,18 +589,26 @@ export async function getSettings(req, res) {
 
 export async function updateSettings(req, res) {
   try {
-    const { pixKey, pixKeyType, pixName, pixCity, pixBank } = req.body;
+    const { pixKey, pixKeyType, pixName, pixCity, pixBank, mpAccessToken, c6ClientId, c6ClientSecret, c6ApiUrl } = req.body;
     const db = await readDB();
     db.settings = {
       ...(db.settings || {}),
-      pixKey: pixKey || db.settings?.pixKey || '',
-      pixKeyType: pixKeyType || db.settings?.pixKeyType || 'cnpj',
-      pixName: pixName || db.settings?.pixName || '',
-      pixCity: pixCity || db.settings?.pixCity || '',
-      pixBank: pixBank || db.settings?.pixBank || '',
+      pixKey: pixKey !== undefined ? pixKey : (db.settings?.pixKey || ''),
+      pixKeyType: pixKeyType !== undefined ? pixKeyType : (db.settings?.pixKeyType || 'cnpj'),
+      pixName: pixName !== undefined ? pixName : (db.settings?.pixName || ''),
+      pixCity: pixCity !== undefined ? pixCity : (db.settings?.pixCity || ''),
+      pixBank: pixBank !== undefined ? pixBank : (db.settings?.pixBank || ''),
+      mpAccessToken: mpAccessToken !== undefined ? mpAccessToken : (db.settings?.mpAccessToken || ''),
+      c6ClientId: c6ClientId !== undefined ? c6ClientId : (db.settings?.c6ClientId || ''),
+      c6ClientSecret: c6ClientSecret !== undefined ? c6ClientSecret : (db.settings?.c6ClientSecret || ''),
+      c6ApiUrl: c6ApiUrl !== undefined ? c6ApiUrl : (db.settings?.c6ApiUrl || ''),
       updatedAt: new Date().toISOString(),
     };
     saveDB(db);
+    // Return settings without secrets in full
+    const safe = { ...db.settings };
+    if (safe.mpAccessToken) safe.mpAccessToken = safe.mpAccessToken.substring(0, 8) + '••••••••';
+    if (safe.c6ClientSecret) safe.c6ClientSecret = safe.c6ClientSecret.substring(0, 4) + '••••••••';
     res.json(db.settings);
   } catch (error) {
     res.status(500).json({ error: 'Erro ao salvar configurações' });
