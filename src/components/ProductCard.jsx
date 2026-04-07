@@ -117,7 +117,7 @@ export default function ProductCard({ product, promotion }) {
               <Plus className="w-3 h-3" />
             </button>
             <span className="text-xs text-muted-foreground ml-1">
-              {formatPrice(product.price * qty)}
+              {formatPrice(parseFloat((product.price * qty).toFixed(2)))}
             </span>
           </div>
         )}

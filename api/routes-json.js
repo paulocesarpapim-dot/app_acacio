@@ -7,6 +7,7 @@ import {
   deleteCustomer,
   createPaymentPreference,
   getOrders,
+  updateOrderStatus,
   createPixCharge,
   checkPixStatus,
   pixWebhook,
@@ -76,6 +77,7 @@ router.delete('/customers/:id', adminAuth, deleteCustomer);
 
 // Orders
 router.get('/orders', adminAuth, getOrders);
+router.put('/orders/:id/status', adminAuth, updateOrderStatus);
 
 // Payments (admin-only)
 router.post('/pix/webhook/register', adminAuth, registerPixWebhook);

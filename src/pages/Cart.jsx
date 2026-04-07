@@ -66,18 +66,18 @@ export default function Cart() {
   };
 
   // Cálculos
-  const couponDiscount = appliedCoupon?.discount ? cartTotal * appliedCoupon.discount : 0;
-  const subtotalAfterCoupon = cartTotal - couponDiscount;
+  const couponDiscount = appliedCoupon?.discount ? parseFloat((cartTotal * appliedCoupon.discount).toFixed(2)) : 0;
+  const subtotalAfterCoupon = parseFloat((cartTotal - couponDiscount).toFixed(2));
   const shippingCost = shipping?.value || 0;
-  const total = subtotalAfterCoupon + shippingCost;
-  const pixTotal = total * (1 - PIX_DISCOUNT);
+  const total = parseFloat((subtotalAfterCoupon + shippingCost).toFixed(2));
+  const pixTotal = parseFloat((total * (1 - PIX_DISCOUNT)).toFixed(2));
 
   const buildWhatsAppMessage = () => {
     let msg = "🛒 *Meu Pedido - Empório Filho de Deus*\n\n";
     items.forEach((item) => {
       const isKg = isKgProduct(item.product);
       const qtyLabel = isKg ? formatQty(item.product, item.qty) : `${item.qty}x`;
-      msg += `• ${qtyLabel} ${item.product.name} — ${formatPrice(item.product.price * item.qty)}\n`;
+      msg += `• ${qtyLabel} ${item.product.name} — ${formatPrice(parseFloat((item.product.price * item.qty).toFixed(2)))}\n`;
     });
     if (appliedCoupon) msg += `\n🏷️ Cupom: ${appliedCoupon.code} (${appliedCoupon.label})\n`;
     msg += `\n💳 Pagamento: Pix (5% desc.)`;
@@ -97,7 +97,7 @@ export default function Cart() {
     try {
       const discountMultiplier = 1 - PIX_DISCOUNT;
       const couponMultiplier = appliedCoupon?.discount ? (1 - appliedCoupon.discount) : 1;
-      const finalAmount = (cartTotal * couponMultiplier * discountMultiplier) + shippingCost;
+      const finalAmount = parseFloat(((cartTotal * couponMultiplier * discountMultiplier) + shippingCost).toFixed(2));
 
       const payerData = isAuthenticated && user ? {
         name: user.name,
@@ -189,7 +189,7 @@ export default function Cart() {
           const isKg = isKgProduct(product);
           const step = qtyStep(product);
           const min = minQty(product);
-          const itemTotal = product.price * qty;
+          const itemTotal = parseFloat((product.price * qty).toFixed(2));
           return (
             <div key={product.id} className="grid grid-cols-12 gap-4 px-4 sm:px-6 py-4 border-b border-border last:border-0 items-center">
               {/* Produto */}

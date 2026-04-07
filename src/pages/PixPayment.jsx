@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useSearchParams, Link, useNavigate } from "react-router-dom";
-import { CheckCircle2, Copy, Clock, QrCode, AlertCircle, ArrowLeft } from "lucide-react";
+import { CheckCircle2, Copy, Clock, QrCode, AlertCircle, ArrowLeft, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "../hooks/useCart";
 
@@ -207,11 +207,22 @@ export default function PixPayment() {
             <li>Escolha pagar com <strong>Pix</strong></li>
             <li>Escaneie o QR Code ou cole o código</li>
             <li>Confirme o pagamento</li>
+            <li>Clique no botão abaixo para <strong>confirmar pelo WhatsApp</strong></li>
           </ol>
-          <p className="text-xs text-green-600 font-medium mt-2">
-            ✅ A confirmação aparece aqui automaticamente!
-          </p>
         </div>
+
+        {/* WhatsApp confirmation */}
+        <a
+          href={`https://wa.me/5511999999999?text=${encodeURIComponent(`✅ Paguei o Pix!\n\n📋 Pedido: ${txid}\n💰 Valor: R$ ${parseFloat(amount || 0).toFixed(2)}\n\nPor favor, confirme meu pagamento!`)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block mb-4"
+        >
+          <Button className="w-full rounded-xl h-12 font-bold bg-green-600 hover:bg-green-700 text-white">
+            <MessageCircle className="w-5 h-5 mr-2" />
+            Já paguei! Confirmar via WhatsApp
+          </Button>
+        </a>
 
         {/* Polling indicator */}
         <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
@@ -219,7 +230,7 @@ export default function PixPayment() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
           </span>
-          Aguardando pagamento...
+          Aguardando confirmação...
         </div>
       </div>
     </div>

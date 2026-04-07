@@ -244,7 +244,7 @@ export default function ProductDetail() {
                 </button>
               </div>
               <span className="text-sm text-muted-foreground ml-1">
-                Total: <span className="font-semibold text-primary">{formatPrice(product.price * currentQty)}</span>
+                Total: <span className="font-semibold text-primary">{formatPrice(parseFloat((product.price * currentQty).toFixed(2)))}</span>
               </span>
             </div>
           )}

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Trash2, Edit2, Plus, AlertCircle, Lock, ImageIcon, Search, Users, Package, Star, Phone, Mail, ShoppingBag, Settings, Tag, Megaphone, Percent, CalendarDays, Eye, EyeOff } from "lucide-react";
+import { Trash2, Edit2, Plus, AlertCircle, Lock, ImageIcon, Search, Users, Package, Star, Phone, Mail, ShoppingBag, Settings, Tag, Megaphone, Percent, CalendarDays, Eye, EyeOff, Coins } from "lucide-react";
 
 // ============================================================
 // API BASE URL - Definida uma única vez
@@ -1176,6 +1176,9 @@ function AdminClientes() {
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [pointsModal, setPointsModal] = useState(null); // { id, name }
+  const [purchaseAmount, setPurchaseAmount] = useState("");
+  const [pointsLoading, setPointsLoading] = useState(false);
 
   const API_URL = getApiUrl();
 
@@ -1210,6 +1213,29 @@ function AdminClientes() {
     } catch (err) {
       console.error("Erro ao deletar cliente:", err);
     }
+  };
+
+  const handleAddPoints = async () => {
+    if (!pointsModal || !purchaseAmount || parseFloat(purchaseAmount) <= 0) return;
+    setPointsLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/api/customers/${pointsModal.id}/loyalty`, {
+        method: 'PUT',
+        headers: { ...adminHeaders(), 'Content-Type': 'application/json' },
+        body: JSON.stringify({ purchaseAmount: parseFloat(purchaseAmount) }),
+      });
+      if (res.ok) {
+        setPointsModal(null);
+        setPurchaseAmount("");
+        loadCustomers();
+      } else {
+        alert("Erro ao adicionar pontos");
+      }
+    } catch (err) {
+      console.error("Erro ao adicionar pontos:", err);
+      alert("Erro de conexão");
+    }
+    setPointsLoading(false);
   };
 
   const filtered = customers.filter(c =>
@@ -1283,19 +1309,79 @@ function AdminClientes() {
                       {c.createdAt ? new Date(c.createdAt).toLocaleDateString("pt-BR") : "—"}
                     </td>
                     <td className="px-4 py-3 text-sm">
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        onClick={() => handleDelete(c.id)}
-                        className="flex items-center gap-1"
-                      >
-                        <Trash2 className="w-4 h-4" /> Excluir
-                      </Button>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => { setPointsModal({ id: c.id, name: c.name }); setPurchaseAmount(""); }}
+                          className="flex items-center gap-1 text-green-700 border-green-200 hover:bg-green-50"
+                        >
+                          <Coins className="w-4 h-4" /> Pontos
+                        </Button>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => handleDelete(c.id)}
+                          className="flex items-center gap-1"
+                        >
+                          <Trash2 className="w-4 h-4" /> Excluir
+                        </Button>
+                      </div>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Adicionar Pontos */}
+      {pointsModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50" onClick={() => setPointsModal(null)}>
+          <div className="bg-white rounded-xl shadow-xl p-6 w-full max-w-md mx-4" onClick={e => e.stopPropagation()}>
+            <h3 className="text-lg font-bold text-gray-900 mb-1 flex items-center gap-2">
+              <Coins className="w-5 h-5 text-green-600" />
+              Adicionar Pontos de Fidelidade
+            </h3>
+            <p className="text-sm text-gray-500 mb-4">
+              Cliente: <strong>{pointsModal.name}</strong>
+            </p>
+            <p className="text-xs text-gray-500 mb-3">
+              Informe o valor da compra em dinheiro na loja. O cliente ganhará <strong>1 ponto por real</strong> gasto (ex: R$ 50 = 50 pontos).
+            </p>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Valor da compra (R$)</label>
+            <Input
+              type="number"
+              min="0.01"
+              step="0.01"
+              placeholder="Ex: 45.00"
+              value={purchaseAmount}
+              onChange={e => setPurchaseAmount(e.target.value)}
+              className="mb-2"
+              autoFocus
+            />
+            {purchaseAmount && parseFloat(purchaseAmount) > 0 && (
+              <p className="text-sm text-green-700 bg-green-50 rounded-lg px-3 py-2 mb-3">
+                ✅ O cliente receberá <strong>{Math.floor(parseFloat(purchaseAmount))} pontos</strong> e o total gasto será atualizado.
+              </p>
+            )}
+            <div className="flex gap-2 mt-4">
+              <Button
+                variant="outline"
+                className="flex-1"
+                onClick={() => setPointsModal(null)}
+              >
+                Cancelar
+              </Button>
+              <Button
+                className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+                onClick={handleAddPoints}
+                disabled={pointsLoading || !purchaseAmount || parseFloat(purchaseAmount) <= 0}
+              >
+                {pointsLoading ? "Salvando..." : "Adicionar Pontos"}
+              </Button>
+            </div>
           </div>
         </div>
       )}

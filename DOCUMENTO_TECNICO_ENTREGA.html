@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documento Técnico de Entrega — Empório Filho de Deus</title>
+<style>
+  @page { margin: 2cm; size: A4; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 11pt;
+    line-height: 1.6;
+    color: #1a1a1a;
+    background: #fff;
+    padding: 40px;
+    max-width: 210mm;
+    margin: 0 auto;
+  }
+
+  /* COVER */
+  .cover {
+    text-align: center;
+    padding: 80px 0 60px;
+    page-break-after: always;
+    border-bottom: 3px solid #8B4513;
+  }
+  .cover h1 {
+    font-size: 28pt;
+    color: #8B4513;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+  .cover .subtitle {
+    font-size: 14pt;
+    color: #555;
+    margin-bottom: 40px;
+  }
+  .cover .project-name {
+    font-size: 20pt;
+    color: #D2691E;
+    font-weight: bold;
+    margin: 30px 0;
+    padding: 20px;
+    border: 2px solid #D2691E;
+    border-radius: 12px;
+    display: inline-block;
+  }
+  .cover .info-table {
+    margin: 40px auto 0;
+    text-align: left;
+    border-collapse: collapse;
+  }
+  .cover .info-table td {
+    padding: 8px 16px;
+    font-size: 11pt;
+  }
+  .cover .info-table td:first-child {
+    font-weight: bold;
+    color: #8B4513;
+  }
+
+  /* HEADERS */
+  h2 {
+    font-size: 16pt;
+    color: #8B4513;
+    border-bottom: 2px solid #D2691E;
+    padding-bottom: 6px;
+    margin: 30px 0 15px;
+    page-break-after: avoid;
+  }
+  h3 {
+    font-size: 13pt;
+    color: #A0522D;
+    margin: 20px 0 10px;
+    page-break-after: avoid;
+  }
+  h4 {
+    font-size: 11pt;
+    color: #555;
+    margin: 12px 0 6px;
+  }
+
+  /* CONTENT */
+  p { margin: 8px 0; text-align: justify; }
+  ul, ol { margin: 8px 0 8px 24px; }
+  li { margin: 4px 0; }
+  strong { color: #333; }
+
+  /* TABLES */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 10pt;
+  }
+  th, td {
+    border: 1px solid #ccc;
+    padding: 8px 10px;
+    text-align: left;
+  }
+  th {
+    background: #8B4513;
+    color: white;
+    font-weight: 600;
+  }
+  tr:nth-child(even) { background: #faf5f0; }
+  tr:hover { background: #f0e6d8; }
+
+  /* CODE */
+  code {
+    background: #f4f0eb;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 9.5pt;
+    color: #8B4513;
+  }
+  pre {
+    background: #2d2d2d;
+    color: #f8f8f2;
+    padding: 14px 18px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 9pt;
+    line-height: 1.5;
+    margin: 10px 0;
+  }
+  pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+  }
+
+  /* BOXES */
+  .warning-box {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 12px 16px;
+    margin: 12px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .warning-box::before {
+    content: "⚠️ ATENÇÃO: ";
+    font-weight: bold;
+  }
+  .info-box {
+    background: #e7f3ff;
+    border-left: 4px solid #0d6efd;
+    padding: 12px 16px;
+    margin: 12px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .info-box::before {
+    content: "ℹ️ DICA: ";
+    font-weight: bold;
+  }
+  .success-box {
+    background: #d4edda;
+    border-left: 4px solid #28a745;
+    padding: 12px 16px;
+    margin: 12px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .danger-box {
+    background: #f8d7da;
+    border-left: 4px solid #dc3545;
+    padding: 12px 16px;
+    margin: 12px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .danger-box::before {
+    content: "🔒 SEGURANÇA: ";
+    font-weight: bold;
+  }
+
+  /* PRINT */
+  @media print {
+    body { padding: 0; }
+    .no-print { display: none; }
+    h2 { page-break-before: auto; }
+  }
+
+  /* TOC */
+  .toc { margin: 20px 0; }
+  .toc a {
+    color: #8B4513;
+    text-decoration: none;
+    display: block;
+    padding: 4px 0;
+    border-bottom: 1px dotted #ddd;
+  }
+  .toc a:hover { color: #D2691E; }
+  .toc .toc-h3 { padding-left: 20px; font-size: 10pt; }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 8pt;
+    font-weight: bold;
+    color: white;
+  }
+  .badge-green { background: #28a745; }
+  .badge-blue { background: #0d6efd; }
+  .badge-orange { background: #fd7e14; }
+  .badge-red { background: #dc3545; }
+
+  .footer {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+    color: #999;
+    font-size: 9pt;
+  }
+
+  .diagram {
+    background: #faf5f0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 15px 0;
+    text-align: center;
+    font-family: 'Consolas', monospace;
+    font-size: 9pt;
+    line-height: 1.8;
+    white-space: pre;
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ CAPA ============ -->
+<div class="cover">
+  <h1>📋 DOCUMENTO TÉCNICO DE ENTREGA</h1>
+  <p class="subtitle">Relatório Completo de Infraestrutura e Operação</p>
+  <div class="project-name">🏪 Empório Filho de Deus<br><small style="font-size:12pt;color:#888">emporiofilhodedeus.com.br</small></div>
+  <table class="info-table">
+    <tr><td>Projeto:</td><td>E-commerce — Empório Filho de Deus</td></tr>
+    <tr><td>Domínio:</td><td>emporiofilhodedeus.com.br</td></tr>
+    <tr><td>Data de Entrega:</td><td>07 de Abril de 2026</td></tr>
+    <tr><td>Versão:</td><td>1.0.0</td></tr>
+    <tr><td>Stack:</td><td>React + Vite (Frontend) / Express.js (API) / Upstash Redis (DB)</td></tr>
+    <tr><td>Hospedagem:</td><td>Vercel (Serverless)</td></tr>
+  </table>
+</div>
+
+<!-- ============ ÍNDICE ============ -->
+<h2>Índice</h2>
+<div class="toc">
+  <a href="#arquitetura">1. Arquitetura Geral do Sistema</a>
+  <a href="#servicos">2. Serviços e Servidores Utilizados</a>
+  <a class="toc-h3" href="#vercel">2.1 Vercel — Hospedagem e Deploy</a>
+  <a class="toc-h3" href="#github">2.2 GitHub — Repositório de Código</a>
+  <a class="toc-h3" href="#upstash">2.3 Upstash Redis — Banco de Dados</a>
+  <a class="toc-h3" href="#registrobr">2.4 Registro.br — Domínio DNS</a>
+  <a href="#credenciais">3. Credenciais e Acessos</a>
+  <a href="#painel-admin">4. Painel Administrativo — Guia de Uso</a>
+  <a class="toc-h3" href="#gerenciar-produtos">4.1 Gerenciar Produtos</a>
+  <a class="toc-h3" href="#gerenciar-categorias">4.2 Gerenciar Categorias</a>
+  <a class="toc-h3" href="#gerenciar-clientes">4.3 Gerenciar Clientes</a>
+  <a class="toc-h3" href="#gerenciar-pedidos">4.4 Gerenciar Pedidos</a>
+  <a href="#api">5. Documentação da API</a>
+  <a href="#pagamentos">6. Configuração de Pagamentos</a>
+  <a href="#seguranca">7. Segurança</a>
+  <a href="#manutencao">8. Manutenção e Suporte</a>
+  <a href="#troubleshooting">9. Resolução de Problemas</a>
+</div>
+
+<!-- ============ 1. ARQUITETURA ============ -->
+<h2 id="arquitetura">1. Arquitetura Geral do Sistema</h2>
+
+<p>O site <strong>Empório Filho de Deus</strong> é uma aplicação web moderna do tipo <strong>SPA (Single Page Application)</strong> com uma API REST serverless. A arquitetura é dividida em três camadas:</p>
+
+<div class="diagram">
+┌─────────────────────────────────────────────────────────────────┐
+│                      USUÁRIO (Navegador)                        │
+│                   emporiofilhodedeus.com.br                      │
+└──────────────────────────┬──────────────────────────────────────┘
+                           │
+                    ┌──────▼───────┐
+                    │  Registro.br │  ← DNS (A + CNAME)
+                    │   Domínio    │
+                    └──────┬───────┘
+                           │
+              ┌────────────▼────────────────┐
+              │         VERCEL              │
+              │  ┌──────────────────────┐   │
+              │  │  Frontend (React)    │   │  ← dist/ (Vite build)
+              │  │  SPA estático        │   │
+              │  └──────────────────────┘   │
+              │  ┌──────────────────────┐   │
+              │  │  API (Express.js)    │   │  ← Serverless Function
+              │  │  /api/* → handler.js │   │
+              │  └──────────┬───────────┘   │
+              └─────────────┼───────────────┘
+                            │
+               ┌────────────▼────────────┐
+               │    Upstash Redis        │
+               │  Banco de Dados REST    │  ← Persistência
+               │  (JSON serializado)     │
+               └─────────────────────────┘
+               
+               ┌─────────────────────────┐
+               │    GitHub               │
+               │  Repositório de código  │  ← Auto-deploy no push
+               └─────────────────────────┘
+</div>
+
+<h3>Tecnologias Utilizadas</h3>
+<table>
+  <tr><th>Camada</th><th>Tecnologia</th><th>Versão</th><th>Finalidade</th></tr>
+  <tr><td>Frontend</td><td>React + Vite</td><td>React 18 / Vite 6</td><td>Interface do usuário (SPA)</td></tr>
+  <tr><td>UI Components</td><td>Radix UI + Tailwind CSS</td><td>Tailwind 3.4</td><td>Design system e estilização</td></tr>
+  <tr><td>State Management</td><td>TanStack React Query</td><td>v5</td><td>Cache e sincronização de dados</td></tr>
+  <tr><td>API</td><td>Express.js</td><td>4.18</td><td>Rotas REST, autenticação, pagamentos</td></tr>
+  <tr><td>Runtime</td><td>Node.js</td><td>≥ 18</td><td>Execução serverless na Vercel</td></tr>
+  <tr><td>Banco de Dados</td><td>Upstash Redis</td><td>REST API</td><td>Persistência JSON (key-value)</td></tr>
+  <tr><td>Hospedagem</td><td>Vercel</td><td>v2</td><td>CDN global + Serverless Functions</td></tr>
+  <tr><td>DNS</td><td>Registro.br</td><td>—</td><td>Gerenciamento do domínio .com.br</td></tr>
+  <tr><td>Código-fonte</td><td>GitHub</td><td>—</td><td>Versionamento e deploy automático</td></tr>
+</table>
+
+<!-- ============ 2. SERVIÇOS ============ -->
+<h2 id="servicos">2. Serviços e Servidores Utilizados</h2>
+
+<!-- 2.1 VERCEL -->
+<h3 id="vercel">2.1 Vercel — Hospedagem e Deploy</h3>
+<table>
+  <tr><th>Item</th><th>Detalhe</th></tr>
+  <tr><td>URL do Painel</td><td><code>https://vercel.com/paulocesarpapim-dots-projects/casadonorte</code></td></tr>
+  <tr><td>Nome do Projeto</td><td><code>casadonorte</code></td></tr>
+  <tr><td>Plano</td><td>Pro</td></tr>
+  <tr><td>Domínio Produção</td><td><code>emporiofilhodedeus.com.br</code> + <code>www.emporiofilhodedeus.com.br</code></td></tr>
+  <tr><td>Domínio Preview</td><td><code>casadonorte-paulocesarpapim-dots-projects.vercel.app</code></td></tr>
+  <tr><td>Build Command</td><td><code>npm run build</code></td></tr>
+  <tr><td>Output Directory</td><td><code>dist</code></td></tr>
+  <tr><td>Node.js Runtime</td><td>24.x (serverless)</td></tr>
+  <tr><td>Memória Funções</td><td>1024 MB</td></tr>
+  <tr><td>Timeout Funções</td><td>30 segundos</td></tr>
+</table>
+
+<h4>Como funciona o deploy</h4>
+<p>O deploy é <strong>automático</strong>. Sempre que um <code>git push</code> é feito para o branch <code>main</code> no GitHub, a Vercel detecta as mudanças e executa automaticamente:</p>
+<ol>
+  <li>Instala as dependências (<code>npm install</code>)</li>
+  <li>Compila o frontend (<code>npm run build</code> → gera a pasta <code>dist/</code>)</li>
+  <li>Empacota as Serverless Functions (<code>api/handler.js</code>)</li>
+  <li>Distribui globalmente pela CDN da Vercel</li>
+  <li>Ativa o novo deploy em produção</li>
+</ol>
+
+<h4>Variáveis de Ambiente Configuradas na Vercel</h4>
+<table>
+  <tr><th>Variável</th><th>Finalidade</th><th>Ambiente</th></tr>
+  <tr><td><code>UPSTASH_REDIS_REST_URL</code></td><td>URL de acesso ao Redis</td><td>Production</td></tr>
+  <tr><td><code>UPSTASH_REDIS_REST_TOKEN</code></td><td>Token de autenticação Redis</td><td>Production</td></tr>
+  <tr><td><code>ADMIN_PASSWORD</code></td><td>Senha do painel admin</td><td>Production</td></tr>
+  <tr><td><code>NODE_ENV</code></td><td>Ambiente (production)</td><td>Production</td></tr>
+</table>
+
+<div class="info-box">Para acessar o painel da Vercel, faça login em <code>https://vercel.com</code> com a conta do GitHub.</div>
+
+<h4>Como forçar um redeploy manualmente</h4>
+<pre><code>cd C:\RPA\APP_Acacio
+git commit --allow-empty -m "redeploy"
+git push origin main</code></pre>
+
+<!-- 2.2 GITHUB -->
+<h3 id="github">2.2 GitHub — Repositório de Código</h3>
+<table>
+  <tr><th>Item</th><th>Detalhe</th></tr>
+  <tr><td>Repositório</td><td><code>https://github.com/paulocesarpapim-dot/app_acacio</code></td></tr>
+  <tr><td>Branch Principal</td><td><code>main</code></td></tr>
+  <tr><td>Visibilidade</td><td>Privado</td></tr>
+  <tr><td>Integração</td><td>Conectado à Vercel (auto-deploy)</td></tr>
+</table>
+
+<h4>Estrutura de Pastas Principais</h4>
+<pre><code>app_acacio/
+├── api/                    ← API Express.js (backend)
+│   ├── handler.js          ← Entry point Vercel serverless
+│   ├── index.js            ← Configuração Express (CORS, routes)
+│   ├── routes-json.js      ← Definição de rotas da API
+│   ├── controllers-json.js ← Lógica de negócio (1045 linhas)
+│   ├── middleware.js        ← Autenticação, hash de senhas, rate limit
+│   ├── db-json.js          ← Camada de banco de dados (file + Redis)
+│   └── database.json       ← Dados iniciais (seed de produtos)
+├── src/                    ← Frontend React
+│   ├── App.jsx             ← Componente raiz e rotas
+│   ├── pages/              ← Páginas (Home, Admin, Checkout, etc.)
+│   ├── components/         ← Componentes reutilizáveis
+│   ├── api/                ← Funções de chamada à API
+│   └── context/            ← Contextos React (carrinho, auth, etc.)
+├── vercel.json             ← Configuração Vercel (rewrites, functions)
+├── package.json            ← Dependências do frontend
+└── vite.config.js          ← Configuração do bundler</code></pre>
+
+<div class="info-box">Para editar o código localmente, clone o repositório: <code>git clone https://github.com/paulocesarpapim-dot/app_acacio.git</code></div>
+
+<!-- 2.3 UPSTASH -->
+<h3 id="upstash">2.3 Upstash Redis — Banco de Dados</h3>
+<table>
+  <tr><th>Item</th><th>Detalhe</th></tr>
+  <tr><td>Painel</td><td><code>https://console.upstash.com</code></td></tr>
+  <tr><td>Database ID</td><td><code>ff06ab0f-2dcf-40fb-b7ce-e827cc141279</code></td></tr>
+  <tr><td>Endpoint</td><td><code>huge-ghoul-93746.upstash.io</code></td></tr>
+  <tr><td>REST URL</td><td><code>https://huge-ghoul-93746.upstash.io</code></td></tr>
+  <tr><td>Plano</td><td>Free (10.000 comandos/dia)</td></tr>
+  <tr><td>Região</td><td>Global</td></tr>
+  <tr><td>Chave Principal</td><td><code>database</code> (armazena todo o JSON)</td></tr>
+</table>
+
+<h4>Como os dados são armazenados</h4>
+<p>Todos os dados do sistema são armazenados em uma <strong>única chave Redis</strong> chamada <code>database</code>, que contém um JSON com a seguinte estrutura:</p>
+<pre><code>{
+  "products": [...],      // Lista de produtos
+  "customers": [...],     // Lista de clientes cadastrados
+  "orders": [...],        // Pedidos realizados
+  "settings": {...},      // Configurações (Pix, categorias, senhas)
+  "promotions": [...]     // Promoções ativas
+}</code></pre>
+
+<h4>Fluxo de persistência</h4>
+<ol>
+  <li>A cada escrita (produto, cliente, pedido), o sistema salva no arquivo <code>/tmp/database.json</code> e simultaneamente no Redis</li>
+  <li>Em um <strong>cold start</strong> (primeira requisição após inatividade), o sistema lê do Redis e restaura os dados</li>
+  <li>Produtos iniciais vêm do arquivo <code>database.json</code> do deploy, mas depois de atualizados, a versão do Redis tem prioridade</li>
+</ol>
+
+<div class="warning-box">O plano gratuito do Upstash permite 10.000 comandos/dia. Para um e-commerce com tráfego moderado, isso é suficiente. Se o limite for atingido, considere migrar para o plano Pay-As-You-Go ($0.2/100K comandos).</div>
+
+<div class="info-box">Para monitorar o uso, acesse o painel: <code>https://console.upstash.com/redis/ff06ab0f-2dcf-40fb-b7ce-e827cc141279</code>. A aba "Usage" mostra os comandos consumidos.</div>
+
+<!-- 2.4 REGISTRO.BR -->
+<h3 id="registrobr">2.4 Registro.br — Domínio e DNS</h3>
+<table>
+  <tr><th>Item</th><th>Detalhe</th></tr>
+  <tr><td>Painel</td><td><code>https://registro.br</code></td></tr>
+  <tr><td>Domínio</td><td><code>emporiofilhodedeus.com.br</code></td></tr>
+  <tr><td>Configuração DNS</td><td>Zona DNS (não "Alterar servidores DNS")</td></tr>
+</table>
+
+<h4>Registros DNS Configurados</h4>
+<table>
+  <tr><th>Tipo</th><th>Host</th><th>Valor</th><th>Finalidade</th></tr>
+  <tr><td>A</td><td><code>emporiofilhodedeus.com.br</code></td><td><code>76.76.21.21</code></td><td>Aponta domínio raiz para Vercel</td></tr>
+  <tr><td>CNAME</td><td><code>www</code></td><td><code>cname.vercel-dns.com</code></td><td>Aponta www para Vercel</td></tr>
+</table>
+
+<div class="warning-box">Nunca altere os registros DNS sem necessidade. Se os registros A ou CNAME forem removidos, o site ficará fora do ar. A propagação DNS pode levar até 48 horas.</div>
+
+<h4>Como acessar a configuração DNS</h4>
+<ol>
+  <li>Acesse <code>https://registro.br</code> e faça login</li>
+  <li>Clique no domínio <code>emporiofilhodedeus.com.br</code></li>
+  <li>Vá em <strong>"Configurar zona DNS"</strong> (não "Alterar servidores DNS")</li>
+  <li>Os registros A e CNAME devem estar conforme a tabela acima</li>
+</ol>
+
+<!-- ============ 3. CREDENCIAIS ============ -->
+<h2 id="credenciais">3. Credenciais e Acessos</h2>
+
+<div class="danger-box">Mantenha estas credenciais em local seguro. Nunca compartilhe publicamente ou por e-mail não criptografado. Troque as senhas periodicamente.</div>
+
+<table>
+  <tr><th>Serviço</th><th>URL de Acesso</th><th>Credencial</th></tr>
+  <tr>
+    <td><strong>Painel Admin do Site</strong></td>
+    <td><code>https://emporiofilhodedeus.com.br/admin/produtos</code></td>
+    <td>Senha: <code>casadonorte2026</code></td>
+  </tr>
+  <tr>
+    <td><strong>Vercel (Hospedagem)</strong></td>
+    <td><code>https://vercel.com</code></td>
+    <td>Login via conta GitHub</td>
+  </tr>
+  <tr>
+    <td><strong>GitHub (Código)</strong></td>
+    <td><code>https://github.com/paulocesarpapim-dot/app_acacio</code></td>
+    <td>Conta: paulocesarpapim-dot</td>
+  </tr>
+  <tr>
+    <td><strong>Upstash (Banco de Dados)</strong></td>
+    <td><code>https://console.upstash.com</code></td>
+    <td>Login via conta (e-mail cadastrado)</td>
+  </tr>
+  <tr>
+    <td><strong>Registro.br (Domínio)</strong></td>
+    <td><code>https://registro.br</code></td>
+    <td>Login com CPF/CNPJ do titular</td>
+  </tr>
+</table>
+
+<h3>Alteração de Senha do Admin</h3>
+<p>A senha do painel administrativo pode ser alterada de duas formas:</p>
+
+<h4>Opção 1: Pela Vercel (recomendado)</h4>
+<ol>
+  <li>Acesse <code>Vercel → casadonorte → Settings → Environment Variables</code></li>
+  <li>Edite a variável <code>ADMIN_PASSWORD</code> com a nova senha</li>
+  <li>Faça um redeploy para ativar</li>
+</ol>
+
+<h4>Opção 2: Pela API (senha já hashada no Redis)</h4>
+<p>Após o primeiro login com sucesso, a senha é automaticamente hasheada com <strong>scrypt</strong> e salva no Redis. Para resetar, atualize a variável <code>ADMIN_PASSWORD</code> na Vercel e limpe o campo <code>settings.adminPassword</code> no Redis.</p>
+
+<!-- ============ 4. PAINEL ADMIN ============ -->
+<h2 id="painel-admin">4. Painel Administrativo — Guia de Uso</h2>
+
+<h4>Como acessar</h4>
+<ol>
+  <li>Acesse <code>https://emporiofilhodedeus.com.br</code></li>
+  <li>No <strong>rodapé (footer)</strong> do site, clique no link discreto <strong>"Admin"</strong></li>
+  <li>Ou acesse diretamente: <code>https://emporiofilhodedeus.com.br/admin/produtos</code></li>
+  <li>Digite a senha: <code>casadonorte2026</code></li>
+</ol>
+
+<h3 id="gerenciar-produtos">4.1 Gerenciar Produtos</h3>
+
+<h4>Adicionar um produto</h4>
+<p>No painel admin, use o formulário de cadastro com os campos:</p>
+<table>
+  <tr><th>Campo</th><th>Obrigatório</th><th>Descrição</th></tr>
+  <tr><td>Nome</td><td>✅ Sim</td><td>Nome do produto (ex: "Feijão Preto")</td></tr>
+  <tr><td>Descrição</td><td>Não</td><td>Descrição detalhada</td></tr>
+  <tr><td>Categoria</td><td>✅ Sim</td><td>Deve coincidir com uma categoria existente</td></tr>
+  <tr><td>Preço</td><td>✅ Sim</td><td>Valor em reais (ex: 6.99)</td></tr>
+  <tr><td>URL da Imagem</td><td>Não</td><td>URL de uma imagem. Se vazio, usa placeholder</td></tr>
+</table>
+
+<h4>Editar um produto</h4>
+<p>Clique no botão de editar ao lado do produto, altere os campos desejados e salve. As alterações são salvas no Redis e persistem entre deploys.</p>
+
+<h4>Excluir um produto</h4>
+<p>Clique no botão de excluir. A ação é irreversível.</p>
+
+<h4>Via API (avançado)</h4>
+<pre><code># Login admin (obter token)
+curl -X POST https://emporiofilhodedeus.com.br/api/admin/login \
+  -H "Content-Type: application/json" \
+  -d '{"password":"casadonorte2026"}'
+
+# Criar produto
+curl -X POST https://emporiofilhodedeus.com.br/api/products \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer SEU_TOKEN" \
+  -d '{"name":"Feijão Verde","category":"Feijão","price":8.50}'
+
+# Atualizar produto (ID = 1)
+curl -X PUT https://emporiofilhodedeus.com.br/api/products/1 \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer SEU_TOKEN" \
+  -d '{"price":7.99}'
+
+# Excluir produto (ID = 1)
+curl -X DELETE https://emporiofilhodedeus.com.br/api/products/1 \
+  -H "Authorization: Bearer SEU_TOKEN"</code></pre>
+
+<h3 id="gerenciar-categorias">4.2 Gerenciar Categorias</h3>
+<p>As categorias atuais são:</p>
+<table>
+  <tr><th>Nome</th><th>Emoji</th><th>Descrição</th></tr>
+  <tr><td>Feijão</td><td>🫘</td><td>Feijão carioca, preto, fradinho, verde e mais</td></tr>
+  <tr><td>Cereais</td><td>🌾</td><td>Arroz, milho, canjica, farinha e grãos</td></tr>
+</table>
+
+<p>Para adicionar ou modificar categorias, use a API:</p>
+<pre><code>curl -X PUT https://emporiofilhodedeus.com.br/api/categories \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer SEU_TOKEN" \
+  -d '{
+    "categories": [
+      {"name":"Feijão","emoji":"🫘","description":"Feijão carioca, preto..."},
+      {"name":"Cereais","emoji":"🌾","description":"Arroz, milho..."},
+      {"name":"Temperos","emoji":"🌶️","description":"Pimentas, colorau..."}
+    ]
+  }'</code></pre>
+
+<h3 id="gerenciar-clientes">4.3 Gerenciar Clientes</h3>
+<p>Clientes se cadastram pelo site. No painel admin você pode:</p>
+<ul>
+  <li><strong>Visualizar</strong> todos os clientes cadastrados (sem exibir senhas)</li>
+  <li><strong>Excluir</strong> clientes</li>
+  <li><strong>Gerenciar fidelidade</strong> — atualizar pontos, nível (bronze/silver/gold)</li>
+</ul>
+<p>Programa de fidelidade automático:</p>
+<table>
+  <tr><th>Nível</th><th>Gasto Acumulado</th></tr>
+  <tr><td><span class="badge badge-orange">Bronze</span></td><td>R$ 0 – R$ 499</td></tr>
+  <tr><td><span class="badge badge-blue">Silver</span></td><td>R$ 500 – R$ 1.999</td></tr>
+  <tr><td><span class="badge badge-green">Gold</span></td><td>R$ 2.000+</td></tr>
+</table>
+
+<h3 id="gerenciar-pedidos">4.4 Gerenciar Pedidos</h3>
+<p>Pedidos são criados automaticamente quando um cliente realiza um pagamento via Pix ou Mercado Pago. No painel admin, é possível visualizar:</p>
+<ul>
+  <li>ID do pedido</li>
+  <li>Itens comprados</li>
+  <li>Valor total</li>
+  <li>Status (pending / approved / rejected)</li>
+  <li>Data de criação e pagamento</li>
+</ul>
+
+<!-- ============ 5. API ============ -->
+<h2 id="api">5. Documentação da API</h2>
+
+<p>Base URL: <code>https://emporiofilhodedeus.com.br/api</code></p>
+
+<h3>Rotas Públicas (sem autenticação)</h3>
+<table>
+  <tr><th>Método</th><th>Rota</th><th>Descrição</th></tr>
+  <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/products</code></td><td>Listar todos os produtos</td></tr>
+  <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/products/:id</code></td><td>Buscar produto por ID</td></tr>
+  <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/products/category/:cat</code></td><td>Produtos por categoria</td></tr>
+  <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/categories</code></td><td>Listar categorias</td></tr>
+  <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/promotions/active</code></td><td>Promoções ativas</td></tr>
+  <tr><td><span class="badge badge-blue">POST</span></td><td><code>/api/customers/register</code></td><td>Cadastrar cliente</td></tr>
+  <tr><td><span class="badge badge-blue">POST</span></td><td><code>/api/customers/login</code></td><td>Login cliente</td></tr>
+  <tr><td><span class="badge badge-blue">POST</span></td><td><code>/api/payments/preference</code></td><td>Criar pagamento Mercado Pago</td></tr>
+  <tr><td><span class="badge badge-blue">POST</span></td><td><code>/api/pix/charge</code></td><td>Gerar cobrança Pix</td></tr>
+  <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/pix/status/:txid</code></td><td>Consultar status do Pix</td></tr>
+  <tr><td><span class="badge badge-blue">POST</span></td><td><code>/api/admin/login</code></td><td>Login administrador</td></tr>
+  <tr><td><span class="badge badge-green">GET</span></td><td><code>/health</code></td><td>Health check da API</td></tr>
+</table>
+
+<h3>Rotas Admin (requer <code>Authorization: Bearer TOKEN</code>)</h3>
+<table>
+  <tr><th>Método</th><th>Rota</th><th>Descrição</th></tr>
+  <tr><td><span class="badge badge-blue">POST</span></td><td><code>/api/products</code></td><td>Criar produto</td></tr>
+  <tr><td><span class="badge badge-orange">PUT</span></td><td><code>/api/products/:id</code></td><td>Atualizar produto</td></tr>
+  <tr><td><span class="badge badge-red">DELETE</span></td><td><code>/api/products/:id</code></td><td>Excluir produto</td></tr>
+  <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/customers</code></td><td>Listar clientes</td></tr>
+  <tr><td><span class="badge badge-red">DELETE</span></td><td><code>/api/customers/:id</code></td><td>Excluir cliente</td></tr>
+  <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/orders</code></td><td>Listar pedidos</td></tr>
+  <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/settings</code></td><td>Ver configurações</td></tr>
+  <tr><td><span class="badge badge-orange">PUT</span></td><td><code>/api/settings</code></td><td>Atualizar configurações</td></tr>
+  <tr><td><span class="badge badge-orange">PUT</span></td><td><code>/api/categories</code></td><td>Atualizar categorias</td></tr>
+  <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/promotions</code></td><td>Listar promoções</td></tr>
+  <tr><td><span class="badge badge-blue">POST</span></td><td><code>/api/promotions</code></td><td>Criar promoção</td></tr>
+  <tr><td><span class="badge badge-orange">PUT</span></td><td><code>/api/promotions/:id</code></td><td>Atualizar promoção</td></tr>
+  <tr><td><span class="badge badge-red">DELETE</span></td><td><code>/api/promotions/:id</code></td><td>Excluir promoção</td></tr>
+</table>
+
+<!-- ============ 6. PAGAMENTOS ============ -->
+<h2 id="pagamentos">6. Configuração de Pagamentos</h2>
+
+<h3>Pix (Estático — funciona sem API bancária)</h3>
+<p>O sistema gera cobranças Pix usando <strong>BRCode EMV padrão BACEN</strong>. As configurações padrão são:</p>
+<table>
+  <tr><th>Configuração</th><th>Valor</th></tr>
+  <tr><td>Chave Pix</td><td><code>64330427000130</code> (CNPJ)</td></tr>
+  <tr><td>Nome</td><td>EMPORIO FILHO DE DEUS</td></tr>
+  <tr><td>Cidade</td><td>SAO PAULO</td></tr>
+  <tr><td>Banco</td><td>C6 Bank</td></tr>
+</table>
+<p>Estas configurações podem ser alteradas no painel admin em <strong>Configurações</strong>.</p>
+
+<h3>Mercado Pago (Checkout Pro)</h3>
+<p>Para ativar pagamentos com cartão de crédito/débito via Mercado Pago:</p>
+<ol>
+  <li>Obtenha o <strong>Access Token</strong> em <code>https://www.mercadopago.com.br/developers</code></li>
+  <li>Adicione como variável de ambiente na Vercel: <code>MP_ACCESS_TOKEN</code></li>
+  <li>Ou configure pelo painel admin em Configurações → Mercado Pago</li>
+</ol>
+
+<h3>Pix Dinâmico (C6 Bank API — Opcional)</h3>
+<p>Para cobranças Pix dinâmicas com confirmação automática via webhook:</p>
+<ol>
+  <li>Configure as variáveis <code>C6_CLIENT_ID</code> e <code>C6_CLIENT_SECRET</code> na Vercel</li>
+  <li>Registre o webhook via API: <code>POST /api/pix/webhook/register</code></li>
+</ol>
+
+<!-- ============ 7. SEGURANÇA ============ -->
+<h2 id="seguranca">7. Segurança</h2>
+
+<table>
+  <tr><th>Mecanismo</th><th>Descrição</th></tr>
+  <tr><td><strong>Hash de Senhas</strong></td><td>Todas as senhas (clientes e admin) são hasheadas com <strong>scrypt</strong> (salt 16 bytes, key 64 bytes). Senhas em texto puro são migradas automaticamente no primeiro login.</td></tr>
+  <tr><td><strong>Tokens de Sessão</strong></td><td>Tokens admin são <strong>cryptographically random</strong> (32 bytes hex) com TTL de 8 horas.</td></tr>
+  <tr><td><strong>Rate Limiting</strong></td><td>Login admin e cliente limitado a <strong>5 tentativas por 15 minutos</strong> por IP.</td></tr>
+  <tr><td><strong>CORS</strong></td><td>API aceita requisições apenas de origens permitidas (<code>localhost</code>, <code>.vercel.app</code>, <code>emporiofilhodedeus.com.br</code>).</td></tr>
+  <tr><td><strong>SSL/TLS</strong></td><td>Certificado HTTPS automático pela Vercel (Let's Encrypt).</td></tr>
+  <tr><td><strong>Variáveis Sensíveis</strong></td><td>Tokens de pagamento e Redis são armazenados como variáveis de ambiente na Vercel, nunca no código.</td></tr>
+  <tr><td><strong>Endpoint Seguro</strong></td><td>Rotas administrativas protegidas por <code>adminAuth</code> middleware (Bearer token obrigatório).</td></tr>
+</table>
+
+<div class="danger-box">
+  Recomendações de segurança:<br>
+  &bull; Troque a senha do admin periodicamente<br>
+  &bull; Nunca inclua tokens ou senhas no código-fonte (use variáveis de ambiente)<br>
+  &bull; Monitore o painel da Upstash para detectar usos anormais<br>
+  &bull; Mantenha o repositório GitHub como <strong>privado</strong>
+</div>
+
+<!-- ============ 8. MANUTENÇÃO ============ -->
+<h2 id="manutencao">8. Manutenção e Suporte</h2>
+
+<h3>Tarefas Periódicas Recomendadas</h3>
+<table>
+  <tr><th>Tarefa</th><th>Frequência</th><th>Como Fazer</th></tr>
+  <tr><td>Verificar site no ar</td><td>Diariamente</td><td>Acesse <code>emporiofilhodedeus.com.br/health</code></td></tr>
+  <tr><td>Renovar domínio</td><td>Anualmente</td><td>Registro.br → Renovação do domínio .com.br</td></tr>
+  <tr><td>Monitorar Redis</td><td>Semanalmente</td><td>Upstash Console → Usage (comandos/dia)</td></tr>
+  <tr><td>Trocar senha admin</td><td>A cada 3 meses</td><td>Vercel → Environment Variables → ADMIN_PASSWORD</td></tr>
+  <tr><td>Backup do banco</td><td>Mensalmente</td><td>Upstash Console → Data Browser → copiar chave <code>database</code></td></tr>
+  <tr><td>Verificar Vercel</td><td>Mensalmente</td><td>Vercel Dashboard → verificar erros de build/deploy</td></tr>
+</table>
+
+<h3>Como fazer backup do banco de dados</h3>
+<ol>
+  <li>Acesse <code>https://console.upstash.com</code></li>
+  <li>Selecione o banco <code>ff06ab0f-2dcf-40fb-b7ce-e827cc141279</code></li>
+  <li>Vá na aba <strong>"Data Browser"</strong></li>
+  <li>Procure a chave <code>database</code></li>
+  <li>Copie o conteúdo JSON e salve em um arquivo local</li>
+</ol>
+
+<h4>Via API (alternativa)</h4>
+<pre><code># Baixar todos os produtos
+curl https://emporiofilhodedeus.com.br/api/products > backup_produtos.json
+
+# Baixar pedidos (requer token admin)
+curl https://emporiofilhodedeus.com.br/api/orders \
+  -H "Authorization: Bearer SEU_TOKEN" > backup_pedidos.json</code></pre>
+
+<h3>Custos Mensais Estimados</h3>
+<table>
+  <tr><th>Serviço</th><th>Plano</th><th>Custo</th></tr>
+  <tr><td>Vercel</td><td>Pro</td><td>US$ 20/mês</td></tr>
+  <tr><td>Upstash Redis</td><td>Free</td><td>Gratuito (até 10K cmd/dia)</td></tr>
+  <tr><td>GitHub</td><td>Free</td><td>Gratuito</td></tr>
+  <tr><td>Registro.br</td><td>Domínio .com.br</td><td>~R$ 40/ano</td></tr>
+  <tr><td>SSL</td><td>Let's Encrypt (Vercel)</td><td>Gratuito</td></tr>
+  <tr><td><strong>Total Estimado</strong></td><td></td><td><strong>~US$ 20/mês + R$ 40/ano</strong></td></tr>
+</table>
+
+<!-- ============ 9. TROUBLESHOOTING ============ -->
+<h2 id="troubleshooting">9. Resolução de Problemas</h2>
+
+<table>
+  <tr><th>Problema</th><th>Causa Provável</th><th>Solução</th></tr>
+  <tr>
+    <td>Site fora do ar</td>
+    <td>DNS ou Vercel</td>
+    <td>Acesse <code>/health</code>. Se não responder, verifique a Vercel Dashboard e o DNS no Registro.br</td>
+  </tr>
+  <tr>
+    <td>API retorna 404</td>
+    <td>Deploy falhou</td>
+    <td>Verifique na Vercel se o último deploy está como "Ready". Se necessário, force redeploy via <code>git push</code></td>
+  </tr>
+  <tr>
+    <td>Produtos voltaram ao original</td>
+    <td>Redis desconectado</td>
+    <td>Verifique as variáveis <code>UPSTASH_REDIS_REST_URL</code> e <code>UPSTASH_REDIS_REST_TOKEN</code> na Vercel</td>
+  </tr>
+  <tr>
+    <td>"Muitas tentativas de login"</td>
+    <td>Rate limiting</td>
+    <td>Aguarde 15 minutos. O rate limit é por IP e reseta automaticamente</td>
+  </tr>
+  <tr>
+    <td>Senha admin não funciona</td>
+    <td>Senha hasheada no Redis diferente da env var</td>
+    <td>Atualize <code>ADMIN_PASSWORD</code> na Vercel, limpe <code>settings.adminPassword</code> no Redis e redeploy</td>
+  </tr>
+  <tr>
+    <td>Imagens não carregam</td>
+    <td>URLs de imagem inválidas</td>
+    <td>Atualize a <code>image_url</code> do produto com uma URL válida de imagem</td>
+  </tr>
+  <tr>
+    <td>Pix não gera QR Code</td>
+    <td>Chave Pix inválida</td>
+    <td>Verifique a chave Pix nas Configurações do admin</td>
+  </tr>
+  <tr>
+    <td>Erro 500 na API</td>
+    <td>Erro interno</td>
+    <td>Acesse Vercel → casadonorte → Deployments → Function Logs para ver o erro detalhado</td>
+  </tr>
+</table>
+
+<h3>Contatos de Suporte dos Serviços</h3>
+<table>
+  <tr><th>Serviço</th><th>Suporte</th></tr>
+  <tr><td>Vercel</td><td><code>https://vercel.com/support</code></td></tr>
+  <tr><td>Upstash</td><td><code>https://upstash.com/docs</code> | Chat no painel</td></tr>
+  <tr><td>Registro.br</td><td><code>https://registro.br/atendimento</code></td></tr>
+  <tr><td>GitHub</td><td><code>https://support.github.com</code></td></tr>
+</table>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p><strong>Empório Filho de Deus</strong> — Documento Técnico de Entrega v1.0</p>
+  <p>Gerado em 07 de Abril de 2026</p>
+  <p style="margin-top:10px; font-size:8pt; color:#bbb;">Este documento é confidencial e destinado exclusivamente ao proprietário do projeto.</p>
+</div>
+
+</body>
+</html>

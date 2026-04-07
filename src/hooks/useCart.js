@@ -60,7 +60,7 @@ export function useCart() {
   }, []);
 
   const cartCount = items.reduce((sum, i) => sum + i.qty, 0);
-  const cartTotal = items.reduce((sum, i) => sum + i.product.price * i.qty, 0);
+  const cartTotal = parseFloat(items.reduce((sum, i) => sum + parseFloat((i.product.price * i.qty).toFixed(2)), 0).toFixed(2));
 
   return { items, addItem, removeItem, updateQty, clearCart, cartCount, cartTotal };
 }

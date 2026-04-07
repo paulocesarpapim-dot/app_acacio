@@ -236,6 +236,29 @@ export async function getOrders(req, res) {
   }
 }
 
+export async function updateOrderStatus(req, res) {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+    if (!status || !['approved', 'pending', 'rejected'].includes(status)) {
+      return res.status(400).json({ error: 'Status deve ser: approved, pending ou rejected' });
+    }
+    const db = await readDB();
+    if (!db.orders) return res.status(404).json({ error: 'Pedido não encontrado' });
+    const idx = db.orders.findIndex(o => o.id === id);
+    if (idx < 0) return res.status(404).json({ error: 'Pedido não encontrado' });
+    db.orders[idx].status = status;
+    if (status === 'approved') {
+      db.orders[idx].paidAt = new Date().toISOString();
+      db.orders[idx].confirmedBy = 'admin';
+    }
+    saveDB(db);
+    res.json(db.orders[idx]);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao atualizar pedido' });
+  }
+}
+
 // ============ PIX C6 BANK (BACEN Standard) ============
 
 // Cache token in memory (survives within same Vercel instance)
