@@ -750,7 +750,7 @@ export async function loginAdmin(req, res) {
     }
 
     const db = await readDB();
-    const adminPassword = db.settings?.adminPassword || process.env.ADMIN_PASSWORD;
+    const adminPassword = db.settings?.adminPassword || (process.env.ADMIN_PASSWORD || '').trim();
 
     if (!adminPassword) {
       return res.status(500).json({ error: 'Senha de admin não configurada. Defina ADMIN_PASSWORD nas variáveis de ambiente.' });

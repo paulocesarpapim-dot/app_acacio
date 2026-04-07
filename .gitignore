@@ -32,3 +32,4 @@ dist-ssr
 .vite
 .vercel
 .env*.local
+.env_tmp
