@@ -93,7 +93,7 @@ export default function AdminProducts() {
       category: product.category,
       price: product.price,
       unit: product.unit || "kg",
-      in_stock: product.in_stock !== false,
+      in_stock: product.in_stock ?? true,
       image_url: product.image_url || "",
     });
   };
@@ -267,8 +267,8 @@ export default function AdminProducts() {
                       <td className="px-6 py-4 text-sm font-medium">R$ {parseFloat(product.price).toFixed(2)}</td>
                       <td className="px-6 py-4 text-sm">{product.unit || "kg"}</td>
                       <td className="px-6 py-4 text-sm">
-                        <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${product.in_stock !== false ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}>
-                          {product.in_stock !== false ? "Em estoque" : "Esgotado"}
+                        <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${(product.in_stock ?? true) ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}>
+                          {(product.in_stock ?? true) ? "Em estoque" : "Esgotado"}
                         </span>
                       </td>
                       <td className="px-6 py-4 text-sm flex gap-2">
