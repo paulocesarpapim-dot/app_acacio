@@ -17,8 +17,6 @@ export default function Home() {
 
   const featuredProducts = allProducts?.slice(0, 8) || [];
 
-  const products = featuredProducts?.length > 0 ? featuredProducts : allProducts?.slice(0, 8);
-
   return (
     <div>
       {/* Hero */}
@@ -133,9 +131,9 @@ export default function Home() {
               </div>
             ))}
           </div>
-        ) : products?.length > 0 ? (
+        ) : featuredProducts?.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-            {products.map((product) => (
+            {featuredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>

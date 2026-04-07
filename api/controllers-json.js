@@ -36,7 +36,7 @@ export function getProductById(req, res) {
 
 export function createProduct(req, res) {
   try {
-    const { name, description, category, price, image_url } = req.body;
+    const { name, description, category, price, unit, in_stock, image_url } = req.body;
 
     if (!name || !category || !price) {
       return res.status(400).json({ error: 'Nome, categoria e preço são obrigatórios' });
@@ -51,7 +51,9 @@ export function createProduct(req, res) {
       description: description || '',
       category,
       price: parseFloat(price),
-      image_url: image_url || 'https://via.placeholder.com/400x400?text=' + name,
+      unit: unit || 'kg',
+      in_stock: in_stock !== undefined ? Boolean(in_stock) : true,
+      image_url: image_url || '',
       created_at: new Date().toISOString()
     };
 
@@ -66,7 +68,7 @@ export function createProduct(req, res) {
 export function updateProduct(req, res) {
   try {
     const { id } = req.params;
-    const { name, description, category, price, image_url } = req.body;
+    const { name, description, category, price, unit, in_stock, image_url } = req.body;
 
     const db = readDB();
     const productIndex = db.products.findIndex(p => p.id === parseInt(id));
@@ -81,6 +83,8 @@ export function updateProduct(req, res) {
       description: description !== undefined ? description : db.products[productIndex].description,
       category: category || db.products[productIndex].category,
       price: price ? parseFloat(price) : db.products[productIndex].price,
+      unit: unit !== undefined ? unit : db.products[productIndex].unit,
+      in_stock: in_stock !== undefined ? Boolean(in_stock) : db.products[productIndex].in_stock,
       image_url: image_url || db.products[productIndex].image_url
     };
 

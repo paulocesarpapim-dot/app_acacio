@@ -1,5 +1,4 @@
 import { Toaster } from "@/components/ui/toaster"
-import capa from "./assets/capa.jpg";
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -72,11 +71,6 @@ function App() {
         <AuthProvider>
           <QueryClientProvider client={queryClientInstance}>
             <div>
-              <img
-                src={capa}
-                alt="Capa Casa do Norte"
-                style={{ width: '100%', maxHeight: '400px', objectFit: 'cover', display: 'block' }}
-              />
               <Router>
                 <AuthenticatedApp />
                 <Chatbot />
