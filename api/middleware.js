@@ -26,16 +26,25 @@ export function verifyPassword(password, hash) {
   });
 }
 
-// ============ ADMIN AUTH (token-based) ============
+// ============ ADMIN AUTH (HMAC signed token — serverless safe) ============
 
-// In-memory admin sessions (simple token store)
-const adminSessions = new Map();
 const SESSION_TTL = 8 * 60 * 60 * 1000; // 8 hours
+const TOKEN_SECRET = process.env.ADMIN_TOKEN_SECRET || 'casadonorte-hmac-secret-2026';
 
 export function createAdminToken() {
-  const token = crypto.randomBytes(32).toString('hex');
-  adminSessions.set(token, { createdAt: Date.now() });
-  return token;
+  const timestamp = Date.now().toString(36);
+  const signature = crypto.createHmac('sha256', TOKEN_SECRET).update(timestamp).digest('hex');
+  return `${timestamp}.${signature}`;
+}
+
+function verifyAdminToken(token) {
+  if (!token || !token.includes('.')) return false;
+  const [timestamp, signature] = token.split('.');
+  const expectedSig = crypto.createHmac('sha256', TOKEN_SECRET).update(timestamp).digest('hex');
+  if (!crypto.timingSafeEqual(Buffer.from(signature, 'hex'), Buffer.from(expectedSig, 'hex'))) return false;
+  const createdAt = parseInt(timestamp, 36);
+  if (isNaN(createdAt) || Date.now() - createdAt > SESSION_TTL) return false;
+  return true;
 }
 
 export function adminAuth(req, res, next) {
@@ -45,15 +54,8 @@ export function adminAuth(req, res, next) {
   }
 
   const token = authHeader.slice(7);
-  const session = adminSessions.get(token);
-
-  if (!session) {
+  if (!verifyAdminToken(token)) {
     return res.status(401).json({ error: 'Token inválido ou expirado' });
-  }
-
-  if (Date.now() - session.createdAt > SESSION_TTL) {
-    adminSessions.delete(token);
-    return res.status(401).json({ error: 'Sessão expirada' });
   }
 
   next();
