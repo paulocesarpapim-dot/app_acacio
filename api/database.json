@@ -143,7 +143,5 @@
   ],
   "customers": [],
   "orders": [],
-  "settings": {
-    "adminPassword": "c3f45df626552a051bb510e41ae08042:04e3f7733f5b242a3964c236f20264c0f2584ecfe003c0ccb5da5eeb678a2bf2e28a21a762e197794ecddd5194db30859ae5bb9e25821ddc2e1d15ad86f24e1f"
-  }
+  "settings": {}
 }
