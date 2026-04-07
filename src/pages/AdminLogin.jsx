@@ -3,27 +3,38 @@ import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Lock, AlertCircle } from "lucide-react";
+import { ADMIN_TOKEN_KEY } from "@/lib/admin-session";
 
-const ADMIN_PASSWORD = "acacio@admin";
-const ADMIN_SESSION_KEY = "admin_authenticated";
-
-export function isAdminAuthenticated() {
-  return sessionStorage.getItem(ADMIN_SESSION_KEY) === "true";
-}
+export { getAdminToken, isAdminAuthenticated } from "@/lib/admin-session";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password === ADMIN_PASSWORD) {
-      sessionStorage.setItem(ADMIN_SESSION_KEY, "true");
-      navigate("/admin");
-    } else {
-      setError("Senha incorreta. Tente novamente.");
-      setPassword("");
+    setLoading(true);
+    setError("");
+    try {
+      const response = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setError(data.error || "Senha incorreta. Tente novamente.");
+        setPassword("");
+      } else {
+        sessionStorage.setItem(ADMIN_TOKEN_KEY, data.token);
+        navigate("/admin");
+      }
+    } catch {
+      setError("Erro ao conectar com o servidor. Tente novamente.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -55,8 +66,8 @@ export default function AdminLogin() {
               autoFocus
               required
             />
-            <Button type="submit" className="w-full">
-              Entrar
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? "Verificando..." : "Entrar"}
             </Button>
           </form>
         </div>

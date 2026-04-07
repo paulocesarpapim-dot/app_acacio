@@ -4,6 +4,7 @@ import { fetchProducts, createProduct, updateProduct, deleteProduct } from "@/ap
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Trash2, Edit2, Plus, AlertCircle, LogOut } from "lucide-react";
+import { adminLogout } from "@/lib/admin-session";
 import { useNavigate } from "react-router-dom";
 
 const CATEGORIES = ["Feijão", "Cereais"];
@@ -13,7 +14,7 @@ export default function AdminProducts() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    sessionStorage.removeItem("admin_authenticated");
+    adminLogout();
     navigate("/");
   };
   const { data: products = [], isLoading } = useQuery({
