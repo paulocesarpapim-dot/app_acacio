@@ -6,7 +6,7 @@ import { useCart } from "../hooks/useCart";
 import { toast } from "sonner";
 import { isKgProduct, formatQty, qtyStep, minQty } from "../utils/productUtils";
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, promotion }) {
   const { addItem } = useCart();
   const [added, setAdded] = useState(false);
   const isKg = isKgProduct(product);
@@ -50,6 +50,11 @@ export default function ProductCard({ product }) {
               ⭐ Destaque
             </span>
           )}
+          {promotion && (
+            <span className="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-full animate-pulse">
+              {promotion.type === 'percentage' ? `${promotion.discountPercent}% OFF` : promotion.type === 'fixed' ? `R$${promotion.discountValue} OFF` : '🔥 Promo'}
+            </span>
+          )}
           {product.in_stock === false && (
             <div className="absolute inset-0 bg-background/60 flex items-center justify-center">
               <span className="bg-destructive text-destructive-foreground text-sm font-medium px-3 py-1.5 rounded-lg">
@@ -75,7 +80,19 @@ export default function ProductCard({ product }) {
 
         <div className="flex items-center justify-between mt-4">
           <div>
-            <span className="text-lg font-bold text-primary">{formatPrice(product.price)}</span>
+            {promotion && promotion.type === 'percentage' ? (
+              <>
+                <span className="text-sm text-muted-foreground line-through mr-1">{formatPrice(product.price)}</span>
+                <span className="text-lg font-bold text-red-600">{formatPrice(product.price * (1 - promotion.discountPercent / 100))}</span>
+              </>
+            ) : promotion && promotion.type === 'fixed' ? (
+              <>
+                <span className="text-sm text-muted-foreground line-through mr-1">{formatPrice(product.price)}</span>
+                <span className="text-lg font-bold text-red-600">{formatPrice(Math.max(0, product.price - promotion.discountValue))}</span>
+              </>
+            ) : (
+              <span className="text-lg font-bold text-primary">{formatPrice(product.price)}</span>
+            )}
             {isKg ? (
               <span className="text-xs text-muted-foreground ml-1">/ kg</span>
             ) : product.unit ? (

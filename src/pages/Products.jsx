@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "@/api/productService";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Search, X, ChevronDown, Filter, Grid3x3, List, TrendingDown } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import ProductCard from "../components/ProductCard";
 import ListProductCard from "../components/ListProductCard";
 
-const CATEGORIES = ["Feijão", "Cereais"];
+const API_URL = typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1'
+  ? window.location.origin : 'http://localhost:3000';
 
 const PRICE_RANGES = [
   { label: "Todos os preços", min: 0, max: Infinity },
@@ -28,7 +29,16 @@ export default function Products() {
   const urlParams = new URLSearchParams(window.location.search);
   const initialCategory = urlParams.get("categoria") || "";
 
+  const [categoryNames, setCategoryNames] = useState([]);
+  const [promotions, setPromotions] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState(initialCategory ? [initialCategory] : []);
+
+  useEffect(() => {
+    fetch(`${API_URL}/api/categories`).then(r => r.ok ? r.json() : []).then(data => setCategoryNames(data.map(c => c.name))).catch(() => {});
+    fetch(`${API_URL}/api/promotions/active`).then(r => r.ok ? r.json() : []).then(setPromotions).catch(() => {});
+  }, []);
+
+  const getPromoForProduct = (productId) => promotions.find(p => p.productIds?.includes(productId));
   const [priceRange, setPriceRange] = useState(PRICE_RANGES[0]);
   const [search, setSearch] = useState("");
   const [showFilters, setShowFilters] = useState(false);
@@ -178,7 +188,7 @@ export default function Products() {
 
                 {expandedFilters.categories && (
                   <div className="space-y-3">
-                    {CATEGORIES.map((category) => (
+                    {categoryNames.map((category) => (
                       <label key={category} className="flex items-center gap-2 cursor-pointer group">
                         <input
                           type="checkbox"
@@ -314,7 +324,7 @@ export default function Products() {
               viewMode === "grid" ? (
                 <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
                   {filtered.map((product) => (
-                    <ProductCard key={product.id} product={product} />
+                    <ProductCard key={product.id} product={product} promotion={getPromoForProduct(product.id)} />
                   ))}
                 </div>
               ) : (

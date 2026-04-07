@@ -2,9 +2,7 @@ import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Trash2, Edit2, Plus, AlertCircle, Lock, ImageIcon, Search, Users, Package, Star, Phone, Mail, ShoppingBag, Settings } from "lucide-react";
-
-const CATEGORIES = ["Feijão", "Cereais"];
+import { Trash2, Edit2, Plus, AlertCircle, Lock, ImageIcon, Search, Users, Package, Star, Phone, Mail, ShoppingBag, Settings, Tag, Megaphone, Percent, CalendarDays, Eye, EyeOff } from "lucide-react";
 
 // ============================================================
 // API BASE URL - Definida uma única vez
@@ -77,6 +75,20 @@ async function deleteProduct(id) {
 // ============================================================
 // COMPONENTE AdminConfiguracoes (criado)
 // ============================================================
+
+const GRADIENT_OPTIONS = [
+  { label: "Marrom", value: "from-amber-700 to-amber-800" },
+  { label: "Amarelo", value: "from-yellow-600 to-yellow-700" },
+  { label: "Verde", value: "from-green-600 to-green-700" },
+  { label: "Azul", value: "from-blue-600 to-blue-700" },
+  { label: "Vermelho", value: "from-red-600 to-red-700" },
+  { label: "Roxo", value: "from-purple-600 to-purple-700" },
+  { label: "Rosa", value: "from-pink-600 to-pink-700" },
+  { label: "Cinza", value: "from-gray-600 to-gray-700" },
+  { label: "Laranja", value: "from-orange-600 to-orange-700" },
+  { label: "Teal", value: "from-teal-600 to-teal-700" },
+];
+
 function AdminConfiguracoes() {
   const API_URL = getApiUrl();
   const [settings, setSettings] = useState({
@@ -86,17 +98,29 @@ function AdminConfiguracoes() {
     pixCity: '',
     pixBank: '',
   });
+  const [categories, setCategories] = useState([]);
+  const [newCat, setNewCat] = useState({ name: '', emoji: '📦', description: '', color: 'from-gray-600 to-gray-700' });
+  const [editingCatIdx, setEditingCatIdx] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [savingCats, setSavingCats] = useState(false);
   const [msg, setMsg] = useState({ text: '', type: '' });
+  const [catMsg, setCatMsg] = useState({ text: '', type: '' });
 
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_URL}/api/settings`, { headers: adminHeaders() });
-        if (res.ok) {
-          const data = await res.json();
+        const [settingsRes, catsRes] = await Promise.all([
+          fetch(`${API_URL}/api/settings`, { headers: adminHeaders() }),
+          fetch(`${API_URL}/api/categories`),
+        ]);
+        if (settingsRes.ok) {
+          const data = await settingsRes.json();
           setSettings(prev => ({ ...prev, ...data }));
+        }
+        if (catsRes.ok) {
+          const data = await catsRes.json();
+          setCategories(data);
         }
       } catch (err) {
         console.error('Erro ao carregar configurações:', err);
@@ -132,6 +156,57 @@ function AdminConfiguracoes() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setSettings(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleAddCategory = () => {
+    if (!newCat.name.trim()) return;
+    if (categories.find(c => c.name.toLowerCase() === newCat.name.trim().toLowerCase()) && editingCatIdx === null) {
+      setCatMsg({ text: 'Essa categoria já existe', type: 'error' });
+      return;
+    }
+    if (editingCatIdx !== null) {
+      const updated = [...categories];
+      updated[editingCatIdx] = { ...newCat, name: newCat.name.trim() };
+      setCategories(updated);
+      setEditingCatIdx(null);
+    } else {
+      setCategories([...categories, { ...newCat, name: newCat.name.trim() }]);
+    }
+    setNewCat({ name: '', emoji: '📦', description: '', color: 'from-gray-600 to-gray-700' });
+    setCatMsg({ text: '', type: '' });
+  };
+
+  const handleEditCategory = (idx) => {
+    setEditingCatIdx(idx);
+    setNewCat({ ...categories[idx] });
+  };
+
+  const handleDeleteCategory = (idx) => {
+    if (!confirm(`Remover categoria "${categories[idx].name}"?`)) return;
+    setCategories(categories.filter((_, i) => i !== idx));
+  };
+
+  const handleSaveCategories = async () => {
+    setSavingCats(true);
+    setCatMsg({ text: '', type: '' });
+    try {
+      const res = await fetch(`${API_URL}/api/categories`, {
+        method: 'PUT',
+        headers: adminHeaders(),
+        body: JSON.stringify({ categories }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setCategories(data);
+        setCatMsg({ text: 'Categorias salvas com sucesso!', type: 'success' });
+      } else {
+        const err = await res.json();
+        setCatMsg({ text: err.error || 'Erro ao salvar categorias', type: 'error' });
+      }
+    } catch (err) {
+      setCatMsg({ text: 'Erro de conexão com o servidor', type: 'error' });
+    }
+    setSavingCats(false);
   };
 
   if (loading) return <div className="text-center py-12 text-gray-500">Carregando configurações...</div>;
@@ -218,20 +293,133 @@ function AdminConfiguracoes() {
           </div>
         </div>
 
+        {/* API PagBem */}
+        <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            💚 Banco PagBem (Pix)
+          </h3>
+          <p className="text-sm text-gray-500 mb-4">Credenciais da API PagBem para cobranças Pix. Preencha quando tiver os dados do banco.</p>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Client ID</label>
+              <Input name="pagbemClientId" value={settings.pagbemClientId || ''} onChange={handleChange} placeholder="Client ID da API PagBem" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Client Secret</label>
+              <Input name="pagbemClientSecret" value={settings.pagbemClientSecret || ''} onChange={handleChange} placeholder="Client Secret" type="password" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">URL da API</label>
+              <Input name="pagbemApiUrl" value={settings.pagbemApiUrl || ''} onChange={handleChange} placeholder="https://api.pagbem.com.br (ou URL fornecida)" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Chave Pix PagBem</label>
+              <Input name="pagbemPixKey" value={settings.pagbemPixKey || ''} onChange={handleChange} placeholder="CPF/CNPJ/e-mail/telefone/aleatória" />
+            </div>
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-1">Webhook Secret (opcional)</label>
+              <Input name="pagbemWebhookSecret" value={settings.pagbemWebhookSecret || ''} onChange={handleChange} placeholder="Secret para validar webhooks do PagBem" type="password" />
+            </div>
+          </div>
+          <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
+            <p className="text-xs text-green-700">💡 Quando tiver as credenciais do PagBem, preencha aqui. A integração com a API será ativada automaticamente quando os campos Client ID e Client Secret estiverem preenchidos.</p>
+          </div>
+        </div>
+
+        {/* Categorias */}
+        <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            <Tag className="w-5 h-5" /> Categorias de Produtos
+          </h3>
+          <p className="text-sm text-gray-500 mb-4">Adicione, edite ou remova categorias. Essas categorias aparecerão no formulário de produtos e no site.</p>
+
+          {catMsg.text && (
+            <div className={`rounded-lg p-3 mb-4 flex items-center gap-2 text-sm ${catMsg.type === 'success' ? 'bg-green-50 border border-green-200 text-green-700' : 'bg-red-50 border border-red-200 text-red-700'}`}>
+              <AlertCircle className="w-4 h-4 flex-shrink-0" />
+              {catMsg.text}
+            </div>
+          )}
+
+          {/* Lista de categorias */}
+          <div className="space-y-2 mb-4">
+            {categories.length === 0 && (
+              <p className="text-gray-400 text-sm">Nenhuma categoria cadastrada</p>
+            )}
+            {categories.map((cat, idx) => (
+              <div key={idx} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                <span className="text-2xl">{cat.emoji}</span>
+                <div className="flex-1 min-w-0">
+                  <p className="font-medium text-gray-900">{cat.name}</p>
+                  <p className="text-xs text-gray-500 truncate">{cat.description || 'Sem descrição'}</p>
+                </div>
+                <div className={`w-6 h-6 rounded-full bg-gradient-to-r ${cat.color}`} title={cat.color}></div>
+                <Button type="button" variant="outline" size="sm" onClick={() => handleEditCategory(idx)}>
+                  <Edit2 className="w-3 h-3" />
+                </Button>
+                <Button type="button" variant="destructive" size="sm" onClick={() => handleDeleteCategory(idx)}>
+                  <Trash2 className="w-3 h-3" />
+                </Button>
+              </div>
+            ))}
+          </div>
+
+          {/* Formulário para adicionar/editar */}
+          <div className="border border-dashed border-gray-300 rounded-lg p-4 bg-gray-50/50">
+            <p className="text-sm font-medium text-gray-700 mb-3">
+              {editingCatIdx !== null ? `Editando: ${categories[editingCatIdx]?.name}` : 'Nova Categoria'}
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <Input
+                placeholder="Nome (ex: Temperos)"
+                value={newCat.name}
+                onChange={e => setNewCat(prev => ({ ...prev, name: e.target.value }))}
+              />
+              <Input
+                placeholder="Emoji (ex: 🌶️)"
+                value={newCat.emoji}
+                onChange={e => setNewCat(prev => ({ ...prev, emoji: e.target.value }))}
+                className="text-center text-xl"
+              />
+              <Input
+                placeholder="Descrição curta"
+                value={newCat.description}
+                onChange={e => setNewCat(prev => ({ ...prev, description: e.target.value }))}
+              />
+              <select
+                value={newCat.color}
+                onChange={e => setNewCat(prev => ({ ...prev, color: e.target.value }))}
+                className="px-3 py-2 border border-gray-300 rounded-md bg-white text-sm"
+              >
+                {GRADIENT_OPTIONS.map(opt => (
+                  <option key={opt.value} value={opt.value}>{opt.label}</option>
+                ))}
+              </select>
+            </div>
+            <div className="flex gap-2 mt-3">
+              <Button type="button" onClick={handleAddCategory} className="bg-amber-600 hover:bg-amber-700 flex items-center gap-1">
+                <Plus className="w-4 h-4" /> {editingCatIdx !== null ? 'Atualizar' : 'Adicionar'}
+              </Button>
+              {editingCatIdx !== null && (
+                <Button type="button" variant="outline" onClick={() => { setEditingCatIdx(null); setNewCat({ name: '', emoji: '📦', description: '', color: 'from-gray-600 to-gray-700' }); }}>
+                  Cancelar
+                </Button>
+              )}
+            </div>
+          </div>
+
+          <div className="mt-4">
+            <Button type="button" onClick={handleSaveCategories} disabled={savingCats} className="bg-amber-600 hover:bg-amber-700">
+              {savingCats ? 'Salvando...' : 'Salvar Categorias'}
+            </Button>
+          </div>
+        </div>
+
         {/* Info Geral */}
         <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
           <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
             ⚙️ Geral
           </h3>
           <div className="space-y-3">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Categorias Disponíveis</label>
-              <div className="flex flex-wrap gap-2">
-                {CATEGORIES.map(cat => (
-                  <span key={cat} className="px-3 py-1 bg-amber-50 border border-amber-200 rounded-full text-sm text-amber-700 font-medium">{cat}</span>
-                ))}
-              </div>
-            </div>
             {settings.updatedAt && (
               <p className="text-xs text-gray-400">Última atualização: {new Date(settings.updatedAt).toLocaleString('pt-BR')}</p>
             )}
@@ -250,6 +438,325 @@ function AdminConfiguracoes() {
 }
 
 // ============================================================
+// COMPONENTE AdminPromocoes
+// ============================================================
+
+const PROMO_COLORS = [
+  { label: "Laranja → Vermelho", value: "from-orange-500 to-red-500" },
+  { label: "Verde → Teal", value: "from-green-500 to-teal-500" },
+  { label: "Azul → Roxo", value: "from-blue-500 to-purple-500" },
+  { label: "Rosa → Vermelho", value: "from-pink-500 to-red-500" },
+  { label: "Amarelo → Laranja", value: "from-yellow-400 to-orange-500" },
+  { label: "Roxo → Rosa", value: "from-purple-500 to-pink-500" },
+  { label: "Vermelho → Laranja", value: "from-red-600 to-orange-500" },
+  { label: "Teal → Azul", value: "from-teal-500 to-blue-600" },
+];
+
+function AdminPromocoes() {
+  const API_URL = getApiUrl();
+  const [promotions, setPromotions] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [msg, setMsg] = useState({ text: '', type: '' });
+  const [editingId, setEditingId] = useState(null);
+  const [form, setForm] = useState({
+    title: '', description: '', type: 'percentage', discountPercent: 10, discountValue: 0,
+    productIds: [], bannerText: '', bannerColor: 'from-orange-500 to-red-500',
+    startDate: '', endDate: '', active: true,
+  });
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const [promoRes, prodRes] = await Promise.all([
+          fetch(`${API_URL}/api/promotions`, { headers: adminHeaders() }),
+          fetch(`${API_URL}/api/products`),
+        ]);
+        if (promoRes.ok) setPromotions(await promoRes.json());
+        if (prodRes.ok) setProducts(await prodRes.json());
+      } catch (err) {
+        console.error('Erro ao carregar promoções:', err);
+      }
+      setLoading(false);
+    };
+    load();
+  }, []);
+
+  const resetForm = () => {
+    setForm({
+      title: '', description: '', type: 'percentage', discountPercent: 10, discountValue: 0,
+      productIds: [], bannerText: '', bannerColor: 'from-orange-500 to-red-500',
+      startDate: '', endDate: '', active: true,
+    });
+    setEditingId(null);
+  };
+
+  const handleEdit = (promo) => {
+    setEditingId(promo.id);
+    setForm({
+      title: promo.title || '',
+      description: promo.description || '',
+      type: promo.type || 'percentage',
+      discountPercent: promo.discountPercent || 10,
+      discountValue: promo.discountValue || 0,
+      productIds: promo.productIds || [],
+      bannerText: promo.bannerText || '',
+      bannerColor: promo.bannerColor || 'from-orange-500 to-red-500',
+      startDate: promo.startDate ? promo.startDate.substring(0, 16) : '',
+      endDate: promo.endDate ? promo.endDate.substring(0, 16) : '',
+      active: promo.active !== false,
+    });
+  };
+
+  const handleSave = async () => {
+    if (!form.title.trim()) { setMsg({ text: 'Título é obrigatório', type: 'error' }); return; }
+    setSaving(true);
+    setMsg({ text: '', type: '' });
+    try {
+      const payload = {
+        ...form,
+        startDate: form.startDate ? new Date(form.startDate).toISOString() : null,
+        endDate: form.endDate ? new Date(form.endDate).toISOString() : null,
+      };
+      const url = editingId ? `${API_URL}/api/promotions/${editingId}` : `${API_URL}/api/promotions`;
+      const method = editingId ? 'PUT' : 'POST';
+      const res = await fetch(url, { method, headers: adminHeaders(), body: JSON.stringify(payload) });
+      if (res.ok) {
+        const data = await res.json();
+        if (editingId) {
+          setPromotions(prev => prev.map(p => p.id === editingId ? data : p));
+        } else {
+          setPromotions(prev => [...prev, data]);
+        }
+        setMsg({ text: editingId ? 'Promoção atualizada!' : 'Promoção criada!', type: 'success' });
+        resetForm();
+      } else {
+        const err = await res.json();
+        setMsg({ text: err.error || 'Erro ao salvar', type: 'error' });
+      }
+    } catch (err) {
+      setMsg({ text: 'Erro de conexão', type: 'error' });
+    }
+    setSaving(false);
+  };
+
+  const handleDelete = async (id) => {
+    if (!confirm('Remover esta promoção?')) return;
+    try {
+      const res = await fetch(`${API_URL}/api/promotions/${id}`, { method: 'DELETE', headers: adminHeaders() });
+      if (res.ok) {
+        setPromotions(prev => prev.filter(p => p.id !== id));
+        if (editingId === id) resetForm();
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleToggleActive = async (promo) => {
+    try {
+      const res = await fetch(`${API_URL}/api/promotions/${promo.id}`, {
+        method: 'PUT', headers: adminHeaders(),
+        body: JSON.stringify({ active: !promo.active }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setPromotions(prev => prev.map(p => p.id === promo.id ? data : p));
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const toggleProductId = (pid) => {
+    setForm(prev => ({
+      ...prev,
+      productIds: prev.productIds.includes(pid)
+        ? prev.productIds.filter(id => id !== pid)
+        : [...prev.productIds, pid],
+    }));
+  };
+
+  if (loading) return <p className="text-gray-500 py-8 text-center">Carregando promoções...</p>;
+
+  return (
+    <>
+      <h2 className="text-2xl font-bold mb-4 text-gray-900">Gerenciar Promoções</h2>
+
+      {msg.text && (
+        <div className={`rounded-lg p-3 mb-4 flex items-center gap-2 text-sm ${msg.type === 'success' ? 'bg-green-50 border border-green-200 text-green-700' : 'bg-red-50 border border-red-200 text-red-700'}`}>
+          <AlertCircle className="w-4 h-4 flex-shrink-0" /> {msg.text}
+        </div>
+      )}
+
+      {/* Lista de promoções existentes */}
+      {promotions.length > 0 && (
+        <div className="space-y-3 mb-8">
+          {promotions.map(promo => (
+            <div key={promo.id} className={`bg-white rounded-lg border p-4 shadow-sm flex items-center justify-between gap-4 ${promo.active ? 'border-green-300' : 'border-gray-200 opacity-60'}`}>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className={`inline-block w-3 h-3 rounded-full ${promo.active ? 'bg-green-500' : 'bg-gray-400'}`}></span>
+                  <span className="font-semibold text-gray-900 truncate">{promo.title}</span>
+                  <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">
+                    {promo.type === 'percentage' ? `${promo.discountPercent}% OFF` : promo.type === 'fixed' ? `R$ ${promo.discountValue} OFF` : 'Banner'}
+                  </span>
+                </div>
+                <p className="text-xs text-gray-500 truncate">{promo.description || promo.bannerText || 'Sem descrição'}</p>
+                {promo.productIds?.length > 0 && (
+                  <p className="text-xs text-blue-600 mt-1">{promo.productIds.length} produto(s) vinculado(s)</p>
+                )}
+                {(promo.startDate || promo.endDate) && (
+                  <p className="text-xs text-gray-400 mt-1">
+                    {promo.startDate ? `De ${new Date(promo.startDate).toLocaleDateString('pt-BR')}` : ''}
+                    {promo.endDate ? ` até ${new Date(promo.endDate).toLocaleDateString('pt-BR')}` : ''}
+                  </p>
+                )}
+              </div>
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <button onClick={() => handleToggleActive(promo)} className="p-1.5 rounded-lg hover:bg-gray-100" title={promo.active ? 'Desativar' : 'Ativar'}>
+                  {promo.active ? <Eye className="w-4 h-4 text-green-600" /> : <EyeOff className="w-4 h-4 text-gray-400" />}
+                </button>
+                <button onClick={() => handleEdit(promo)} className="p-1.5 rounded-lg hover:bg-gray-100"><Edit2 className="w-4 h-4 text-blue-600" /></button>
+                <button onClick={() => handleDelete(promo.id)} className="p-1.5 rounded-lg hover:bg-gray-100"><Trash2 className="w-4 h-4 text-red-500" /></button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Formulário de criação/edição */}
+      <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+          {editingId ? 'Editar Promoção' : 'Nova Promoção'}
+        </h3>
+
+        <div className="space-y-4">
+          {/* Título e Descrição */}
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Título *</label>
+              <Input value={form.title} onChange={e => setForm(p => ({ ...p, title: e.target.value }))} placeholder="Ex: Semana do Feijão" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Descrição</label>
+              <Input value={form.description} onChange={e => setForm(p => ({ ...p, description: e.target.value }))} placeholder="Descrição curta da promoção" />
+            </div>
+          </div>
+
+          {/* Tipo de promoção */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Tipo de Promoção</label>
+            <div className="flex flex-wrap gap-2">
+              {[
+                { value: 'percentage', label: '% Desconto', icon: '🏷️' },
+                { value: 'fixed', label: 'R$ Desconto', icon: '💰' },
+                { value: 'banner', label: 'Apenas Banner', icon: '📢' },
+              ].map(opt => (
+                <button key={opt.value} type="button"
+                  onClick={() => setForm(p => ({ ...p, type: opt.value }))}
+                  className={`px-4 py-2 rounded-lg border text-sm font-medium transition-colors ${form.type === opt.value ? 'bg-amber-600 text-white border-amber-600' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'}`}
+                >
+                  {opt.icon} {opt.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Valor do desconto */}
+          {form.type === 'percentage' && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Desconto (%)</label>
+              <Input type="number" min="1" max="100" value={form.discountPercent} onChange={e => setForm(p => ({ ...p, discountPercent: Number(e.target.value) }))} />
+            </div>
+          )}
+          {form.type === 'fixed' && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Desconto (R$)</label>
+              <Input type="number" min="0.01" step="0.01" value={form.discountValue} onChange={e => setForm(p => ({ ...p, discountValue: Number(e.target.value) }))} />
+            </div>
+          )}
+
+          {/* Texto do Banner */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Texto do Banner (exibido no site)</label>
+            <Input value={form.bannerText} onChange={e => setForm(p => ({ ...p, bannerText: e.target.value }))} placeholder="Ex: 🔥 Feijão com 20% de desconto esta semana!" />
+          </div>
+
+          {/* Cor do Banner */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Cor do Banner</label>
+            <div className="flex flex-wrap gap-2">
+              {PROMO_COLORS.map(c => (
+                <button key={c.value} type="button" onClick={() => setForm(p => ({ ...p, bannerColor: c.value }))}
+                  className={`w-10 h-10 rounded-full bg-gradient-to-r ${c.value} border-2 transition-transform ${form.bannerColor === c.value ? 'border-gray-900 scale-110' : 'border-transparent hover:scale-105'}`}
+                  title={c.label}
+                />
+              ))}
+            </div>
+            {/* Preview */}
+            {form.bannerText && (
+              <div className={`mt-3 rounded-xl bg-gradient-to-r ${form.bannerColor} p-4 text-white text-center font-semibold text-lg shadow-md`}>
+                {form.bannerText}
+              </div>
+            )}
+          </div>
+
+          {/* Datas */}
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Data Início (opcional)</label>
+              <Input type="datetime-local" value={form.startDate} onChange={e => setForm(p => ({ ...p, startDate: e.target.value }))} />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Data Fim (opcional)</label>
+              <Input type="datetime-local" value={form.endDate} onChange={e => setForm(p => ({ ...p, endDate: e.target.value }))} />
+            </div>
+          </div>
+
+          {/* Vincular Produtos */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Vincular Produtos ({form.productIds.length} selecionado{form.productIds.length !== 1 ? 's' : ''})
+            </label>
+            <p className="text-xs text-gray-500 mb-2">Selecione os produtos que participam desta promoção. Deixe vazio para promoção geral (banner).</p>
+            <div className="max-h-48 overflow-y-auto border border-gray-200 rounded-lg p-2 space-y-1">
+              {products.map(prod => (
+                <label key={prod.id} className="flex items-center gap-2 p-1.5 rounded hover:bg-gray-50 cursor-pointer">
+                  <input type="checkbox" checked={form.productIds.includes(prod.id)} onChange={() => toggleProductId(prod.id)}
+                    className="w-4 h-4 rounded border-gray-300 text-amber-600" />
+                  <span className="text-sm text-gray-700 truncate">{prod.name}</span>
+                  <span className="text-xs text-gray-400 ml-auto">R$ {prod.price?.toFixed(2)}</span>
+                </label>
+              ))}
+              {products.length === 0 && <p className="text-xs text-gray-400 text-center py-2">Nenhum produto cadastrado</p>}
+            </div>
+          </div>
+
+          {/* Ativo */}
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" checked={form.active} onChange={e => setForm(p => ({ ...p, active: e.target.checked }))}
+              className="w-4 h-4 rounded border-gray-300 text-amber-600" />
+            <span className="text-sm font-medium text-gray-700">Promoção ativa</span>
+          </label>
+
+          {/* Botões */}
+          <div className="flex gap-3 pt-2">
+            <Button type="button" onClick={handleSave} disabled={saving} className="bg-amber-600 hover:bg-amber-700 px-8">
+              {saving ? 'Salvando...' : editingId ? 'Atualizar Promoção' : 'Criar Promoção'}
+            </Button>
+            {editingId && (
+              <Button type="button" variant="outline" onClick={resetForm}>Cancelar</Button>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+// ============================================================
 // COMPONENTE PRINCIPAL
 // ============================================================
 export default function AdminProducts() {
@@ -258,6 +765,7 @@ export default function AdminProducts() {
   const [passwordError, setPasswordError] = useState("");
   const [adminTab, setAdminTab] = useState("produtos");
   const [editingId, setEditingId] = useState(null);
+  const [categoriesList, setCategoriesList] = useState([]);
 
   const queryClient = useQueryClient();
   
@@ -266,6 +774,16 @@ export default function AdminProducts() {
     queryFn: fetchProducts,
     enabled: authenticated,
   });
+
+  // Fetch categories from API
+  useEffect(() => {
+    fetch(`${API_URL}/api/categories`)
+      .then(r => r.ok ? r.json() : [])
+      .then(data => setCategoriesList(data))
+      .catch(() => {});
+  }, [adminTab]); // Refetch when switching tabs (in case new categories were saved)
+
+  const categoryNames = categoriesList.map(c => c.name);
   
   const [formData, setFormData] = useState({
     name: "",
@@ -447,12 +965,20 @@ export default function AdminProducts() {
           >
             <Settings className="w-4 h-4" /> Configurações
           </Button>
+          <Button
+            variant={adminTab === "promocoes" ? "default" : "outline"}
+            onClick={() => setAdminTab("promocoes")}
+            className="flex items-center gap-2"
+          >
+            <Megaphone className="w-4 h-4" /> Promoções
+          </Button>
         </div>
 
         {/* Conteúdo das Tabs */}
         {adminTab === "clientes" && <AdminClientes />}
         {adminTab === "pedidos" && <AdminPedidos />}
         {adminTab === "config" && <AdminConfiguracoes />}
+        {adminTab === "promocoes" && <AdminPromocoes />}
 
         {adminTab === "produtos" && (
           <>
@@ -486,7 +1012,8 @@ export default function AdminProducts() {
                     onChange={handleChange}
                     className="px-3 py-2 border border-gray-300 rounded-md bg-white"
                   >
-                    {CATEGORIES.map((cat) => (
+                    {categoryNames.length === 0 && <option value="">Carregando...</option>}
+                    {categoryNames.map((cat) => (
                       <option key={cat} value={cat}>
                         {cat}
                       </option>

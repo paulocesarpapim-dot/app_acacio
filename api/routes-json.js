@@ -14,6 +14,13 @@ import {
   handleMPNotification,
   getSettings,
   updateSettings,
+  getCategories,
+  updateCategories,
+  getPromotions,
+  getActivePromotions,
+  createPromotion,
+  updatePromotion,
+  deletePromotion,
   getProducts,
   getProductsByCategory,
   getProductById,
@@ -32,6 +39,12 @@ const router = express.Router();
 router.get('/products', getProducts);
 router.get('/products/category/:category', getProductsByCategory);
 router.get('/products/:id', getProductById);
+
+// Categories (leitura publica)
+router.get('/categories', getCategories);
+
+// Promotions (leitura publica)
+router.get('/promotions/active', getActivePromotions);
 
 // Customer auth
 router.post('/customers/register', registerCustomer);
@@ -70,5 +83,12 @@ router.post('/pix/webhook/register', adminAuth, registerPixWebhook);
 // Settings
 router.get('/settings', adminAuth, getSettings);
 router.put('/settings', adminAuth, updateSettings);
+router.put('/categories', adminAuth, updateCategories);
+
+// Promotions (admin)
+router.get('/promotions', adminAuth, getPromotions);
+router.post('/promotions', adminAuth, createPromotion);
+router.put('/promotions/:id', adminAuth, updatePromotion);
+router.delete('/promotions/:id', adminAuth, deletePromotion);
 
 export default router;

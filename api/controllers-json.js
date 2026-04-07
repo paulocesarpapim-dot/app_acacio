@@ -666,6 +666,167 @@ export async function registerPixWebhook(req, res) {
 
 // ============ SETTINGS ============
 
+// ============ PROMOTIONS ============
+
+export async function getPromotions(req, res) {
+  try {
+    const db = await readDB();
+    const now = new Date().toISOString();
+    const promotions = (db.promotions || []).map(p => ({
+      ...p,
+      active: p.active && (!p.endDate || p.endDate >= now),
+    }));
+    res.json(promotions);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar promoções' });
+  }
+}
+
+export async function getActivePromotions(req, res) {
+  try {
+    const db = await readDB();
+    const now = new Date().toISOString();
+    const promotions = (db.promotions || []).filter(p =>
+      p.active && (!p.startDate || p.startDate <= now) && (!p.endDate || p.endDate >= now)
+    );
+    res.json(promotions);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar promoções ativas' });
+  }
+}
+
+export async function createPromotion(req, res) {
+  try {
+    const { title, description, type, discountPercent, discountValue, productIds, bannerText, bannerColor, startDate, endDate, active } = req.body;
+    if (!title) return res.status(400).json({ error: 'Título é obrigatório' });
+    if (!type || !['percentage', 'fixed', 'banner'].includes(type)) {
+      return res.status(400).json({ error: 'Tipo deve ser: percentage, fixed ou banner' });
+    }
+
+    const db = await readDB();
+    if (!db.promotions) db.promotions = [];
+    const newId = db.promotions.length > 0 ? Math.max(...db.promotions.map(p => p.id || 0)) + 1 : 1;
+
+    const promo = {
+      id: newId,
+      title: title.trim(),
+      description: (description || '').trim(),
+      type,
+      discountPercent: type === 'percentage' ? Math.min(Math.max(Number(discountPercent) || 0, 0), 100) : 0,
+      discountValue: type === 'fixed' ? Math.max(Number(discountValue) || 0, 0) : 0,
+      productIds: Array.isArray(productIds) ? productIds.map(Number) : [],
+      bannerText: (bannerText || '').trim(),
+      bannerColor: bannerColor || 'from-orange-500 to-red-500',
+      startDate: startDate || null,
+      endDate: endDate || null,
+      active: active !== false,
+      createdAt: new Date().toISOString(),
+    };
+
+    db.promotions.push(promo);
+    saveDB(db);
+    res.status(201).json(promo);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao criar promoção' });
+  }
+}
+
+export async function updatePromotion(req, res) {
+  try {
+    const { id } = req.params;
+    const db = await readDB();
+    if (!db.promotions) db.promotions = [];
+    const idx = db.promotions.findIndex(p => p.id === parseInt(id));
+    if (idx < 0) return res.status(404).json({ error: 'Promoção não encontrada' });
+
+    const { title, description, type, discountPercent, discountValue, productIds, bannerText, bannerColor, startDate, endDate, active } = req.body;
+
+    if (type && !['percentage', 'fixed', 'banner'].includes(type)) {
+      return res.status(400).json({ error: 'Tipo deve ser: percentage, fixed ou banner' });
+    }
+
+    const promo = db.promotions[idx];
+    db.promotions[idx] = {
+      ...promo,
+      title: title !== undefined ? title.trim() : promo.title,
+      description: description !== undefined ? description.trim() : promo.description,
+      type: type || promo.type,
+      discountPercent: type === 'percentage' || (!type && promo.type === 'percentage')
+        ? Math.min(Math.max(Number(discountPercent ?? promo.discountPercent) || 0, 0), 100)
+        : promo.discountPercent,
+      discountValue: type === 'fixed' || (!type && promo.type === 'fixed')
+        ? Math.max(Number(discountValue ?? promo.discountValue) || 0, 0)
+        : promo.discountValue,
+      productIds: productIds !== undefined ? (Array.isArray(productIds) ? productIds.map(Number) : []) : promo.productIds,
+      bannerText: bannerText !== undefined ? bannerText.trim() : promo.bannerText,
+      bannerColor: bannerColor || promo.bannerColor,
+      startDate: startDate !== undefined ? startDate : promo.startDate,
+      endDate: endDate !== undefined ? endDate : promo.endDate,
+      active: active !== undefined ? active : promo.active,
+      updatedAt: new Date().toISOString(),
+    };
+
+    saveDB(db);
+    res.json(db.promotions[idx]);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao atualizar promoção' });
+  }
+}
+
+export async function deletePromotion(req, res) {
+  try {
+    const { id } = req.params;
+    const db = await readDB();
+    if (!db.promotions) return res.status(404).json({ error: 'Promoção não encontrada' });
+    const idx = db.promotions.findIndex(p => p.id === parseInt(id));
+    if (idx < 0) return res.status(404).json({ error: 'Promoção não encontrada' });
+    db.promotions.splice(idx, 1);
+    saveDB(db);
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao deletar promoção' });
+  }
+}
+
+export async function getCategories(req, res) {
+  try {
+    const db = await readDB();
+    const categories = db.settings?.categories || [
+      { name: 'Feijão', emoji: '🫘', description: 'Feijão carioca, preto, fradinho, verde e mais', color: 'from-amber-700 to-amber-800' },
+      { name: 'Cereais', emoji: '🌾', description: 'Arroz, milho, canjica, farinha e grãos', color: 'from-yellow-600 to-yellow-700' },
+    ];
+    res.json(categories);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar categorias' });
+  }
+}
+
+export async function updateCategories(req, res) {
+  try {
+    const { categories } = req.body;
+    if (!Array.isArray(categories)) {
+      return res.status(400).json({ error: 'Formato inválido. Envie { categories: [...] }' });
+    }
+    for (const cat of categories) {
+      if (!cat.name || typeof cat.name !== 'string') {
+        return res.status(400).json({ error: 'Cada categoria precisa ter um nome' });
+      }
+    }
+    const db = await readDB();
+    if (!db.settings) db.settings = {};
+    db.settings.categories = categories.map(cat => ({
+      name: cat.name.trim(),
+      emoji: cat.emoji || '📦',
+      description: cat.description || '',
+      color: cat.color || 'from-gray-600 to-gray-700',
+    }));
+    saveDB(db);
+    res.json(db.settings.categories);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao salvar categorias' });
+  }
+}
+
 export async function getSettings(req, res) {
   try {
     const db = await readDB();
@@ -683,7 +844,8 @@ export async function getSettings(req, res) {
 
 export async function updateSettings(req, res) {
   try {
-    const { pixKey, pixKeyType, pixName, pixCity, pixBank, mpAccessToken, c6ClientId, c6ClientSecret, c6ApiUrl } = req.body;
+    const { pixKey, pixKeyType, pixName, pixCity, pixBank, mpAccessToken, c6ClientId, c6ClientSecret, c6ApiUrl,
+            pagbemClientId, pagbemClientSecret, pagbemApiUrl, pagbemPixKey, pagbemWebhookSecret } = req.body;
     const db = await readDB();
     db.settings = {
       ...(db.settings || {}),
@@ -696,6 +858,11 @@ export async function updateSettings(req, res) {
       c6ClientId: c6ClientId !== undefined ? c6ClientId : (db.settings?.c6ClientId || ''),
       c6ClientSecret: c6ClientSecret !== undefined ? c6ClientSecret : (db.settings?.c6ClientSecret || ''),
       c6ApiUrl: c6ApiUrl !== undefined ? c6ApiUrl : (db.settings?.c6ApiUrl || ''),
+      pagbemClientId: pagbemClientId !== undefined ? pagbemClientId : (db.settings?.pagbemClientId || ''),
+      pagbemClientSecret: pagbemClientSecret !== undefined ? pagbemClientSecret : (db.settings?.pagbemClientSecret || ''),
+      pagbemApiUrl: pagbemApiUrl !== undefined ? pagbemApiUrl : (db.settings?.pagbemApiUrl || ''),
+      pagbemPixKey: pagbemPixKey !== undefined ? pagbemPixKey : (db.settings?.pagbemPixKey || ''),
+      pagbemWebhookSecret: pagbemWebhookSecret !== undefined ? pagbemWebhookSecret : (db.settings?.pagbemWebhookSecret || ''),
       updatedAt: new Date().toISOString(),
     };
     saveDB(db);
@@ -703,6 +870,8 @@ export async function updateSettings(req, res) {
     const safe = { ...db.settings };
     if (safe.mpAccessToken) safe.mpAccessToken = safe.mpAccessToken.substring(0, 8) + '••••••••';
     if (safe.c6ClientSecret) safe.c6ClientSecret = safe.c6ClientSecret.substring(0, 4) + '••••••••';
+    if (safe.pagbemClientSecret) safe.pagbemClientSecret = safe.pagbemClientSecret.substring(0, 4) + '••••••••';
+    if (safe.pagbemWebhookSecret) safe.pagbemWebhookSecret = safe.pagbemWebhookSecret.substring(0, 4) + '••••••••';
     res.json(db.settings);
   } catch (error) {
     res.status(500).json({ error: 'Erro ao salvar configurações' });

@@ -7,14 +7,25 @@ import CategoryCard from "../components/CategoryCard";
 import ProductCard from "../components/ProductCard";
 import capa from "../assets/capa.jpg";
 import PromocaoCliente from "@/components/PromocaoCliente";
+import { useState, useEffect } from "react";
 
-const CATEGORIES = ["Feijão", "Cereais"];
+const API_URL = typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1'
+  ? window.location.origin : 'http://localhost:3000';
 
 export default function Home() {
   const { data: allProducts, isLoading } = useQuery({
     queryKey: ["all-products"],
     queryFn: () => fetchProducts(),
   });
+
+  const [categories, setCategories] = useState([]);
+  const [promotions, setPromotions] = useState([]);
+  useEffect(() => {
+    fetch(`${API_URL}/api/categories`).then(r => r.ok ? r.json() : []).then(setCategories).catch(() => {});
+    fetch(`${API_URL}/api/promotions/active`).then(r => r.ok ? r.json() : []).then(setPromotions).catch(() => {});
+  }, []);
+
+  const getPromoForProduct = (productId) => promotions.find(p => p.productIds?.includes(productId));
 
   const featuredProducts = allProducts?.slice(0, 8) || [];
 
@@ -110,8 +121,8 @@ export default function Home() {
           </Link>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-          {CATEGORIES.map((cat) => (
-            <CategoryCard key={cat} category={cat} />
+          {categories.map((cat) => (
+            <CategoryCard key={cat.name} category={cat.name} />
           ))}
         </div>
       </section>
@@ -146,7 +157,7 @@ export default function Home() {
         ) : products?.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
             {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product.id} product={product} promotion={getPromoForProduct(product.id)} />
             ))}
           </div>
         ) : (

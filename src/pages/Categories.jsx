@@ -4,23 +4,25 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Grid3x3, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 
-const CATEGORIES_INFO = {
-  "Feijão": {
-    emoji: "🫘",
-    description: "Feijão carioca, preto, fradinho, verde e mais",
-    color: "from-amber-700 to-amber-800"
-  },
-  "Cereais": {
-    emoji: "🌾",
-    description: "Arroz, milho, canjica, farinha e grãos",
-    color: "from-yellow-600 to-yellow-700"
-  }
-};
+const API_URL = typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1'
+  ? window.location.origin : 'http://localhost:3000';
 
 export default function Categories() {
   const [search, setSearch] = useState("");
+  const [categoriesInfo, setCategoriesInfo] = useState({});
+
+  useEffect(() => {
+    fetch(`${API_URL}/api/categories`)
+      .then(r => r.ok ? r.json() : [])
+      .then(data => {
+        const map = {};
+        data.forEach(c => { map[c.name] = { emoji: c.emoji, description: c.description, color: c.color }; });
+        setCategoriesInfo(map);
+      })
+      .catch(() => {});
+  }, []);
 
   const { data: products, isLoading } = useQuery({
     queryKey: ["all-products"],
@@ -45,12 +47,12 @@ export default function Categories() {
       .map(([name, count]) => ({
         name,
         count,
-        ...CATEGORIES_INFO[name] || { emoji: "📦", description: "Produtos", color: "from-gray-600 to-gray-700" }
+        ...categoriesInfo[name] || { emoji: "📦", description: "Produtos", color: "from-gray-600 to-gray-700" }
       }))
       .sort((a, b) => b.count - a.count);
 
     return filtered;
-  }, [products, search]);
+  }, [products, search, categoriesInfo]);
 
   return (
     <div className="min-h-screen">
@@ -128,12 +130,7 @@ export default function Categories() {
 
             {/* Results Info */}
             <div className="mt-8 text-center text-muted-foreground">
-              <p>
-                {categoriesWithCount.length === Object.keys(CATEGORIES_INFO).length
-                  ? `Total: ${categoriesWithCount.length} categorias`
-                  : `Mostrando ${categoriesWithCount.length} de ${Object.keys(CATEGORIES_INFO).length} categorias`
-                }
-              </p>
+              <p>Total: {categoriesWithCount.length} categorias</p>
             </div>
           </>
         ) : (
