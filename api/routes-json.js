@@ -1,5 +1,6 @@
 import express from 'express';
 import {
+  healthCheck,
   getCustomers,
   registerCustomer,
   loginCustomer,
@@ -35,6 +36,9 @@ import { adminAuth, loginRateLimit } from './middleware.js';
 const router = express.Router();
 
 // ============ PUBLIC ROUTES ============
+
+// Health check (public)
+router.get('/health', healthCheck);
 
 // Products (leitura publica)
 router.get('/products', getProducts);

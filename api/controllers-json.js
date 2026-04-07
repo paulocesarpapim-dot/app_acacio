@@ -2,6 +2,22 @@ import { readDB, saveDB } from './db-json.js';
 import crypto from 'crypto';
 import { hashPassword, verifyPassword, createAdminToken } from './middleware.js';
 
+// ============ HEALTH CHECK ============
+export async function healthCheck(req, res) {
+  try {
+    const db = await readDB();
+    res.json({
+      status: 'ok',
+      products: (db.products || []).length,
+      customers: (db.customers || []).length,
+      orders: (db.orders || []).length,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({ status: 'error', error: error.message });
+  }
+}
+
 // ============ CUSTOMERS ============
 
 export async function getCustomers(req, res) {

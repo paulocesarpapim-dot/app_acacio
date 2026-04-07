@@ -213,7 +213,7 @@ export default function PixPayment() {
 
         {/* WhatsApp confirmation */}
         <a
-          href={`https://wa.me/5511999999999?text=${encodeURIComponent(`✅ Paguei o Pix!\n\n📋 Pedido: ${txid}\n💰 Valor: R$ ${parseFloat(amount || 0).toFixed(2)}\n\nPor favor, confirme meu pagamento!`)}`}
+          href={`https://wa.me/5511957800711?text=${encodeURIComponent(`✅ Paguei o Pix!\n\n📋 Pedido: ${txid}\n💰 Valor: R$ ${parseFloat(amount || 0).toFixed(2)}\n\nPor favor, confirme meu pagamento!`)}`}
           target="_blank"
           rel="noopener noreferrer"
           className="block mb-4"
