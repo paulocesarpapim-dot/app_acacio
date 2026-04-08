@@ -19,6 +19,10 @@ import MyAccount from './pages/MyAccount';
 import AdminProducts from './pages/AdminProducts';
 import CheckoutStatus from './pages/CheckoutStatus';
 import PixPayment from './pages/PixPayment';
+import Sobre from './pages/Sobre';
+import Blog from './pages/Blog';
+import InstagramPlan from './pages/InstagramPlan';
+import PlataformaAnalise from './pages/PlataformaAnalise';
 import React from 'react';
 import PromocaoCliente from '@/components/PromocaoCliente';
 
@@ -49,6 +53,10 @@ const AuthenticatedApp = () => {
         <Route path="/produto/:id" element={<ProductDetail />} />
         <Route path="/conta" element={<CustomerAuth />} />
         <Route path="/minha-conta" element={<MyAccount />} />
+        <Route path="/sobre" element={<Sobre />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/instagram-plan" element={<InstagramPlan />} />
+        <Route path="/plataformas" element={<PlataformaAnalise />} />
         <Route path="/admin/produtos" element={<AdminProducts />} />
         <Route path="/checkout/status" element={<CheckoutStatus />} />
         <Route path="/pix/pagamento" element={<PixPayment />} />

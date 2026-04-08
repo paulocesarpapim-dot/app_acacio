@@ -126,16 +126,79 @@ export default function Layout() {
 
       {/* Footer */}
       <footer className="border-t border-border bg-card mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-display text-sm font-bold">N</span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+            {/* Brand */}
+            <div>
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+                  <span className="text-primary-foreground font-display text-sm font-bold">N</span>
+                </div>
+                <span className="font-display text-sm font-semibold">Empório Filho de Deus</span>
               </div>
-              <span className="font-display text-sm font-semibold">Empório Filho de Deus</span>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Sabor autêntico direto do sertão nordestino para sua mesa em São Paulo.
+              </p>
             </div>
+
+            {/* Navigation */}
+            <div>
+              <h3 className="text-sm font-semibold text-foreground mb-3">Navegação</h3>
+              <ul className="space-y-2 text-xs text-muted-foreground">
+                <li><Link to="/produtos" className="hover:text-foreground transition-colors">Produtos</Link></li>
+                <li><Link to="/sobre" className="hover:text-foreground transition-colors">Sobre Nós</Link></li>
+                <li><Link to="/blog" className="hover:text-foreground transition-colors">Blog & Receitas</Link></li>
+                <li><Link to="/conta" className="hover:text-foreground transition-colors">Minha Conta</Link></li>
+              </ul>
+            </div>
+
+            {/* Policies */}
+            <div>
+              <h3 className="text-sm font-semibold text-foreground mb-3">Políticas</h3>
+              <ul className="space-y-2 text-xs text-muted-foreground">
+                <li><span className="font-medium text-foreground/80">Entrega:</span> Em toda São Paulo, via motoboy ou Correios. Prazo de 1 a 3 dias úteis.</li>
+                <li><span className="font-medium text-foreground/80">Troca:</span> Aceitamos trocas em até 7 dias para produtos fechados e dentro da validade.</li>
+                <li><span className="font-medium text-foreground/80">Pagamento:</span> Pix, dinheiro na entrega ou cartão (via link).</li>
+              </ul>
+            </div>
+
+            {/* Contact */}
+            <div>
+              <h3 className="text-sm font-semibold text-foreground mb-3">Contato & Localização</h3>
+              <ul className="space-y-2 text-xs text-muted-foreground">
+                <li>
+                  <a href="https://wa.me/5511957800711" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
+                    📱 WhatsApp: (11) 95780-0711
+                  </a>
+                </li>
+                <li>🕐 Seg a Sáb: 8h às 18h</li>
+                <li>
+                  <a href="https://maps.google.com/?q=Rua+Piacatu+1130+Munhoz+Osasco+SP" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
+                    📍 Rua Piacatu, 1130 — Munhóz, Osasco/SP
+                  </a>
+                </li>
+                <li>🏢 CNPJ: 44.945.245/0001-67</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Map */}
+          <div className="mb-6 rounded-xl overflow-hidden border border-border">
+            <iframe
+              title="Localização Empório Filho de Deus"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.5!2d-46.78!3d-23.53!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sRua+Piacatu+1130+Munhoz+Osasco+SP!5e0!3m2!1spt-BR!2sbr!4v1700000000000"
+              width="100%"
+              height="200"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
+
+          <div className="border-t border-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-2">
             <p className="text-xs text-muted-foreground text-center">
-              © 2026 Empório Filho de Deus — Sabor autêntico direto do sertão para sua mesa
+              © 2026 Empório Filho de Deus — CNPJ 44.945.245/0001-67 — Todos os direitos reservados
             </p>
             <Link to="/admin/produtos" className="text-[10px] text-muted-foreground/40 hover:text-muted-foreground transition-colors">
               Admin

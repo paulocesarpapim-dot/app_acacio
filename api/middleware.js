@@ -61,10 +61,10 @@ export function adminAuth(req, res, next) {
   next();
 }
 
-// ============ RATE LIMITING (in-memory) ============
+// ============ RATE LIMITING (in-memory, failed attempts only) ============
 
 const loginAttempts = new Map();
-const MAX_ATTEMPTS = 5;
+const MAX_ATTEMPTS = 10;
 const WINDOW_MS = 15 * 60 * 1000; // 15 minutes
 
 export function loginRateLimit(req, res, next) {
@@ -84,8 +84,21 @@ export function loginRateLimit(req, res, next) {
     });
   }
 
-  attempts.push(now);
   next();
+}
+
+// Record a failed login attempt (call from controller on auth failure)
+export function recordFailedLogin(req) {
+  const ip = req.ip || req.connection.remoteAddress;
+  const now = Date.now();
+  if (!loginAttempts.has(ip)) loginAttempts.set(ip, []);
+  loginAttempts.get(ip).push(now);
+}
+
+// Clear failed attempts on successful login
+export function clearLoginAttempts(req) {
+  const ip = req.ip || req.connection.remoteAddress;
+  loginAttempts.delete(ip);
 }
 
 // Cleanup old entries every 30 minutes

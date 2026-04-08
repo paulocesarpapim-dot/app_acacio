@@ -1,6 +1,6 @@
 import { readDB, saveDB } from './db-json.js';
 import crypto from 'crypto';
-import { hashPassword, verifyPassword, createAdminToken } from './middleware.js';
+import { hashPassword, verifyPassword, createAdminToken, recordFailedLogin, clearLoginAttempts } from './middleware.js';
 
 // ============ HEALTH CHECK ============
 export async function healthCheck(req, res) {
@@ -68,6 +68,7 @@ export async function loginCustomer(req, res) {
     const db = await readDB();
     const customer = (db.customers || []).find(c => c.email === email.toLowerCase());
     if (!customer) {
+      recordFailedLogin(req);
       return res.status(401).json({ error: 'E-mail ou senha incorretos' });
     }
 
@@ -86,8 +87,10 @@ export async function loginCustomer(req, res) {
     }
 
     if (!valid) {
+      recordFailedLogin(req);
       return res.status(401).json({ error: 'E-mail ou senha incorretos' });
     }
+    clearLoginAttempts(req);
     const { password: _, ...safe } = customer;
     res.json(safe);
   } catch (error) {
@@ -1072,9 +1075,11 @@ export async function loginAdmin(req, res) {
     }
 
     if (!valid) {
+      recordFailedLogin(req);
       return res.status(401).json({ error: 'Senha incorreta' });
     }
 
+    clearLoginAttempts(req);
     const token = createAdminToken();
     res.json({ token });
   } catch (error) {

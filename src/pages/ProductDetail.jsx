@@ -125,7 +125,7 @@ export default function ProductDetail() {
             {product.image_url ? (
               <img
                 src={product.image_url}
-                alt={product.name}
+                alt={`${product.name}${product.category ? ` — ${product.category}` : ''} | Empório Filho de Deus`}
                 className="w-full h-full object-cover"
                 loading="lazy"
                 onError={(e) => { e.target.style.display = 'none'; e.target.parentElement.innerHTML = '<div class="w-full h-full flex items-center justify-center"><span class="text-6xl">📦</span></div>'; }}

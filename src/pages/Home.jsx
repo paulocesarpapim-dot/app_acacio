@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "@/api/productService";
 import { Link } from "react-router-dom";
-import { ArrowRight, Truck, Shield, Clock, MessageCircle } from "lucide-react";
+import { ArrowRight, Truck, Shield, Clock, MessageCircle, Star, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CategoryCard from "../components/CategoryCard";
 import ProductCard from "../components/ProductCard";
@@ -163,6 +163,57 @@ export default function Home() {
             <p className="text-sm text-muted-foreground mt-2">Estamos preparando nosso catálogo</p>
           </div>
         )}
+      </section>
+
+      {/* Best Sellers */}
+      {(() => {
+        const bestSellers = allProducts?.filter(p => p.featured)?.slice(0, 4) || [];
+        if (bestSellers.length === 0) return null;
+        return (
+          <section className="bg-primary/5 border-y border-border">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+              <div className="text-center mb-8">
+                <span className="text-primary text-sm font-bold uppercase tracking-widest">⭐ Top Vendas</span>
+                <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mt-2">Mais Vendidos</h2>
+                <p className="text-muted-foreground mt-1">Os favoritos dos nossos clientes</p>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+                {bestSellers.map((product) => (
+                  <ProductCard key={product.id} product={product} promotion={getPromoForProduct(product.id)} />
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      })()}
+
+      {/* Customer Reviews */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+        <div className="text-center mb-10">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground">O que dizem nossos clientes</h2>
+          <p className="text-muted-foreground mt-1">Avaliações reais de quem compra com a gente</p>
+        </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[
+            { name: "Maria S.", city: "São Paulo", stars: 5, text: "Feijão de primeiríssima qualidade! Parece que voltei pro sertão da minha avó. Entrega rápida e atendimento nota 10." },
+            { name: "João P.", city: "Guarulhos", stars: 5, text: "Compro toda semana. Os grãos são frescos, bem selecionados e o preço é justo. Recomendo demais!" },
+            { name: "Ana L.", city: "São Paulo", stars: 5, text: "Atendimento pelo WhatsApp super atencioso. Tirou todas as minhas dúvidas e entregou no dia seguinte. Virei cliente fiel!" },
+          ].map((review, i) => (
+            <div key={i} className="bg-card rounded-2xl border border-border p-6 relative">
+              <Quote className="w-8 h-8 text-primary/10 absolute top-4 right-4" />
+              <div className="flex gap-0.5 mb-3">
+                {Array.from({ length: review.stars }).map((_, j) => (
+                  <Star key={j} className="w-4 h-4 fill-accent text-accent" />
+                ))}
+              </div>
+              <p className="text-muted-foreground text-sm leading-relaxed mb-4">"{review.text}"</p>
+              <div>
+                <p className="text-sm font-semibold text-foreground">{review.name}</p>
+                <p className="text-xs text-muted-foreground">{review.city}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* CTA */}

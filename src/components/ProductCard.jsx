@@ -37,7 +37,7 @@ export default function ProductCard({ product, promotion }) {
           {product.image_url ? (
             <img
               src={product.image_url}
-              alt={product.name}
+              alt={`${product.name}${product.category ? ` — ${product.category}` : ''} | Empório Filho de Deus`}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
               onError={(e) => { e.target.style.display = 'none'; e.target.parentElement.innerHTML = '<div class="w-full h-full flex items-center justify-center bg-secondary"><span class="text-4xl">📦</span></div>'; }}
