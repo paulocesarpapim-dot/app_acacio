@@ -11,7 +11,7 @@ export default function Sobre() {
             Nossa <span className="text-primary">História</span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Conheça o Empório Filho de Deus — onde cada produto carrega o sabor e a tradição do sertão nordestino.
+            Conheça o Empório Filho de Deus — também chamado de Casa do Norte, Empório Nordestino, Empório Paraense, Mercado do Norte, Armazém do Norte, Cantinho do Norte, Sabores do Norte, Temperos do Norte, Casa Norte Produtos Regionais, Casa dos Produtos do Norte — onde cada produto carrega o sabor e a tradição do sertão nordestino, Norte e Nordeste.
           </p>
         </div>
       </section>

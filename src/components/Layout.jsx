@@ -137,7 +137,8 @@ export default function Layout() {
                 <span className="font-display text-sm font-semibold">Empório Filho de Deus</span>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Sabor autêntico direto do sertão nordestino para sua mesa em São Paulo.
+                Sabor autêntico direto do sertão nordestino para sua mesa em São Paulo.<br/>
+                <span style={{fontWeight:'bold'}}>Também conhecido como:</span> Casa do Norte, Casa do Norte e Nordeste, Empório do Norte, Empório Nordestino, Mercado do Norte, Armazém do Norte, Cantinho do Norte, Sabores do Norte, Temperos do Norte, Casa do Paraense, Empório Paraense, Casa Norte, Casa Norte Produtos, Empório Norte Produtos Regionais, Casa dos Produtos do Norte.
               </p>
             </div>
 
