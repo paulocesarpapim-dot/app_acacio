@@ -70,7 +70,7 @@ export default function Layout() {
 
             {/* Mobile menu + cart */}
             <div className="flex md:hidden items-center gap-2">
-              <Link to="/carrinho" className="relative p-2">
+              <Link to="/carrinho" className="relative p-2" aria-label="Carrinho de compras">
                 <ShoppingCart className="w-5 h-5 text-foreground" />
                 {cartCount > 0 && (
                   <span className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-primary text-primary-foreground rounded-full text-xs flex items-center justify-center font-bold">
@@ -200,7 +200,7 @@ export default function Layout() {
             <p className="text-xs text-muted-foreground text-center">
               © 2026 Empório Filho de Deus — CNPJ 44.945.245/0001-67 — Todos os direitos reservados
             </p>
-            <Link to="/admin/produtos" className="text-[10px] text-muted-foreground/40 hover:text-muted-foreground transition-colors">
+            <Link to="/admin/produtos" className="text-[10px] text-muted-foreground/60 hover:text-muted-foreground transition-colors">
               Admin
             </Link>
           </div>

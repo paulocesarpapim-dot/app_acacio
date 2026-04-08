@@ -5,7 +5,7 @@ import { ArrowRight, Truck, Shield, Clock, MessageCircle, Star, Quote } from "lu
 import { Button } from "@/components/ui/button";
 import CategoryCard from "../components/CategoryCard";
 import ProductCard from "../components/ProductCard";
-import capa from "../assets/capa.jpg";
+import capa from "../assets/capa.webp";
 // PromocaoCliente movido para App.jsx (popup global)
 import { useState, useEffect } from "react";
 
@@ -222,7 +222,7 @@ export default function Home() {
           <h2 className="font-display text-2xl sm:text-3xl font-bold text-primary-foreground">
             Faça seu pedido agora!
           </h2>
-          <p className="text-primary-foreground/80 mt-2 max-w-md mx-auto">
+          <p className="text-primary-foreground/90 mt-2 max-w-md mx-auto">
             Peça pelo WhatsApp ou monte seu carrinho e envie direto pelo app
           </p>
           <div className="flex flex-wrap justify-center gap-3 mt-6">

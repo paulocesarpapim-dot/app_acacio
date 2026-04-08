@@ -105,11 +105,11 @@ export default function ListProductCard({ product }) {
           </div>
           {isKg && (
             <div className="flex items-center gap-1 mr-2">
-              <button onClick={() => setQty(q => Math.max(min, parseFloat((q - step).toFixed(2))))} className="w-7 h-7 rounded-full border border-border flex items-center justify-center hover:bg-muted">
+              <button onClick={() => setQty(q => Math.max(min, parseFloat((q - step).toFixed(2))))} aria-label="Diminuir quantidade" className="w-7 h-7 rounded-full border border-border flex items-center justify-center hover:bg-muted">
                 <Minus className="w-3 h-3" />
               </button>
               <span className="text-xs font-bold min-w-[40px] text-center">{formatQty(product, qty)}</span>
-              <button onClick={() => setQty(q => parseFloat((q + step).toFixed(2)))} className="w-7 h-7 rounded-full border border-border flex items-center justify-center hover:bg-muted">
+              <button onClick={() => setQty(q => parseFloat((q + step).toFixed(2)))} aria-label="Aumentar quantidade" className="w-7 h-7 rounded-full border border-border flex items-center justify-center hover:bg-muted">
                 <Plus className="w-3 h-3" />
               </button>
             </div>

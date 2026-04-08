@@ -107,6 +107,7 @@ export default function ProductCard({ product, promotion }) {
           <div className="flex items-center gap-2 mt-3">
             <button
               onClick={handleDecrease}
+              aria-label="Diminuir quantidade"
               className="w-7 h-7 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors text-xs"
             >
               <Minus className="w-3 h-3" />
@@ -114,6 +115,7 @@ export default function ProductCard({ product, promotion }) {
             <span className="text-sm font-bold min-w-[50px] text-center">{formatQty(product, qty)}</span>
             <button
               onClick={handleIncrease}
+              aria-label="Aumentar quantidade"
               className="w-7 h-7 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors text-xs"
             >
               <Plus className="w-3 h-3" />
