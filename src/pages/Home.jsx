@@ -36,7 +36,7 @@ export default function Home() {
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
-          <img src={capa} alt="Empório Filho de Deus" className="w-full h-full object-cover" />
+          <img src={capa} alt="Empório Filho de Deus - Produtos do Sertão Nordestino em Osasco SP" className="w-full h-full object-cover" fetchPriority="high" loading="eager" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/70 to-black/30" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-24 sm:py-36 lg:py-44">

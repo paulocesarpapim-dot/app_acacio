@@ -78,7 +78,7 @@ export default function Layout() {
                   </span>
                 )}
               </Link>
-              <button onClick={() => setMenuOpen(!menuOpen)} className="p-2">
+              <button onClick={() => setMenuOpen(!menuOpen)} className="p-2" aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}>
                 {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
             </div>
@@ -212,6 +212,7 @@ export default function Layout() {
         href="https://wa.me/5511957800711?text=Olá! Gostaria de fazer um pedido."
         target="_blank"
         rel="noopener noreferrer"
+        aria-label="Fale conosco pelo WhatsApp"
         className="fixed bottom-6 left-6 z-50 w-14 h-14 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg hover:shadow-xl flex items-center justify-center transition-all hover:scale-110"
       >
         <MessageCircle className="w-7 h-7" />
