@@ -17,16 +17,12 @@ export default function PromocaoCliente() {
       .catch(() => {});
   }, []);
 
-  // Popup aparece 1x por sessão, após 2 segundos
+  // Popup aparece sempre ao acessar, após 2 segundos
   useEffect(() => {
-    const alreadyShown = sessionStorage.getItem('promo_popup_shown');
-    if (!alreadyShown) {
-      const timer = setTimeout(() => {
-        setShowPopup(true);
-        sessionStorage.setItem('promo_popup_shown', '1');
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
+    const timer = setTimeout(() => {
+      setShowPopup(true);
+    }, 2000);
+    return () => clearTimeout(timer);
   }, []);
 
   if (!showPopup) return null;

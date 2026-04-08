@@ -20,6 +20,7 @@ import AdminProducts from './pages/AdminProducts';
 import CheckoutStatus from './pages/CheckoutStatus';
 import PixPayment from './pages/PixPayment';
 import React from 'react';
+import PromocaoCliente from '@/components/PromocaoCliente';
 
 class ErrorBoundary extends React.Component {
   constructor(props) { super(props); this.state = { error: null }; }
@@ -68,6 +69,7 @@ function App() {
             <div>
               <Router>
                 <AuthenticatedApp />
+                <PromocaoCliente />
                 <Chatbot />
                 <AccessibilityPanel />
               </Router>

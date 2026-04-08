@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import CategoryCard from "../components/CategoryCard";
 import ProductCard from "../components/ProductCard";
 import capa from "../assets/capa.jpg";
-import PromocaoCliente from "@/components/PromocaoCliente";
+// PromocaoCliente movido para App.jsx (popup global)
 import { useState, useEffect } from "react";
 
 const API_URL = typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1'
@@ -81,9 +81,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Espaço de Promoção e Fidelidade */}
-      <PromocaoCliente />
 
       {/* Trust Bar */}
       <section className="bg-card border-b border-border">
