@@ -127,6 +127,8 @@ export default function ProductDetail() {
                 src={product.image_url}
                 alt={product.name}
                 className="w-full h-full object-cover"
+                loading="lazy"
+                onError={(e) => { e.target.style.display = 'none'; e.target.parentElement.innerHTML = '<div class="w-full h-full flex items-center justify-center"><span class="text-6xl">📦</span></div>'; }}
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center">

@@ -196,7 +196,7 @@ export default function Cart() {
               <div className="col-span-12 sm:col-span-6 flex gap-3 items-center">
                 <div className="w-16 h-16 rounded-lg overflow-hidden bg-muted flex-shrink-0">
                   {product.image_url ? (
-                    <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" />
+                    <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" loading="lazy" onError={(e) => { e.target.style.display = 'none'; e.target.parentElement.innerHTML = '<div class="w-full h-full flex items-center justify-center text-xl">📦</div>'; }} />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-xl">📦</div>
                   )}

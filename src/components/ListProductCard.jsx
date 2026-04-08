@@ -36,6 +36,8 @@ export default function ListProductCard({ product }) {
               src={product.image_url}
               alt={product.name}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+              onError={(e) => { e.target.style.display = 'none'; e.target.parentElement.innerHTML = '<div class="w-full h-full flex items-center justify-center bg-secondary"><span class="text-3xl">📦</span></div>'; }}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-secondary">
