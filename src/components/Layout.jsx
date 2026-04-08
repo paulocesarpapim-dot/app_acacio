@@ -173,7 +173,7 @@ export default function Layout() {
                 </li>
                 <li>🕐 Seg a Sáb: 8h às 18h</li>
                 <li>
-                  <a href="https://maps.google.com/?q=Rua+Piacatu+1130+Munhoz+Osasco+SP" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
+                  <a href="https://maps.app.goo.gl/33PtpXDVJnyL4aY1A" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
                     📍 Rua Piacatu, 1130 — Munhóz, Osasco/SP
                   </a>
                 </li>
@@ -186,7 +186,7 @@ export default function Layout() {
           <div className="mb-6 rounded-xl overflow-hidden border border-border">
             <iframe
               title="Localização Empório Filho de Deus"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.5!2d-46.78!3d-23.53!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sRua+Piacatu+1130+Munhoz+Osasco+SP!5e0!3m2!1spt-BR!2sbr!4v1700000000000"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d913!2d-46.806642!3d-23.5029766!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cefe12a44803ad%3A0x3aeba69b18515985!2sEmporio%20Filho%20De%20Deus!5e0!3m2!1spt-BR!2sbr"
               width="100%"
               height="200"
               style={{ border: 0 }}
